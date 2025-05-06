@@ -1,0 +1,177 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Phòng ban 
+model Department {
+  id            String          @id @default(uuid())
+  name          String          @unique
+  description   String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  users         User[]
+  documents     Document[]
+  notifications Notification[]
+  events        Event[]
+  posts         Post[]
+}
+
+enum Role {
+  ADMIN           // Quản trị viên
+  DEPARTMENT_HEAD // Trưởng phòng
+  EMPLOYEE        // Nhân viên
+}
+
+enum DocumentCategory {
+  REPORT  // Báo cáo
+  CONTRACT // Hợp đồng
+  GUIDE   // Hướng dẫn
+  FORM    // Biểu mẫu
+  OTHER   // Khác
+}
+
+enum ContentStatus {
+  PENDING      // Đang chờ duyệt
+  APPROVED     // Đã duyệt
+  REJECTED     // Đã từ chối
+}
+
+model User {
+  id                 String          @id @default(uuid())
+  name               String
+  email              String          @unique
+  password           String
+  role               Role            @default(EMPLOYEE)
+  departmentId       String?
+  department         Department?     @relation(fields: [departmentId], references: [id])
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  uploadedDocuments  Document[]      @relation("UploadedDocuments")
+  createdEvents      Event[]         @relation("CreatedEvents")
+  createdPosts       Post[]          @relation("CreatedPosts")
+  createdNotifications Notification[] @relation("CreatedNotifications")
+  readNotifications  Notification[]  @relation("ReadNotifications")
+  eventParticipants  EventParticipant[]
+  reviewedDocuments  Document[]      @relation("ReviewedDocuments")
+  reviewedPosts      Post[]          @relation("ReviewedPosts")
+  reviewComments     ReviewComment[]
+}
+
+model Document {
+  id              String           @id @default(uuid())
+  title           String
+  description     String?
+  category        DocumentCategory @default(OTHER)
+  filePath        String
+  uploadedById    String
+  uploadedBy      User             @relation("UploadedDocuments", fields: [uploadedById], references: [id])
+  departmentId    String?
+  department      Department?      @relation(fields: [departmentId], references: [id])
+  isPublic        Boolean          @default(false)
+  status          ContentStatus    @default(PENDING)
+  reviewedById    String?
+  reviewedBy      User?            @relation("ReviewedDocuments", fields: [reviewedById], references: [id])
+  reviewedAt      DateTime?
+  reviewComments  ReviewComment[]  @relation("DocumentComments")
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model Post {
+  id            String       @id @default(uuid())
+  title         String
+  content       String       @db.Text
+  authorId      String
+  author        User         @relation("CreatedPosts", fields: [authorId], references: [id])
+  departmentId  String?
+  department    Department?  @relation(fields: [departmentId], references: [id])
+  isPublic      Boolean      @default(false)
+  status        ContentStatus @default(PENDING)
+  reviewedById  String?
+  reviewedBy    User?        @relation("ReviewedPosts", fields: [reviewedById], references: [id])
+  reviewedAt    DateTime?
+  reviewComments ReviewComment[] @relation("PostComments")
+  tags          String[]     @default([])
+  coverImageUrl String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model Event {
+  id                String            @id @default(uuid())
+  title             String
+  description       String?           @db.Text
+  location          String?
+  startDate         DateTime
+  endDate           DateTime
+  createdById       String
+  createdBy         User              @relation("CreatedEvents", fields: [createdById], references: [id])
+  departmentId      String?
+  department        Department?       @relation(fields: [departmentId], references: [id])
+  isPublic          Boolean           @default(false)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  participants      EventParticipant[]
+}
+
+model EventParticipant {
+  id          String    @id @default(uuid())
+  eventId     String
+  event       Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status      String    @default("pending") // pending, accepted, declined
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([eventId, userId])
+}
+
+model Notification {
+  id            String       @id @default(uuid())
+  title         String
+  content       String       @db.Text
+  createdById   String
+  createdBy     User         @relation("CreatedNotifications", fields: [createdById], references: [id])
+  readByUsers   User[]       @relation("ReadNotifications")
+  departmentId  String?
+  department    Department?  @relation(fields: [departmentId], references: [id])
+  isPublic      Boolean      @default(false)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model File {
+  id          String    @id @default(uuid())
+  filename    String
+  fileUrl     String    
+  fileType    String
+  fileSize    Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model ReviewComment {
+  id          String    @id @default(uuid())
+  content     String    @db.Text
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  documentId  String?   
+  document    Document? @relation("DocumentComments", fields: [documentId], references: [id])
+  postId      String?
+  post        Post?     @relation("PostComments", fields: [postId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}

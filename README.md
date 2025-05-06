@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FPT CMS - Hệ thống Quản lý Nội dung
 
-## Getting Started
+Dự án sử dụng Next.js, Prisma ORM và PostgreSQL để xây dựng hệ thống quản lý nội dung cho tổ chức.
 
-First, run the development server:
+## Yêu cầu hệ thống
+
+- Node.js 18.0 trở lên
+- PostgreSQL 14.0 trở lên
+- npm hoặc yarn
+
+## Cài đặt
+
+### 1. Clone dự án
+
+```bash
+git clone <repository-url>
+cd tuongtacnguoimay
+```
+
+### 2. Cài đặt dependencies
+
+```bash
+npm install
+# hoặc
+yarn install
+```
+
+### 3. Cấu hình cơ sở dữ liệu
+
+- Cài đặt và khởi động PostgreSQL trên máy tính của bạn
+- Tạo cơ sở dữ liệu với tên `fpt_cms_db`
+
+### 4. Cấu hình môi trường
+
+Tạo file `.env` với nội dung sau (điều chỉnh thông tin kết nối PostgreSQL theo cấu hình của bạn):
+
+```
+# Cấu hình Prisma và PostgreSQL
+DATABASE_URL="postgresql://postgres:your_password@localhost:5432/fpt_cms_db?schema=public"
+
+# Next Auth
+NEXTAUTH_SECRET="your_nextauth_secret"
+NEXTAUTH_URL="http://localhost:3000"
+```
+
+Tạo file `.env.local` với cấu hình Cloudinary (nếu bạn sử dụng Cloudinary):
+
+```
+# Cloudinary Configuration
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+CLOUDINARY_URL=cloudinary://your_api_key:your_api_secret@your_cloud_name
+```
+
+### 5. Migration và Seed dữ liệu
+
+```bash
+# Tạo migration
+npm run prisma:migrate
+# hoặc
+yarn prisma:migrate
+
+# Seed dữ liệu mẫu
+npm run seed
+# hoặc
+yarn seed
+```
+
+## Chạy dự án
+
+### 1. Khởi động server phát triển
 
 ```bash
 npm run dev
-# or
+# hoặc
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ứng dụng sẽ khởi chạy tại [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Các lệnh hữu ích khác
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Build ứng dụng cho production
+npm run build
+# hoặc
+yarn build
 
-## Learn More
+# Khởi chạy ứng dụng đã build
+npm run start
+# hoặc
+yarn start
 
-To learn more about Next.js, take a look at the following resources:
+# Mở Prisma Studio để quản lý dữ liệu
+npm run prisma:studio
+# hoặc
+yarn prisma:studio
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Cấu trúc dự án
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `/src/app`: Chứa các route và layout chính của ứng dụng
+- `/src/components`: Chứa các thành phần giao diện tái sử dụng
+- `/src/lib`: Chứa các thư viện và tiện ích
+- `/prisma`: Chứa schema Prisma và migration
+- `/public`: Chứa các file tĩnh
 
-## Deploy on Vercel
+## Công nghệ sử dụng
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Frontend**: Next.js 15, React 19, TailwindCSS 4
+- **Backend**: Next.js API Routes
+- **Database**: PostgreSQL với Prisma ORM
+- **Authentication**: NextAuth.js
+- **Cloud Storage**: Cloudinary
