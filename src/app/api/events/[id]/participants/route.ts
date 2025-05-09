@@ -114,7 +114,7 @@ export async function POST(request: NextRequest, props: PathParams) {
     }
     
     const { id: eventId } = params;
-    const { status } = await request.json();
+    const { status, userId } = await request.json();
     
     // Validate status
     if (!['confirmed', 'declined', 'pending'].includes(status.toLowerCase())) {
@@ -131,6 +131,7 @@ export async function POST(request: NextRequest, props: PathParams) {
         id: true, 
         departmentId: true,
         isPublic: true,
+        createdById: true,
       }
     });
     
@@ -141,13 +142,18 @@ export async function POST(request: NextRequest, props: PathParams) {
       );
     }
     
-    // Check if user has access to this event (if not public and not in same department)
-    if (!event.isPublic && 
-        event.departmentId && 
-        event.departmentId !== session.user.department && 
-        session.user.role !== 'ADMIN') {
+    // Determine if current user can invite others
+    const canInviteOthers = 
+      session.user.role === 'ADMIN' || 
+      session.user.id === event.createdById || 
+      (session.user.role === 'DEPARTMENT_HEAD' && event.departmentId === session.user.department);
+    
+    // If inviting other users, verify permissions
+    const targetUserId = userId || session.user.id;
+    
+    if (targetUserId !== session.user.id && !canInviteOthers) {
       return NextResponse.json(
-        { message: 'You do not have access to this event', success: false },
+        { message: 'You do not have permission to invite others to this event', success: false },
         { status: 403 }
       );
     }
@@ -156,7 +162,7 @@ export async function POST(request: NextRequest, props: PathParams) {
     const existingParticipant = await prisma.eventParticipant.findFirst({
       where: {
         eventId,
-        userId: session.user.id
+        userId: targetUserId
       }
     });
     
@@ -173,7 +179,7 @@ export async function POST(request: NextRequest, props: PathParams) {
       participant = await prisma.eventParticipant.create({
         data: {
           eventId,
-          userId: session.user.id,
+          userId: targetUserId,
           status: status.toLowerCase()
         }
       });

@@ -328,9 +328,7 @@ export default function CreateEventPage() {
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className={`block w-full rounded-md border ${
-                formErrors.title ? 'border-red-300 ring-red-500' : 'border-gray-300'
-              } py-2 px-3 shadow-sm outline-none sm:text-sm`}
+              className={`block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150`}
               placeholder="Nhập tiêu đề sự kiện"
             />
             {formErrors.title && (
@@ -350,9 +348,7 @@ export default function CreateEventPage() {
               value={formData.description}
               onChange={handleChange}
               rows={4}
-              className={`block w-full rounded-md border ${
-                formErrors.description ? 'border-red-300 ring-red-500' : 'border-gray-300'
-              } py-2 px-3 shadow-sm outline-none sm:text-sm cursor-text`}
+              className={`block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150`}
               placeholder="Nhập mô tả sự kiện"
             />
             {formErrors.description && (
@@ -376,9 +372,7 @@ export default function CreateEventPage() {
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
-                className={`block w-full rounded-md border ${
-                  formErrors.location ? 'border-red-300 ring-red-500' : 'border-gray-300'
-                } py-2 pl-10 px-3 shadow-sm outline-none sm:text-sm cursor-text`}
+                className={`block w-full pl-9 rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150`}
                 placeholder="Ví dụ: Phòng họp A - Tầng 3"
               />
             </div>
@@ -405,9 +399,7 @@ export default function CreateEventPage() {
                   value={formData.startDate}
                   onChange={handleChange}
                   min={new Date().toISOString().split('T')[0]}
-                  className={`block w-full rounded-md border ${
-                    formErrors.startDate ? 'border-red-300 ring-red-500' : 'border-gray-300'
-                  } py-2 pl-10 px-3 shadow-sm outline-none sm:text-sm cursor-pointer`}
+                  className={`block w-full pl-9 rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150 [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:left-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer`}
                 />
               </div>
               {formErrors.startDate && (
@@ -431,7 +423,7 @@ export default function CreateEventPage() {
                   name="startTime"
                   value={formData.startTime}
                   onChange={handleChange}
-                  className="block w-full rounded-md border border-gray-300 py-2 pl-10 px-3 shadow-sm outline-none sm:text-sm cursor-pointer"
+                  className="block w-full pl-9 rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150 [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:left-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer"
                 />
               </div>
             </div>
@@ -453,9 +445,7 @@ export default function CreateEventPage() {
                   value={formData.endDate}
                   onChange={handleChange}
                   min={formData.startDate || new Date().toISOString().split('T')[0]}
-                  className={`block w-full rounded-md border ${
-                    formErrors.endDate ? 'border-red-300 ring-red-500' : 'border-gray-300'
-                  } py-2 pl-10 px-3 shadow-sm outline-none sm:text-sm cursor-pointer`}
+                  className={`block w-full pl-9 rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150 [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:left-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer`}
                 />
               </div>
               {formErrors.endDate && (
@@ -479,7 +469,7 @@ export default function CreateEventPage() {
                   name="endTime"
                   value={formData.endTime}
                   onChange={handleChange}
-                  className="block w-full rounded-md border border-gray-300 py-2 pl-10 px-3 shadow-sm outline-none sm:text-sm cursor-pointer"
+                  className="block w-full pl-9 rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150 [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:left-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer"
                 />
               </div>
             </div>
@@ -498,7 +488,7 @@ export default function CreateEventPage() {
                   <input
                     type="text"
                     placeholder="Tìm kiếm người dùng..."
-                    className="pl-9 pr-4 py-2 w-full border border-gray-300 rounded-md shadow-sm outline-none text-sm"
+                    className="pl-9 pr-4 py-2 w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />

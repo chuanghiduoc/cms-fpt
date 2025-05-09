@@ -244,7 +244,7 @@ export default function EditEventPage() {
             <input
               type="text"
               id="title"
-              className="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm outline-none sm:text-sm cursor-text"
+              className="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -258,7 +258,7 @@ export default function EditEventPage() {
             <textarea
               id="description"
               rows={4}
-              className="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm outline-none sm:text-sm cursor-text"
+              className="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
               value={description || ''}
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -269,13 +269,13 @@ export default function EditEventPage() {
               Địa điểm
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                 <FiMapPin className="h-5 w-5 text-gray-400" />
               </div>
               <input
                 type="text"
                 id="location"
-                className="block w-full rounded-md border border-gray-300 py-2 pl-10 pr-3 shadow-sm outline-none sm:text-sm cursor-text"
+                className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                 value={location || ''}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="Nhập địa điểm"
@@ -289,13 +289,13 @@ export default function EditEventPage() {
                 Ngày bắt đầu <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                   <FiCalendar className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
                   type="date"
                   id="startDate"
-                  className="block w-full rounded-md border border-gray-300 py-2 pl-10 pr-3 shadow-sm outline-none sm:text-sm cursor-pointer"
+                  className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
                   required
@@ -308,13 +308,13 @@ export default function EditEventPage() {
                 Giờ bắt đầu <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                   <FiClock className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
                   type="time"
                   id="startTime"
-                  className="block w-full rounded-md border border-gray-300 py-2 pl-10 pr-3 shadow-sm outline-none sm:text-sm cursor-pointer"
+                  className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
                   required
@@ -327,13 +327,13 @@ export default function EditEventPage() {
                 Ngày kết thúc <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                   <FiCalendar className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
                   type="date"
                   id="endDate"
-                  className="block w-full rounded-md border border-gray-300 py-2 pl-10 pr-3 shadow-sm outline-none sm:text-sm cursor-pointer"
+                  className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
                   required
@@ -346,13 +346,13 @@ export default function EditEventPage() {
                 Giờ kết thúc <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                   <FiClock className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
                   type="time"
                   id="endTime"
-                  className="block w-full rounded-md border border-gray-300 py-2 pl-10 pr-3 shadow-sm outline-none sm:text-sm cursor-pointer"
+                  className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                   value={endTime}
                   onChange={(e) => setEndTime(e.target.value)}
                   required

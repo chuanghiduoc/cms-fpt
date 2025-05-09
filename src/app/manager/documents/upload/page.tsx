@@ -313,9 +313,7 @@ export default function UploadDocumentPage() {
                 setTitle(e.target.value);
                 validateField('title', e.target.value);
               }}
-              className={`mt-1 block w-full border ${
-                errors.title ? 'border-red-300' : 'border-gray-300'
-              } rounded-md shadow-sm py-2 px-3 outline-none sm:text-sm`}
+              className={`mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150`}
               placeholder="Nhập tiêu đề tài liệu"
               required
             />
@@ -338,9 +336,7 @@ export default function UploadDocumentPage() {
                 setDescription(e.target.value);
                 validateField('description', e.target.value);
               }}
-              className={`mt-1 block w-full border ${
-                errors.description ? 'border-red-300' : 'border-gray-300'
-              } rounded-md shadow-sm py-2 px-3 outline-none sm:text-sm`}
+              className={`mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150`}
               placeholder="Nhập mô tả về tài liệu (tùy chọn)"
             />
             {errors.description && (
@@ -358,7 +354,7 @@ export default function UploadDocumentPage() {
               name="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 outline-none sm:text-sm cursor-pointer"
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
             >
               {documentCategories.map((cat) => (
                 <option key={cat.value} value={cat.value}>
@@ -382,8 +378,8 @@ export default function UploadDocumentPage() {
                 validateField('departmentId', e.target.value);
               }}
               disabled={session?.user?.role === 'DEPARTMENT_HEAD'}
-              className={`mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 outline-none sm:text-sm ${
-                session?.user?.role === 'DEPARTMENT_HEAD' ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : 'bg-white cursor-pointer'
+                className={`mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150 ${
+                session?.user?.role === 'DEPARTMENT_HEAD' ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : 'cursor-pointer'
               }`}
             >
               <option value="" className="bg-gray-100 text-gray-600">Chọn phòng ban</option>
@@ -463,7 +459,7 @@ export default function UploadDocumentPage() {
                     <button
                       type="button"
                       onClick={removeFile}
-                      className="inline-flex items-center p-1.5 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 outline-none cursor-pointer"
+                      className="inline-flex items-center p-1.5 border border-transparent rounded-full text-white bg-red-600 hover:bg-red-700 outline-none cursor-pointer"
                     >
                       <FiX className="h-4 w-4" />
                     </button>
