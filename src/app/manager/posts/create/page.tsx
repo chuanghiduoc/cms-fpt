@@ -454,7 +454,7 @@ export default function CreatePostPage() {
                   id="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm text-gray-900 cursor-text"
+                  className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:outline-none focus:ring-orange-400 focus:border-orange-400 sm:text-sm text-gray-900 cursor-text"
                   placeholder="Nhập tiêu đề bài viết"
                 />
               </div>
@@ -548,7 +548,7 @@ export default function CreatePostPage() {
                     value={tagInput}
                     onChange={(e) => setTagInput(e.target.value)}
                     onKeyDown={handleTagInputKeyDown}
-                    className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm text-gray-900 cursor-text"
+                    className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:outline-none focus:ring-orange-400 focus:border-orange-400 sm:text-sm text-gray-900 cursor-text"
                     placeholder="Nhập thẻ và nhấn Enter"
                   />
                   <button

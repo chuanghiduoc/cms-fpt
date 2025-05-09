@@ -170,7 +170,7 @@ export default function UserCreateModal({
             &#8203;
           </span>
           
-          <div className="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-full max-w-lg mx-2 sm:mx-auto">
+          <div className="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition duration-150 sm:my-8 sm:align-middle w-full max-w-lg mx-2 sm:mx-auto">
             <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-gray-200 bg-white">
               <Dialog.Title as="h3" className="text-lg sm:text-xl font-medium text-gray-900 flex items-center">
                 <FiUser className="mr-2 text-orange-500 text-xl sm:text-2xl" />
@@ -234,7 +234,7 @@ export default function UserCreateModal({
                           id="name"
                           value={formData.name}
                           onChange={handleChange}
-                          className="pl-10 block w-full border border-gray-300 rounded-md py-2.5 sm:py-2 px-3 focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-base sm:text-sm bg-white text-black"
+                          className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                           required
                         />
                       </div>
@@ -257,7 +257,7 @@ export default function UserCreateModal({
                           id="email"
                           value={formData.email}
                           onChange={handleChange}
-                          className="pl-10 block w-full border border-gray-300 rounded-md py-2.5 sm:py-2 px-3 focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-base sm:text-sm bg-white text-black"
+                          className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                           required
                         />
                       </div>
@@ -280,7 +280,7 @@ export default function UserCreateModal({
                           id="password"
                           value={formData.password}
                           onChange={handleChange}
-                          className="pl-10 block w-full border border-gray-300 rounded-md py-2.5 sm:py-2 px-3 focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-base sm:text-sm bg-white text-black"
+                          className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                           required
                         />
                       </div>
@@ -302,7 +302,7 @@ export default function UserCreateModal({
                           name="role"
                           value={formData.role}
                           onChange={handleChange}
-                          className="pl-10 block w-full border border-gray-300 rounded-md py-2.5 sm:py-2 px-3 focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-base sm:text-sm bg-white text-black cursor-pointer appearance-none"
+                          className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150 cursor-pointer appearance-none"
                           required
                         >
                           <option value="EMPLOYEE">Nhân viên</option>
@@ -328,7 +328,7 @@ export default function UserCreateModal({
                           name="departmentId"
                           value={formData.departmentId || ''}
                           onChange={handleChange}
-                          className="pl-10 block w-full border border-gray-300 rounded-md py-2.5 sm:py-2 px-3 focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-base sm:text-sm bg-white text-black cursor-pointer appearance-none"
+                          className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150 cursor-pointer appearance-none"
                         >
                           <option value="">-- Chọn phòng ban --</option>
                           {loadingDepartments ? (

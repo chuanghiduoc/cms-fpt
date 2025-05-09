@@ -366,7 +366,7 @@ export default function EditPostPage() {
                 name="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-orange-500 focus:border-orange-500 cursor-text"
+                className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                 required
               />
             </div>
@@ -380,7 +380,7 @@ export default function EditPostPage() {
                 name="department"
                 value={departmentId}
                 onChange={(e) => setDepartmentId(e.target.value)}
-                className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-orange-500 focus:border-orange-500 cursor-pointer"
+                className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
               >
                 <option value="">Không có phòng ban</option>
                 {departments.map((department) => (
@@ -401,7 +401,7 @@ export default function EditPostPage() {
                     <img
                       src={coverImageUrl}
                       alt="Cover"
-                      className="w-full h-64 object-cover rounded-lg shadow-sm transition-all duration-300 hover:opacity-90"
+                      className="w-full h-64 object-cover rounded-lg shadow-sm transition duration-150 duration-300 hover:opacity-90"
                     />
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 rounded-lg">
                       <button
@@ -483,7 +483,7 @@ export default function EditPostPage() {
                     value={tagInput}
                     onChange={(e) => setTagInput(e.target.value)}
                     onKeyDown={handleTagKeyDown}
-                    className="block w-full border border-gray-300 rounded-l-md shadow-sm py-2 px-3 focus:outline-none focus:ring-orange-500 focus:border-orange-500 cursor-text"
+                    className="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                     placeholder="Thêm thẻ và nhấn Enter"
                   />
                   <button
@@ -575,7 +575,7 @@ export default function EditPostPage() {
 
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition duration-150 sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">

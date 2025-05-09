@@ -205,7 +205,7 @@ export default function DepartmentTable() {
               <select
                 value={itemsPerPage}
                 onChange={handleItemsPerPageChange}
-                className="appearance-none pl-8 pr-10 py-2.5 bg-white border border-gray-300 rounded-md shadow-sm text-gray-800 font-medium focus:ring-orange-500 focus:border-orange-500 cursor-pointer"
+                className="appearance-none pl-8 pr-10 py-2.5 bg-white border border-gray-300 rounded-md shadow-sm text-gray-800 font-medium focus:ring-orange-400 focus:border-orange-400 cursor-pointer"
               >
                 <option value="5">5 / trang</option>
                 <option value="10">10 / trang</option>
@@ -304,7 +304,7 @@ export default function DepartmentTable() {
               <select
                 value={itemsPerPage}
                 onChange={handleItemsPerPageChange}
-                className="appearance-none pl-8 pr-6 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-gray-800 font-medium focus:ring-orange-500 focus:border-orange-500 cursor-pointer"
+                className="appearance-none pl-8 pr-6 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-gray-800 font-medium focus:ring-orange-400 focus:border-orange-400 cursor-pointer"
               >
                 <option value="5">5</option>
                 <option value="10">10</option>

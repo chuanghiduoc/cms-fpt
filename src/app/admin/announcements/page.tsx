@@ -327,7 +327,7 @@ export default function AdminAnnouncementsPage() {
             <input
               type="text"
               placeholder="Tìm kiếm thông báo..."
-              className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+              className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />

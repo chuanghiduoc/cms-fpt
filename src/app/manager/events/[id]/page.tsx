@@ -657,7 +657,7 @@ export default function EventDetailsPage({ params }: { params: Promise<RoutePara
                     <input 
                       type="text"
                       placeholder="Tìm kiếm người dùng..."
-                      className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 cursor-text"
+                      className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-orange-400 focus:border-orange-400 cursor-text"
                       value={searchQuery}
                       onChange={handleSearchChange}
                     />

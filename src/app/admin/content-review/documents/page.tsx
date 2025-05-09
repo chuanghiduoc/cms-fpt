@@ -485,7 +485,7 @@ export default function AdminDocumentsReviewPage() {
               </div>
               <input
                 type="text"
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 sm:text-sm cursor-text"
+                className="block w-full pl-10 pr-3 py-2 rounded-md border border-gray-300 bg-white text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                 placeholder="Tìm kiếm tài liệu..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}

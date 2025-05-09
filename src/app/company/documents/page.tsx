@@ -238,19 +238,29 @@ export default function EmployeeDocumentsPage() {
           transition={{ duration: 0.3 }}
           className="bg-white shadow rounded-lg overflow-hidden"
         >
-          <div className="p-4 border-b border-gray-100">
+          <div className="p-3 border-b border-gray-100">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <FiSearch className="h-5 w-5 text-gray-400" />
               </div>
               <input
                 type="text"
-                className="block w-full rounded-lg border-0 py-3 pl-10 pr-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none sm:text-sm transition-all duration-200"
                 placeholder="Tìm kiếm tài liệu..."
+                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                disabled={true}
+                disabled={filterLoading}
               />
+              {searchTerm && (
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="text-gray-400 hover:text-gray-600 cursor-pointer p-1"
+                  >
+                    <FiX className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           
@@ -460,38 +470,23 @@ export default function EmployeeDocumentsPage() {
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <FiSearch className="h-5 w-5 text-gray-400" />
             </div>
-            <motion.input
-              whileFocus={{ boxShadow: "0 0 0 2px rgba(249, 115, 22, 0.2)" }}
+            <input
               type="text"
-              className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-colors text-sm"
               placeholder="Tìm kiếm tài liệu..."
+              className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               disabled={filterLoading}
             />
             {searchTerm && (
-              <AnimatePresence>
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3"
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                <button
+                  onClick={() => setSearchTerm('')}
+                  className="text-gray-400 hover:text-gray-600 cursor-pointer p-1"
                 >
-                  <motion.button 
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => {
-                      setSearchTerm('');
-                      setCurrentPage(1);
-                    }}
-                    className="text-gray-400 hover:text-gray-600 transition-colors p-1"
-                    aria-label="Xóa từ khóa tìm kiếm"
-                    disabled={filterLoading}
-                  >
-                    <FiX className="h-4 w-4" />
-                  </motion.button>
-                </motion.div>
-              </AnimatePresence>
+                  <FiX className="h-4 w-4" />
+                </button>
+              </div>
             )}
           </div>
         </div>

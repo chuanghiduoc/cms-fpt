@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { FiCalendar, FiClock, FiMapPin, FiUsers, FiFilter, FiSearch, FiCheck, FiX, FiClock as FiClockIcon, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import toast from 'react-hot-toast';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface Event {
   id: string;
@@ -297,13 +297,6 @@ export default function EmployeeEventsPage() {
     }
   };
 
-  const resetFilters = () => {
-    setConfirmationFilter('all');
-    setSearchTerm('');
-    setCurrentPage(1);
-    // Do not reset the active tab
-  };
-
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   if (status === 'loading') {
@@ -397,48 +390,30 @@ export default function EmployeeEventsPage() {
         className="bg-white shadow-md rounded-lg overflow-hidden"
       >
         {/* Search bar */}
-        <div className="p-4 border-b border-gray-100">
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiSearch className="h-5 w-5 text-gray-400" />
-            </div>
-            <motion.input
-              whileFocus={{ boxShadow: "0 0 0 2px rgba(249, 115, 22, 0.2)" }}
-              type="text"
-              className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-colors text-sm"
-              placeholder="Tìm kiếm theo tên sự kiện, địa điểm hoặc mô tả..."
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                setCurrentPage(1);
-              }}
-              aria-label="Tìm kiếm sự kiện"
-            />
-            {searchTerm && (
-              <AnimatePresence>
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3"
-                >
-                  <motion.button 
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => {
-                      setSearchTerm('');
-                      setCurrentPage(1);
-                    }}
-                    className="text-gray-400 hover:text-gray-600 transition-colors p-1"
-                    aria-label="Xóa từ khóa tìm kiếm"
+        <div className="p-3 border-b border-gray-100">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiSearch className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Tìm kiếm sự kiện..."
+                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {searchTerm && (
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="text-gray-400 hover:text-gray-600 cursor-pointer p-1"
                   >
                     <FiX className="h-4 w-4" />
-                  </motion.button>
-                </motion.div>
-              </AnimatePresence>
-            )}
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
         
         {/* Filter section */}
         <div className="p-4 bg-gray-50 border-b border-gray-100">
@@ -520,27 +495,6 @@ export default function EmployeeEventsPage() {
               </div>
             </div>
           </div>
-          
-          {/* Clear filters button */}
-          {(confirmationFilter !== 'all' || searchTerm) && (
-            <AnimatePresence>
-              <motion.div 
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="mt-3 flex justify-end"
-              >
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={resetFilters}
-                  className="flex items-center px-3 py-1.5 bg-white text-gray-700 text-xs font-medium rounded-md border border-gray-300 hover:bg-gray-50 transition-all"
-                >
-                  <FiX className="mr-1.5 h-3.5 w-3.5" /> Xóa tất cả bộ lọc
-                </motion.button>
-              </motion.div>
-            </AnimatePresence>
-          )}
         </div>
       </motion.div>
       
@@ -771,16 +725,6 @@ export default function EmployeeEventsPage() {
                 'Không tìm thấy sự kiện nào phù hợp với bộ lọc hiện tại.' : 
                 `Không có sự kiện ${activeTab === 'upcoming' ? 'sắp diễn ra' : 'đã diễn ra'} nào được tìm thấy.`}
             </p>
-            {(confirmationFilter !== 'all' || searchTerm) && (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={resetFilters}
-                className="px-4 py-2 text-sm font-medium text-orange-600 bg-orange-50 hover:bg-orange-100 rounded-md transition-colors"
-              >
-                Xóa tất cả bộ lọc
-              </motion.button>
-            )}
           </motion.div>
         )}
       </motion.div>

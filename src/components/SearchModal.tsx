@@ -127,7 +127,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0, transition: { delay: index * 0.05 } }}
                 exit={{ opacity: 0 }}
-                className="mb-3 bg-white p-3 rounded-lg border border-gray-200 hover:shadow-md transition-all hover:border-blue-300"
+                className="mb-3 bg-white p-3 rounded-lg border border-gray-200 hover:shadow-md transition duration-150 hover:border-blue-300"
               >
                 <div className="flex justify-between items-start">
                   <div>
@@ -216,7 +216,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0, transition: { delay: index * 0.05 } }}
                 exit={{ opacity: 0 }}
-                className="mb-3 bg-white p-3 rounded-lg border border-gray-200 hover:shadow-md transition-all hover:border-green-300"
+                className="mb-3 bg-white p-3 rounded-lg border border-gray-200 hover:shadow-md transition duration-150 hover:border-green-300"
               >
                 <div className="flex justify-between items-start">
                   <div>
@@ -296,7 +296,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0, transition: { delay: index * 0.05 } }}
                 exit={{ opacity: 0 }}
-                className="mb-3 bg-white p-3 rounded-lg border border-gray-200 hover:shadow-md transition-all hover:border-yellow-300"
+                className="mb-3 bg-white p-3 rounded-lg border border-gray-200 hover:shadow-md transition duration-150 hover:border-yellow-300"
               >
                 <div>
                   <h4 className="text-sm font-medium">{announcement.title}</h4>
@@ -363,7 +363,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0, transition: { delay: index * 0.05 } }}
                 exit={{ opacity: 0 }}
-                className="mb-3 bg-white p-3 rounded-lg border border-gray-200 hover:shadow-md transition-all hover:border-orange-300"
+                className="mb-3 bg-white p-3 rounded-lg border border-gray-200 hover:shadow-md transition duration-150 hover:border-orange-300"
               >
                 <div className="flex justify-between items-start">
                   <div>
@@ -492,7 +492,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition-all">
+              <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition duration-150">
                 <div className="flex justify-between items-center">
                   <Dialog.Title as="h3" className="text-lg font-medium text-gray-900 flex items-center">
                     <FiSearch className="mr-2 text-orange-500" />

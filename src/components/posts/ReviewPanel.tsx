@@ -188,7 +188,7 @@ export default function ReviewPanel({ post, comments, onReviewSubmit, refreshCom
                 id="comment"
                 rows={3}
                 placeholder="Nhập ghi chú về việc duyệt bài viết này..."
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-400 focus:border-orange-400"
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
               ></textarea>

@@ -154,7 +154,7 @@ export default function EmployeeAnnouncementsPage() {
           </div>
           <input
             type="text"
-            className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-colors text-sm"
+            className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
             placeholder="Tìm kiếm theo tiêu đề, nội dung hoặc phòng ban..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

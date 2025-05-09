@@ -71,7 +71,7 @@ export default function ContentReviewPage() {
       <div className="grid md:grid-cols-2 gap-8">
         {/* Documents Card */}
         <motion.div 
-          className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
+          className="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-150 duration-300 overflow-hidden border border-gray-100"
           variants={cardVariants}
           whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
         >
@@ -109,7 +109,7 @@ export default function ContentReviewPage() {
         
         {/* Posts Card */}
         <motion.div 
-          className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
+          className="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-150 duration-300 overflow-hidden border border-gray-100"
           variants={cardVariants}
           whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
         >

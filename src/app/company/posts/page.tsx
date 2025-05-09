@@ -5,9 +5,9 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FiEdit, FiSearch, FiChevronRight, FiChevronLeft, FiUser, FiCalendar, FiX, FiClock, FiBookmark } from 'react-icons/fi';
+import { FiEdit, FiSearch, FiChevronRight, FiChevronLeft, FiUser, FiCalendar, FiX, FiClock } from 'react-icons/fi';
 import toast from 'react-hot-toast';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 
 interface Post {
@@ -233,41 +233,30 @@ export default function CompanyPostsPage() {
         className="bg-white shadow-md rounded-lg overflow-hidden"
       >
         {/* Search bar */}
-        <div className="p-4 border-b border-gray-100">
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiSearch className="h-5 w-5 text-gray-400" />
-            </div>
-            <motion.input
-              whileFocus={{ boxShadow: "0 0 0 2px rgba(249, 115, 22, 0.2)" }}
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-colors text-sm"
-              placeholder="Tìm kiếm bài viết..."
-            />
-            {searchTerm && (
-              <AnimatePresence>
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3"
-                >
-                  <motion.button 
-                    whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
-                    whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
+        <div className="p-3 border-b border-gray-100">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiSearch className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Tìm kiếm bài viết..."
+                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {searchTerm && (
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                  <button
                     onClick={() => setSearchTerm('')}
-                    className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+                    className="text-gray-400 hover:text-gray-600 cursor-pointer p-1"
                   >
                     <FiX className="h-4 w-4" />
-                  </motion.button>
-                </motion.div>
-              </AnimatePresence>
-            )}
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
       </motion.div>
       
       {/* Posts summary */}
@@ -355,7 +344,7 @@ export default function CompanyPostsPage() {
           {posts && posts.length > 0 && posts.map((post) => (
             <motion.div
               key={post.id}
-              className="group bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300"
+              className="group bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition duration-150 duration-300"
               variants={itemVariants}
               whileHover={{ y: -3, transition: { duration: 0.3, ease: 'easeOut' } }}
             >
@@ -379,14 +368,6 @@ export default function CompanyPostsPage() {
                       {post.department.name}
                     </div>
                   )}
-                  <motion.div 
-                    className="absolute top-3 right-3 flex space-x-2"
-                    whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
-                  >
-                    <div className="bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-sm text-orange-500 cursor-pointer">
-                      <FiBookmark className="h-4 w-4" />
-                    </div>
-                  </motion.div>
                 </div>
                 <div className="p-5">
                   <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 group-hover:text-orange-600 transition-colors duration-200">

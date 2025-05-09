@@ -217,7 +217,7 @@ export default function ProfileSettingsPage() {
         <motion.button
           type="button"
           onClick={() => router.push('/profile')}
-          className="flex items-center text-gray-600 hover:text-orange-500 px-3 py-2 rounded-md hover:bg-gray-100 transition-all duration-200 mb-3"
+          className="flex items-center text-gray-600 hover:text-orange-500 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-150 duration-200 mb-3"
           whileHover={{ scale: 1.03, x: -3 }}
           whileTap={{ scale: 0.97 }}
           style={{ cursor: 'pointer', alignSelf: 'flex-start' }}

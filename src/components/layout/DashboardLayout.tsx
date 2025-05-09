@@ -605,7 +605,7 @@ export function DashboardLayout({
               <button 
                 ref={mobileButtonRef}
                 onClick={handleProfileClick}
-                className="h-8 w-8 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 flex items-center justify-center text-white font-medium shadow-md transition-all duration-200 hover:shadow-lg transform hover:scale-105"
+                className="h-8 w-8 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 flex items-center justify-center text-white font-medium shadow-md transition duration-150 duration-200 hover:shadow-lg transform hover:scale-105"
                 style={{ outline: 'none', cursor: 'pointer' }}
               >
                 {getUserInitials(session?.user?.name)}
@@ -614,7 +614,7 @@ export function DashboardLayout({
               {profileDropdownOpen && (
                 <div 
                   ref={mobileProfileDropdownRef} 
-                  className="absolute right-0 mt-2 w-64 rounded-lg shadow-md bg-white ring-1 ring-gray-200 z-50 overflow-hidden transition-all duration-200 transform origin-top-right animate-dropdown"
+                  className="absolute right-0 mt-2 w-64 rounded-lg shadow-md bg-white ring-1 ring-gray-200 z-50 overflow-hidden transition duration-150 duration-200 transform origin-top-right animate-dropdown"
                   style={{
                     animation: 'fadeIn 0.2s ease-out forwards, slideIn 0.2s ease-out forwards'
                   }}
@@ -705,7 +705,7 @@ export function DashboardLayout({
                     <button 
                       ref={desktopButtonRef}
                       onClick={handleProfileClick}
-                      className="h-10 w-10 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 flex items-center justify-center text-white font-medium shadow-md transition-all duration-200 hover:shadow-lg transform hover:scale-105"
+                      className="h-10 w-10 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 flex items-center justify-center text-white font-medium shadow-md transition duration-150 duration-200 hover:shadow-lg transform hover:scale-105"
                       style={{ outline: 'none', cursor: 'pointer' }}
                     >
                       {getUserInitials(session?.user?.name)}
@@ -714,7 +714,7 @@ export function DashboardLayout({
                     {profileDropdownOpen && (
                       <div 
                         ref={desktopProfileDropdownRef} 
-                        className="absolute right-0 mt-2 w-64 rounded-lg shadow-md bg-white ring-1 ring-gray-200 z-50 overflow-hidden transition-all duration-200 transform origin-top-right animate-dropdown"
+                        className="absolute right-0 mt-2 w-64 rounded-lg shadow-md bg-white ring-1 ring-gray-200 z-50 overflow-hidden transition duration-150 duration-200 transform origin-top-right animate-dropdown"
                         style={{
                           animation: 'fadeIn 0.2s ease-out forwards, slideIn 0.2s ease-out forwards'
                         }}

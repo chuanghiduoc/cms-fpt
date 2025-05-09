@@ -192,9 +192,8 @@ export default function AnnouncementForm({ announcement, isEditing = false }: An
           value={formData.title}
           onChange={handleChange}
           required
-          className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 text-gray-700 shadow-sm sm:text-sm cursor-text"
+          className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 text-gray-700 shadow-sm sm:text-sm cursor-text focus:ring-1 focus:ring-orange-400 focus:border-orange-400 focus:outline-none transition duration-150"
           placeholder="Nhập tiêu đề thông báo"
-          style={{ outline: 'none' }}
         />
       </div>
       
@@ -209,9 +208,8 @@ export default function AnnouncementForm({ announcement, isEditing = false }: An
           value={formData.content}
           onChange={handleChange}
           required
-          className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 text-gray-700 shadow-sm sm:text-sm cursor-text"
+          className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 text-gray-700 shadow-sm sm:text-sm cursor-text focus:ring-1 focus:ring-orange-400 focus:border-orange-400 focus:outline-none transition duration-150"
           placeholder="Nhập nội dung thông báo"
-          style={{ outline: 'none' }}
         />
       </div>
       
@@ -233,8 +231,7 @@ export default function AnnouncementForm({ announcement, isEditing = false }: An
               onChange={handleChange}
               required={isAdmin}
               disabled={isDepartmentHead || (isAdmin && isSystemAnnouncement)}
-              className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 text-gray-700 shadow-sm sm:text-sm cursor-pointer"
-              style={{ outline: 'none' }}
+              className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 text-gray-700 shadow-sm sm:text-sm cursor-pointer focus:ring-1 focus:ring-orange-400 focus:border-orange-400 focus:outline-none transition duration-150"
             >
               <option value="">-- Chọn phòng ban --</option>
               {departments && departments.map(department => (
@@ -262,8 +259,7 @@ export default function AnnouncementForm({ announcement, isEditing = false }: An
             checked={formData.isPublic}
             onChange={handleCheckboxChange}
             disabled={isSystemAnnouncement && isAdmin}
-            className="h-4 w-4 rounded border-gray-300 text-orange-600 cursor-pointer"
-            style={{ outline: 'none' }}
+            className="h-4 w-4 rounded border-gray-300 text-orange-600 cursor-pointer focus:ring-1 focus:ring-orange-400 focus:outline-none transition duration-150"
           />
         </div>
         <div className="ml-3 text-sm">
@@ -282,8 +278,7 @@ export default function AnnouncementForm({ announcement, isEditing = false }: An
         <button
           type="button"
           onClick={() => router.back()}
-          className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 mr-3"
-          style={{ outline: 'none' }}
+          className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 mr-3 focus:ring-1 focus:ring-orange-400 focus:border-orange-400 focus:outline-none transition duration-150"
         >
           Hủy bỏ
         </button>
@@ -291,10 +286,9 @@ export default function AnnouncementForm({ announcement, isEditing = false }: An
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 ${
+          className={`inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:ring-1 focus:ring-orange-600 focus:outline-none transition duration-150 ${
             isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
           }`}
-          style={{ outline: 'none' }}
         >
           {isSubmitting ? 'Đang lưu...' : isEditing ? 'Cập nhật' : 'Tạo thông báo'}
         </button>
