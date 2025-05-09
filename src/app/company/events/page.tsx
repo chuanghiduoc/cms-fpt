@@ -405,7 +405,7 @@ export default function EmployeeEventsPage() {
             <motion.input
               whileFocus={{ boxShadow: "0 0 0 2px rgba(249, 115, 22, 0.2)" }}
               type="text"
-              className="block w-full rounded-lg border-0 py-3 pl-10 pr-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none sm:text-sm transition-all duration-200"
+              className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-colors text-sm"
               placeholder="Tìm kiếm theo tên sự kiện, địa điểm hoặc mô tả..."
               value={searchTerm}
               onChange={(e) => {

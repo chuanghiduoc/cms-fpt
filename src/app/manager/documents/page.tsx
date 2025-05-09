@@ -384,18 +384,29 @@ export default function DocumentsManagerPage() {
         <div className="bg-white shadow rounded-lg mb-6">
           {/* Search bar + filter trigger for desktop */}
           <div className="p-4 border-b border-gray-100 hidden sm:block">
-            <div className="flex items-center space-x-2">
-              <div className="relative flex-1">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FiSearch className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Tìm kiếm tài liệu..."
-                  className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 outline-none text-sm cursor-not-allowed"
-                  disabled
-                />
+          <div className="flex items-center space-x-2">
+            <div className="relative flex-1">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiSearch className="h-5 w-5 text-gray-400" />
               </div>
+              <input
+                type="text"
+                placeholder="Tìm kiếm tài liệu..."
+                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-colors text-sm"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {searchTerm && (
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="text-gray-400 hover:text-gray-600 focus:outline-none cursor-pointer"
+                  >
+                    <FiX className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
+            </div>
               
               <button
                 disabled
@@ -423,9 +434,20 @@ export default function DocumentsManagerPage() {
                 <input
                   type="text"
                   placeholder="Tìm kiếm tài liệu..."
-                  className="pl-10 pr-10 block w-full rounded-md border border-gray-300 bg-white py-2.5 px-3 text-gray-700 outline-none text-sm cursor-not-allowed"
-                  disabled
+                  className="pl-10 pr-10 block w-full rounded-md border border-gray-300 bg-white py-2.5 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 focus:border focus:ring transition-colors text-sm"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
+                {searchTerm && (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                    <button
+                      onClick={() => setSearchTerm('')}
+                      className="text-gray-400 hover:text-gray-600 outline-none cursor-pointer p-1"
+                    >
+                      <FiX className="h-4 w-4" />
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
             
@@ -440,11 +462,6 @@ export default function DocumentsManagerPage() {
                   <span>Bộ lọc</span>
                 </button>
                 
-                <Link href="/manager/documents/upload" className="flex-none">
-                  <button className="flex items-center justify-center whitespace-nowrap py-2.5 px-3 bg-orange-600 text-white rounded-md hover:bg-orange-700 outline-none cursor-pointer">
-                    <FiPlus className="h-4 w-4 mr-1.5" /> Thêm
-                  </button>
-                </Link>
               </div>
             </div>
           </div>
@@ -544,7 +561,7 @@ export default function DocumentsManagerPage() {
               <input
                 type="text"
                 placeholder="Tìm kiếm tài liệu..."
-                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 outline-none text-sm"
+                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 focus:border focus:ring transition-colors text-sm"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -591,7 +608,7 @@ export default function DocumentsManagerPage() {
               <input
                 type="text"
                 placeholder="Tìm kiếm tài liệu..."
-                className="pl-10 pr-10 block w-full rounded-md border border-gray-300 bg-white py-2.5 px-3 text-gray-700 outline-none text-sm"
+                className="pl-10 pr-10 block w-full rounded-md border border-gray-300 bg-white py-2.5 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 focus:border focus:ring transition-colors text-sm"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -624,11 +641,6 @@ export default function DocumentsManagerPage() {
                 )}
               </button>
               
-              <Link href="/manager/documents/upload" className="flex-none">
-                <button className="flex items-center justify-center whitespace-nowrap py-2.5 px-3 bg-orange-600 text-white rounded-md hover:bg-orange-700 outline-none cursor-pointer">
-                  <FiPlus className="h-4 w-4 mr-1.5" /> Thêm
-                </button>
-              </Link>
             </div>
           </div>
         </div>

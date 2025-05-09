@@ -39,7 +39,7 @@ interface Post {
   };
 }
 
-export default function DepartmentPostsPage() {
+export default function AdminPostsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [posts, setPosts] = useState<Post[]>([]);
@@ -100,9 +100,9 @@ export default function DepartmentPostsPage() {
   }, []);
 
   useEffect(() => {
-    // Chỉ cho phép trưởng phòng truy cập trang này
+    // Allow both ADMIN and DEPARTMENT_HEAD roles to access this page
     if (status === 'authenticated') {
-      if (session?.user?.role !== 'DEPARTMENT_HEAD') {
+      if (session?.user?.role !== 'ADMIN') {
         router.push('/dashboard');
         toast.error('Bạn không có quyền truy cập trang này');
       } else {
@@ -293,7 +293,7 @@ export default function DepartmentPostsPage() {
               <input
                 type="text"
                 placeholder="Tìm kiếm bài viết..."
-                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-colors text-sm"
+                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -320,7 +320,7 @@ export default function DepartmentPostsPage() {
                 </span>
               )}
             </button>
-            <Link href="/manager/posts/create">
+            <Link href="/admin/posts/create">
               <button className="flex items-center px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500/50 transition-colors cursor-pointer">
                 <FiPlus className="mr-2" /> Thêm bài viết
               </button>
@@ -339,7 +339,7 @@ export default function DepartmentPostsPage() {
               <input
                 type="text"
                 placeholder="Tìm kiếm bài viết..."
-                className="pl-10 pr-10 block w-full rounded-md border border-gray-300 bg-white py-2.5 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-colors text-sm"
+                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -637,12 +637,12 @@ export default function DepartmentPostsPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex space-x-3 justify-end">
-                        <Link href={`/manager/posts/${post.id}`}>
+                        <Link href={`/admin/posts/${post.id}`}>
                           <button className="text-blue-600 hover:text-blue-900 cursor-pointer" title="Xem chi tiết">
                             <FiInfo className="w-5 h-5" />
                           </button>
                         </Link>
-                        <Link href={`/manager/posts/edit/${post.id}`}>
+                        <Link href={`/admin/posts/edit/${post.id}`}>
                           <button className="text-indigo-600 hover:text-indigo-900 cursor-pointer" title="Chỉnh sửa">
                             <FiEdit2 className="w-5 h-5" />
                           </button>
@@ -668,7 +668,7 @@ export default function DepartmentPostsPage() {
             </div>
             <h3 className="text-gray-900 font-medium">Không có bài viết nào</h3>
             <p className="text-gray-500 mt-2 mb-5">Hãy tạo bài viết mới để bắt đầu</p>
-            <Link href="/manager/posts/create">
+            <Link href="/admin/posts/create">
               <button className="inline-flex items-center px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200">
                 <FiPlus className="mr-2" /> Thêm bài viết
               </button>
@@ -774,7 +774,7 @@ export default function DepartmentPostsPage() {
 
       {/* FAB for adding posts on mobile */}
       <div className="sm:hidden fixed bottom-6 right-6 z-10">
-        <Link href="/manager/posts/create">
+        <Link href="/admin/posts/create">
           <button className="flex items-center justify-center w-14 h-14 rounded-full bg-orange-600 text-white shadow-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200">
             <FiPlus className="h-6 w-6" />
           </button>

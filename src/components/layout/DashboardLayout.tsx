@@ -20,6 +20,7 @@ import {
   FiChevronDown,
   FiChevronRight,
   FiUser,
+  FiCheckSquare
 } from 'react-icons/fi';
 import { MdOutlineCorporateFare } from 'react-icons/md';
 import NotificationDropdown from '@/components/common/NotificationDropdown';
@@ -159,6 +160,7 @@ export function DashboardLayout({
     { name: 'Thông báo công ty', href: '/company/announcements', icon: FiBell },
     { name: 'Hoạt động công ty', href: '/company/events', icon: FiCalendar },
     { name: 'Tài liệu công ty', href: '/company/documents', icon: FiFileText },
+    { name: 'Tin tức công ty', href: '/company/posts', icon: FiEdit },
   ];
 
   // Add links based on user role
@@ -176,7 +178,8 @@ export function DashboardLayout({
     { name: 'Quản lý phòng ban', href: '/admin/departments', icon: MdOutlineCorporateFare },
     // { name: 'Phân quyền', href: '/admin/permissions', icon: FiLock },
     { name: 'Thông báo hệ thống', href: '/admin/announcements', icon: FiBell },
-    { name: 'Kiểm duyệt nội dung', href: '/admin/content-review', icon: FiEdit }
+    { name: 'Quản lý bài viết', href: '/admin/posts', icon: FiEdit },
+    { name: 'Kiểm duyệt nội dung', href: '/admin/content-review', icon: FiCheckSquare }
   ];
 
   // Department management submenu for department heads
@@ -184,6 +187,7 @@ export function DashboardLayout({
     { name: 'Quản lý tài liệu', href: '/manager/documents', icon: FiFileText },
     { name: 'Quản lý thông báo', href: '/manager/announcements', icon: FiBell },
     { name: 'Quản lý sự kiện', href: '/manager/events', icon: FiCalendar },
+    { name: 'Quản lý bài viết', href: '/manager/posts', icon: FiEdit },
   ];
 
   return (
@@ -670,6 +674,7 @@ export function DashboardLayout({
                   {pathname.startsWith('/manager/announcements') && 'Quản lý thông báo'}
                   {pathname.startsWith('/manager/documents') && 'Quản lý tài liệu'}
                   {pathname.startsWith('/manager/posts') && 'Quản lý bài viết'}
+                  {pathname.startsWith('/admin/posts') && 'Quản lý bài viết'}
                   {pathname.startsWith('/manager/events') && 'Quản lý sự kiện'}
                   {pathname.startsWith('/admin/departments') && 'Quản lý phòng ban'}
                   {pathname.startsWith('/admin/users') && 'Quản lý người dùng'}
@@ -681,6 +686,7 @@ export function DashboardLayout({
                   {pathname.startsWith('/company/announcements') && 'Thông báo công ty'}
                   {pathname.startsWith('/company/events') && 'Hoạt động công ty'}
                   {pathname.startsWith('/company/documents') && 'Tài liệu công ty'}
+                  {pathname.startsWith('/company/posts') && 'Tin tức công ty'}
                 </h1>
                 <div className="flex items-center">
                   {/* Notification Dropdown */}
@@ -765,6 +771,7 @@ export function DashboardLayout({
                   {pathname.startsWith('/manager/announcements') && 'Quản lý thông báo'}
                   {pathname.startsWith('/manager/documents') && 'Quản lý tài liệu'}
                   {pathname.startsWith('/manager/posts') && 'Quản lý bài viết'}
+                  {pathname.startsWith('/admin/posts') && 'Quản lý bài viết'}
                   {pathname.startsWith('/manager/events') && 'Quản lý sự kiện'}
                   {pathname.startsWith('/admin/departments') && 'Quản lý phòng ban'}
                   {pathname.startsWith('/admin/users') && 'Quản lý người dùng'}
@@ -776,6 +783,7 @@ export function DashboardLayout({
                   {pathname.startsWith('/company/announcements') && 'Thông báo công ty'}
                   {pathname.startsWith('/company/events') && 'Hoạt động công ty'}
                   {pathname.startsWith('/company/documents') && 'Tài liệu công ty'}
+                  {pathname.startsWith('/company/posts') && 'Tin tức công ty'}
                 </h1>
               </div>
             </div>

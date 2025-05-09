@@ -48,7 +48,6 @@ export default function EmployeeDocumentsPage() {
   const [filterLoading, setFilterLoading] = useState(false); // Trạng thái loading riêng cho bộ lọc
   const [searchTerm, setSearchTerm] = useState('');
   const [searchDebounceTimeout, setSearchDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
-  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   
   // Pagination state
@@ -58,11 +57,11 @@ export default function EmployeeDocumentsPage() {
   
   // Document categories from the schema with color mappings
   const documentCategories = [
-    { value: 'REPORT', label: 'Báo cáo', bgClass: 'bg-blue-100', textClass: 'text-blue-800' },
-    { value: 'CONTRACT', label: 'Hợp đồng', bgClass: 'bg-green-100', textClass: 'text-green-800' },
-    { value: 'GUIDE', label: 'Hướng dẫn', bgClass: 'bg-yellow-100', textClass: 'text-yellow-800' },
-    { value: 'FORM', label: 'Biểu mẫu', bgClass: 'bg-purple-100', textClass: 'text-purple-800' },
-    { value: 'OTHER', label: 'Khác', bgClass: 'bg-gray-100', textClass: 'text-gray-800' }
+    { value: 'REPORT', label: 'Báo cáo', bgClass: 'bg-blue-100', textClass: 'text-blue-800', borderClass: 'border-blue-200' },
+    { value: 'CONTRACT', label: 'Hợp đồng', bgClass: 'bg-green-100', textClass: 'text-green-800', borderClass: 'border-green-200' },
+    { value: 'GUIDE', label: 'Hướng dẫn', bgClass: 'bg-yellow-100', textClass: 'text-yellow-800', borderClass: 'border-yellow-200' },
+    { value: 'FORM', label: 'Biểu mẫu', bgClass: 'bg-purple-100', textClass: 'text-purple-800', borderClass: 'border-purple-200' },
+    { value: 'OTHER', label: 'Khác', bgClass: 'bg-gray-100', textClass: 'text-gray-800', borderClass: 'border-gray-200' }
   ];
 
   // Add page transition animations
@@ -70,6 +69,18 @@ export default function EmployeeDocumentsPage() {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
     exit: { opacity: 0 },
+  };
+
+  // Add animation variants like in events page
+  const filterButtonVariants = {
+    initial: { scale: 1 },
+    hover: { scale: 1.05 },
+    tap: { scale: 0.95 }
+  };
+
+  const fadeIn = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.3 } }
   };
 
   useEffect(() => {
@@ -177,7 +188,8 @@ export default function EmployeeDocumentsPage() {
     const category = documentCategories.find(cat => cat.value === categoryValue);
     return {
       bgClass: category ? category.bgClass : 'bg-gray-100',
-      textClass: category ? category.textClass : 'text-gray-800'
+      textClass: category ? category.textClass : 'text-gray-800',
+      borderClass: category ? category.borderClass : 'border-gray-200'
     };
   };
 
@@ -224,31 +236,34 @@ export default function EmployeeDocumentsPage() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="bg-white shadow rounded-lg mb-6"
+          className="bg-white shadow rounded-lg overflow-hidden"
         >
-          <div className="p-4">
-            <div className="flex items-center space-x-3">
-              <div className="relative flex-1">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FiSearch className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  type="text"
-                  className="block w-full rounded-lg border-0 py-3 pl-10 pr-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none sm:text-sm transition-all duration-200"
-                  placeholder="Tìm kiếm tài liệu..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  disabled={true}
-                />
+          <div className="p-4 border-b border-gray-100">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiSearch className="h-5 w-5 text-gray-400" />
               </div>
-              <div className="flex space-x-2 flex-shrink-0">
-                <button
-                  className="inline-flex items-center justify-center p-2.5 text-sm font-medium text-center text-white bg-orange-600 rounded-lg opacity-60 cursor-not-allowed"
-                  disabled={true}
-                >
-                  <FiFilter className="w-5 h-5" />
-                  <span className="ml-2 hidden sm:inline">Lọc</span>
-                </button>
+              <input
+                type="text"
+                className="block w-full rounded-lg border-0 py-3 pl-10 pr-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none sm:text-sm transition-all duration-200"
+                placeholder="Tìm kiếm tài liệu..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                disabled={true}
+              />
+            </div>
+          </div>
+          
+          {/* Filter section skeleton */}
+          <div className="p-4 bg-gray-50 border-b border-gray-100">
+            <div className="flex flex-col space-y-3">
+              <div className="flex items-center gap-2">
+                <div className="h-4 w-24 bg-gray-200 rounded animate-pulse"></div>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="h-8 w-20 bg-gray-200 rounded-full animate-pulse"></div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -434,124 +449,99 @@ export default function EmployeeDocumentsPage() {
     >
       {/* Search and filter section - thiết kế responsive tốt hơn */}
       <motion.div 
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="bg-white shadow rounded-lg mb-6"
+        variants={fadeIn}
+        initial="hidden"
+        animate="visible"
+        className="bg-white shadow rounded-lg overflow-hidden"
       >
-        <div className="p-4">
-          <div className="flex items-center space-x-3">
-            <div className="relative flex-1">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FiSearch className="h-5 w-5 text-gray-400" />
-              </div>
-              <input
-                type="text"
-                className="block w-full rounded-lg border-0 py-3 pl-10 pr-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none sm:text-sm transition-all duration-200"
-                placeholder="Tìm kiếm tài liệu..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                disabled={filterLoading}
-              />
+        {/* Search bar */}
+        <div className="p-4 border-b border-gray-100">
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FiSearch className="h-5 w-5 text-gray-400" />
             </div>
-            <div className="flex space-x-2 flex-shrink-0">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setIsFilterOpen(!isFilterOpen)}
-                className="inline-flex items-center justify-center p-2.5 text-sm font-medium text-center text-white bg-orange-600 rounded-lg hover:bg-orange-700 focus:outline-none"
-                disabled={filterLoading}
-              >
-                <FiFilter className="w-5 h-5" />
-                <span className="ml-2 hidden sm:inline">Lọc</span>
-              </motion.button>
-              {selectedCategory && (
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.9 }}
+            <motion.input
+              whileFocus={{ boxShadow: "0 0 0 2px rgba(249, 115, 22, 0.2)" }}
+              type="text"
+              className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-colors text-sm"
+              placeholder="Tìm kiếm tài liệu..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              disabled={filterLoading}
+            />
+            {searchTerm && (
+              <AnimatePresence>
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={handleClearFilters}
-                  className="inline-flex items-center justify-center p-2.5 text-sm font-medium text-center text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:outline-none"
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3"
+                >
+                  <motion.button 
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => {
+                      setSearchTerm('');
+                      setCurrentPage(1);
+                    }}
+                    className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+                    aria-label="Xóa từ khóa tìm kiếm"
+                    disabled={filterLoading}
+                  >
+                    <FiX className="h-4 w-4" />
+                  </motion.button>
+                </motion.div>
+              </AnimatePresence>
+            )}
+          </div>
+        </div>
+        
+        {/* Filter section */}
+        <div className="p-4 bg-gray-50 border-b border-gray-100">
+          <div className="flex flex-col space-y-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="flex items-center text-sm font-medium text-gray-700">
+                <FiFilter className="h-4 w-4 text-orange-500 mr-1.5" />
+                Phân loại tài liệu:
+              </span>
+              <div className="flex flex-wrap gap-2">
+                <motion.button
+                  variants={filterButtonVariants}
+                  initial="initial"
+                  whileHover="hover"
+                  whileTap="tap"
+                  onClick={() => handleCategoryFilterChange('')}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium border ${
+                    selectedCategory === ''
+                      ? 'bg-orange-50 text-orange-700 border-orange-200'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                  }`}
                   disabled={filterLoading}
                 >
-                  <FiX className="w-5 h-5" />
-                  <span className="ml-2 hidden sm:inline">Xóa bộ lọc</span>
+                  Tất cả
                 </motion.button>
-              )}
+                {documentCategories.map((category) => (
+                  <motion.button
+                    key={category.value}
+                    variants={filterButtonVariants}
+                    initial="initial"
+                    whileHover="hover"
+                    whileTap="tap"
+                    onClick={() => handleCategoryFilterChange(category.value)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium border ${
+                      selectedCategory === category.value
+                        ? `${category.bgClass} ${category.textClass} ${category.borderClass}`
+                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                    }`}
+                    disabled={filterLoading}
+                  >
+                    {category.label}
+                  </motion.button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Filter panel */}
-        <AnimatePresence>
-          {isFilterOpen && (
-            <motion.div 
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="border-t border-gray-100 px-4 py-4 overflow-hidden"
-            >
-              <div className="grid grid-cols-1 gap-4">
-                {/* Category filter */}
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <label className="block text-sm font-medium text-gray-700">
-                      Phân loại tài liệu
-                    </label>
-                    {selectedCategory && (
-                      <motion.button
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        whileHover={{ scale: 1.05 }}
-                        onClick={() => setSelectedCategory('')}
-                        className="text-xs text-gray-500 hover:text-gray-700 flex items-center"
-                        disabled={filterLoading}
-                      >
-                        <FiX className="h-3 w-3 mr-1" /> Bỏ chọn
-                      </motion.button>
-                    )}
-                  </div>
-                  <div className="flex flex-wrap items-center mt-1 -m-1.5">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => handleCategoryFilterChange('')}
-                      className={`m-1.5 px-3 py-1.5 text-xs font-medium rounded-full relative
-                        ${selectedCategory === '' 
-                          ? 'bg-orange-100 text-orange-800' 
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'} 
-                        ${filterLoading ? 'opacity-70 cursor-not-allowed' : ''}`
-                      }
-                      disabled={filterLoading}
-                    >
-                      Tất cả
-                    </motion.button>
-                    {documentCategories.map((category) => (
-                      <motion.button
-                        key={category.value}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => handleCategoryFilterChange(category.value)}
-                        className={`m-1.5 px-3 py-1.5 text-xs font-medium rounded-full relative
-                          ${selectedCategory === category.value 
-                            ? `${category.bgClass} ${category.textClass}` 
-                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}
-                          ${filterLoading ? 'opacity-70 cursor-not-allowed' : ''}`
-                        }
-                        disabled={filterLoading}
-                      >
-                        {category.label}
-                      </motion.button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.div>
 
       {/* Documents list */}
@@ -608,24 +598,31 @@ export default function EmployeeDocumentsPage() {
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.3 }}
-                      className="flex flex-col items-center justify-center"
+                      className="flex flex-col items-center justify-center py-8"
                     >
-                      <motion.div
-                        animate={{ 
-                          y: [0, -5, 0],
-                          rotate: [0, -5, 0, 5, 0] 
-                        }}
-                        transition={{ 
-                          duration: 2,
-                          repeat: Infinity,
-                          repeatType: "loop",
-                          ease: "easeInOut",
-                          times: [0, 0.2, 0.4, 0.6, 1]
-                        }}
+                      <motion.div 
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                        className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-4"
                       >
-                        <FiFileText className="h-10 w-10 text-gray-300 mb-3" />
+                        <FiFileText className="h-10 w-10 text-gray-400" />
                       </motion.div>
-                      <p>Không tìm thấy tài liệu nào</p>
+                      <p className="text-gray-500 mb-6 text-center max-w-md">
+                        {selectedCategory || searchTerm ? 
+                          'Không tìm thấy tài liệu nào phù hợp với bộ lọc hiện tại.' : 
+                          'Không có tài liệu nào được tìm thấy.'}
+                      </p>
+                      {(selectedCategory || searchTerm) && (
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={handleClearFilters}
+                          className="px-4 py-2 text-sm font-medium text-orange-600 bg-orange-50 hover:bg-orange-100 rounded-md transition-colors"
+                        >
+                          Xóa tất cả bộ lọc
+                        </motion.button>
+                      )}
                     </motion.div>
                   </td>
                 </tr>
@@ -667,7 +664,7 @@ export default function EmployeeDocumentsPage() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <motion.span 
                           whileHover={{ scale: 1.05 }}
-                          className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getCategoryColor(doc.category).bgClass} ${getCategoryColor(doc.category).textClass}`}
+                          className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full border ${getCategoryColor(doc.category).bgClass} ${getCategoryColor(doc.category).textClass} ${getCategoryColor(doc.category).borderClass}`}
                         >
                           {getCategoryName(doc.category)}
                         </motion.span>

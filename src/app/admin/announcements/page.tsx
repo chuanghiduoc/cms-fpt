@@ -327,7 +327,7 @@ export default function AdminAnnouncementsPage() {
             <input
               type="text"
               placeholder="Tìm kiếm thông báo..."
-              className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm"
+              className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -461,14 +461,14 @@ export default function AdminAnnouncementsPage() {
                       <div className="flex items-center justify-end space-x-2">
                         <Link
                           href={`/admin/announcements/${announcement.id}`}
-                          className="text-gray-500 hover:text-gray-700"
+                          className="text-blue-600 hover:text-blue-700"
                           title="Xem chi tiết"
                         >
                           <FiInfo className="h-5 w-5" />
                         </Link>
                         <Link
                           href={`/admin/announcements/${announcement.id}/edit`}
-                          className="text-blue-500 hover:text-blue-700"
+                          className="text-indigo-600 hover:text-indigo-90"
                           title="Chỉnh sửa"
                         >
                           <FiEdit2 className="h-5 w-5" />

@@ -311,7 +311,7 @@ export default function DepartmentEventsPage() {
               <input
                 type="text"
                 placeholder="Tìm kiếm sự kiện..."
-                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 focus:outline-none text-sm cursor-text"
+                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-colors text-sm"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -319,7 +319,7 @@ export default function DepartmentEventsPage() {
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
                   <button
                     onClick={() => setSearchTerm('')}
-                    className="text-gray-400 hover:text-gray-600 outline-none cursor-pointer"
+                    className="text-gray-400 hover:text-gray-600 focus:outline-none cursor-pointer"
                   >
                     <FiX className="h-4 w-4" />
                   </button>

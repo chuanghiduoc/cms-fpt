@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { FiPlus, FiSearch, FiChevronLeft, FiChevronRight, FiX, FiEdit2, FiTrash2, FiFilter } from 'react-icons/fi';
@@ -34,6 +34,10 @@ export default function DepartmentManagementPage() {
   const [selectedDepartment, setSelectedDepartment] = useState<Department | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [employeeCountFilter, setEmployeeCountFilter] = useState<string>('');
+
+  // Create refs for search inputs
+  const desktopSearchInputRef = useRef<HTMLInputElement>(null);
+  const mobileSearchInputRef = useRef<HTMLInputElement>(null);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -81,6 +85,34 @@ export default function DepartmentManagementPage() {
       }
     };
   }, []);
+
+  // Add auto-focus effect after component mounts
+  useEffect(() => {
+    // Focus the search input based on viewport size only on initial load
+    const focusSearchInput = () => {
+      // Only focus if user explicitly enabled this feature
+      // Removing auto-focus behavior entirely
+      return;
+      
+      // Previous focus code (disabled)
+      /*
+      if (window.innerWidth >= 640) { // sm breakpoint in Tailwind is 640px
+        desktopSearchInputRef.current?.focus();
+      } else {
+        mobileSearchInputRef.current?.focus();
+      }
+      */
+    };
+    
+    // Don't focus immediately to avoid transition issues
+    const timer = setTimeout(() => {
+      if (!loading) {
+        focusSearchInput();
+      }
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, [loading]);
 
   useEffect(() => {
     // Chỉ cho phép quản trị viên truy cập trang này
@@ -283,7 +315,7 @@ export default function DepartmentManagementPage() {
                 <input
                   type="text"
                   placeholder="Tìm kiếm phòng ban..."
-                  className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm"
+                  className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
                   disabled
                 />
               </div>
@@ -313,7 +345,7 @@ export default function DepartmentManagementPage() {
                 <input
                   type="text"
                   placeholder="Tìm kiếm phòng ban..."
-                  className="pl-10 pr-10 block w-full rounded-md border border-gray-300 bg-white py-2.5 px-3 text-gray-700 text-sm"
+                  className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
                   disabled
                 />
               </div>
@@ -409,9 +441,10 @@ export default function DepartmentManagementPage() {
               <input
                 type="text"
                 placeholder="Tìm kiếm phòng ban..."
-                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm"
+                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
                 value={searchTerm}
                 onChange={handleSearchChange}
+                ref={desktopSearchInputRef}
               />
               {searchTerm && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -456,9 +489,11 @@ export default function DepartmentManagementPage() {
               <input
                 type="text"
                 placeholder="Tìm kiếm phòng ban..."
-                className="pl-10 pr-10 block w-full rounded-md border border-gray-300 bg-white py-2.5 px-3 text-gray-700 text-sm"
+                className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all
+                "
                 value={searchTerm}
                 onChange={handleSearchChange}
+                ref={mobileSearchInputRef}
               />
               {searchTerm && (
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center">

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { ContentStatus } from '@prisma/client';
+import { ContentStatus, Prisma } from '@prisma/client';
 
 // GET /api/posts - Fetch all posts or filtered by department
 export async function GET(request: NextRequest) {
@@ -20,27 +20,72 @@ export async function GET(request: NextRequest) {
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
     const skip = (page - 1) * limit;
+    const includeAdminPosts = searchParams.get('includeAdminPosts') === 'true';
+    const departmentAccess = searchParams.get('departmentAccess') || '';
 
 
     // Query conditions
-    const where: {
-      departmentId?: string;
-      isPublic?: boolean;
-      status?: ContentStatus;
-      OR?: Array<{title: {contains: string, mode: 'insensitive'}} | {content: {contains: string, mode: 'insensitive'}}>;
-    } = {};
+    const where: Prisma.PostWhereInput = {};
     
     // Filter by department
     if (departmentId) {
       where.departmentId = departmentId;
     }
 
+    // For departmentAccess parameter, we need more complex conditions:
+    // 1. Show posts from user's department
+    // 2. Show public posts from other departments
+    // 3. Show posts created by admin users if requested
+    if (departmentAccess && includeAdminPosts) {
+      where.OR = [
+        // Posts from user's department
+        { departmentId: departmentAccess },
+        // Public posts from other departments
+        { isPublic: true },
+        // Posts created by admin users
+        { 
+          author: {
+            role: 'ADMIN'
+          } 
+        }
+      ];
+      // Remove departmentId filter if we're using the OR condition
+      delete where.departmentId;
+    } else if (departmentAccess) {
+      where.OR = [
+        // Posts from user's department
+        { departmentId: departmentAccess },
+        // Public posts from other departments
+        { isPublic: true }
+      ];
+      // Remove departmentId filter if we're using the OR condition
+      delete where.departmentId;
+    }
+
     // Filter by search term
     if (searchTerm) {
-      where.OR = [
-        { title: { contains: searchTerm, mode: 'insensitive' } },
-        { content: { contains: searchTerm, mode: 'insensitive' } }
-      ];
+      // If we already have OR conditions, we need to add the search within each condition
+      if (where.OR) {
+        // Save the existing OR conditions
+        const existingOr = [...where.OR];
+        // Create new conditions that include both the existing conditions AND the search term
+        where.OR = existingOr.map(condition => ({
+          AND: [
+            condition,
+            {
+              OR: [
+                { title: { contains: searchTerm, mode: 'insensitive' } },
+                { content: { contains: searchTerm, mode: 'insensitive' } }
+              ]
+            }
+          ]
+        }));
+      } else {
+        where.OR = [
+          { title: { contains: searchTerm, mode: 'insensitive' } },
+          { content: { contains: searchTerm, mode: 'insensitive' } }
+        ];
+      }
     }
 
     // Apply public status filter if provided

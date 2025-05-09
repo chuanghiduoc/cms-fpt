@@ -12,7 +12,7 @@ import {
   FiChevronLeft,
   FiAlertCircle,
   FiInfo,
-  FiFilter,
+  FiEdit,
 } from 'react-icons/fi';
 import Link from 'next/link';
 import { format } from 'date-fns';
@@ -340,6 +340,84 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
     );
   };
 
+  // Render post results
+  const renderPosts = () => {
+    if (!results?.posts.length) return null;
+
+    return (
+      <div className="mt-6">
+        <h3 className="text-md font-semibold text-gray-900 flex items-center">
+          <FiFileText className="mr-2 text-orange-600" />
+          Tin tức
+          {results.pagination.totalPosts > 0 && (
+            <span className="ml-2 text-sm font-normal text-gray-500">
+              ({results.pagination.totalPosts})
+            </span>
+          )}
+        </h3>
+        <div className="mt-2">
+          <AnimatePresence>
+            {results.posts.map((post, index) => (
+              <motion.div
+                key={post.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0, transition: { delay: index * 0.05 } }}
+                exit={{ opacity: 0 }}
+                className="mb-3 bg-white p-3 rounded-lg border border-gray-200 hover:shadow-md transition-all hover:border-orange-300"
+              >
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h4 className="text-sm font-medium">{post.title}</h4>
+                    <p className="text-xs text-gray-500 mt-1 line-clamp-2">
+                      {post.content.replace(/<[^>]*>?/gm, '').substring(0, 120)}...
+                    </p>
+                    <div className="flex items-center mt-2 text-xs text-gray-500">
+                      <span className="mr-3 flex items-center">
+                        <FiInfo className="mr-1" />
+                        {post.department?.name || 'Công ty'}
+                      </span>
+                      <span className="flex items-center">
+                        <FiCalendar className="mr-1" />
+                        {formatDate(post.createdAt)}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    {post.tags && post.tags.length > 0 && (
+                      <span className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">
+                        {post.tags[0]}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="mt-2 pt-2 border-t border-gray-100 text-right">
+                  <Link 
+                    href={`/company/posts/${post.id}`}
+                    className="text-xs text-orange-600 hover:text-orange-800 flex items-center justify-end"
+                    onClick={onClose}
+                  >
+                    Xem bài viết <FiChevronRight className="ml-1" />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+          {searchType === 'posts' && results.pagination.totalPosts > results.posts.length && (
+            <div className="text-center mt-4">
+              <Link
+                href={`/company/posts?search=${encodeURIComponent(query)}`}
+                className="text-sm text-orange-600 hover:text-orange-800 inline-flex items-center p-2 hover:bg-orange-50 rounded-md transition-colors"
+                onClick={onClose}
+              >
+                Xem tất cả kết quả tin tức <FiExternalLink className="ml-1" />
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   // Render pagination controls for specific content type views
   const renderPagination = () => {
     if (!results || searchType === 'all') return null;
@@ -458,46 +536,61 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                     )}
                   </div>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
+                  <div className="mt-4 flex flex-wrap gap-2 mt-4">
                     <button
                       onClick={() => handleSearchTypeChange('all')}
-                      className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center ${
+                      className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
                         searchType === 'all'
-                          ? 'bg-orange-100 text-orange-700 ring-1 ring-orange-500/20'
-                          : 'text-gray-700 hover:bg-gray-100'
+                          ? 'bg-gray-900 text-white'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       }`}
                     >
-                      <FiFilter className="mr-1" /> Tất cả
+                      <FiSearch className="mr-1" />
+                      Tất cả
                     </button>
                     <button
                       onClick={() => handleSearchTypeChange('documents')}
-                      className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center ${
+                      className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
                         searchType === 'documents'
-                          ? 'bg-blue-100 text-blue-700 ring-1 ring-blue-500/20'
-                          : 'text-gray-700 hover:bg-gray-100'
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
                       }`}
                     >
-                      <FiFileText className="mr-1" /> Tài liệu
+                      <FiFileText className="mr-1" />
+                      Tài liệu
                     </button>
                     <button
                       onClick={() => handleSearchTypeChange('events')}
-                      className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center ${
+                      className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
                         searchType === 'events'
-                          ? 'bg-green-100 text-green-700 ring-1 ring-green-500/20'
-                          : 'text-gray-700 hover:bg-gray-100'
+                          ? 'bg-green-600 text-white'
+                          : 'bg-green-50 text-green-700 hover:bg-green-100'
                       }`}
                     >
-                      <FiCalendar className="mr-1" /> Sự kiện
+                      <FiCalendar className="mr-1" />
+                      Sự kiện
                     </button>
                     <button
                       onClick={() => handleSearchTypeChange('announcements')}
-                      className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center ${
+                      className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
                         searchType === 'announcements'
-                          ? 'bg-yellow-100 text-yellow-700 ring-1 ring-yellow-500/20'
-                          : 'text-gray-700 hover:bg-gray-100'
+                          ? 'bg-purple-600 text-white'
+                          : 'bg-purple-50 text-purple-700 hover:bg-purple-100'
                       }`}
                     >
-                      <FiBell className="mr-1" /> Thông báo
+                      <FiBell className="mr-1" />
+                      Thông báo
+                    </button>
+                    <button
+                      onClick={() => handleSearchTypeChange('posts')}
+                      className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
+                        searchType === 'posts'
+                          ? 'bg-orange-600 text-white'
+                          : 'bg-orange-50 text-orange-700 hover:bg-orange-100'
+                      }`}
+                    >
+                      <FiEdit className="mr-1" />
+                      Tin tức
                     </button>
                   </div>
                 </div>
@@ -505,8 +598,8 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                 <div className="mt-4 max-h-[60vh] overflow-y-auto p-1 custom-scrollbar">
                   {loading ? (
                     <div className="py-10 text-center">
-                      <div className="inline-block h-10 w-10 animate-spin rounded-full border-4 border-solid border-orange-400 border-r-transparent"></div>
-                      <p className="mt-4 text-sm text-gray-500">Đang tìm kiếm...</p>
+                      <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-600 border-r-transparent align-[-0.125em]"></div>
+                      <p className="mt-2 text-sm text-gray-500">Đang tìm kiếm...</p>
                     </div>
                   ) : error ? (
                     <div className="py-10 text-center bg-red-50 rounded-lg">
@@ -514,7 +607,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                       <p className="mt-4 text-red-600 font-medium">{error}</p>
                       <p className="mt-1 text-sm text-red-500">Vui lòng thử lại sau</p>
                     </div>
-                  ) : query && !results?.documents.length && !results?.events.length && !results?.announcements.length ? (
+                  ) : query && !results?.documents.length && !results?.events.length && !results?.announcements.length && !results?.posts.length ? (
                     <div className="py-10 text-center bg-gray-50 rounded-lg">
                       <FiSearch className="h-10 w-10 text-gray-400 mx-auto" />
                       <p className="mt-4 text-gray-600 font-medium">Không tìm thấy kết quả nào cho &ldquo;{query}&rdquo;</p>
@@ -525,6 +618,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                       {searchType === 'all' || searchType === 'documents' ? renderDocuments() : null}
                       {searchType === 'all' || searchType === 'events' ? renderEvents() : null}
                       {searchType === 'all' || searchType === 'announcements' ? renderAnnouncements() : null}
+                      {searchType === 'all' || searchType === 'posts' ? renderPosts() : null}
                       {renderPagination()}
                       
                       {searchType === 'all' && results && results.pagination.total > 0 && (

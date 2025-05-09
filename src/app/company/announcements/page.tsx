@@ -154,7 +154,7 @@ export default function EmployeeAnnouncementsPage() {
           </div>
           <input
             type="text"
-            className="block w-full rounded-lg border-0 py-3 pl-10 pr-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none sm:text-sm transition-all duration-200"
+            className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-colors text-sm"
             placeholder="Tìm kiếm theo tiêu đề, nội dung hoặc phòng ban..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -245,7 +245,7 @@ export default function EmployeeAnnouncementsPage() {
                       <p className="mt-3 text-sm text-gray-600 line-clamp-2">{announcement.content}</p>
                       <div className="mt-3 flex justify-between items-center">
                         <Link href={`/company/announcements/${announcement.id}`} 
-                          className="text-sm font-medium text-orange-600 hover:text-orange-800 flex items-center group">
+                          className="text-sm font-medium text-orange-600 hover:text-orange-800 flex items-center group focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-opacity-60 rounded-md px-2 py-1 -mx-2 -my-1">
                           Xem chi tiết 
                           <motion.div
                             initial={{ x: 0 }}
@@ -260,7 +260,7 @@ export default function EmployeeAnnouncementsPage() {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={(e) => handleMarkAsRead(announcement.id, e)}
-                            className="text-xs bg-blue-50 text-blue-700 px-3 py-1 rounded-full hover:bg-blue-100 transition-colors flex items-center"
+                            className="text-xs bg-blue-50 text-blue-700 px-3 py-1 rounded-full hover:bg-blue-100 transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-60"
                           >
                             <FiCheckCircle className="mr-1 h-4 w-4" /> Đánh dấu đã đọc
                           </motion.button>

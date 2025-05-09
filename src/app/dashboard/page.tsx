@@ -42,6 +42,27 @@ interface Document {
   };
 }
 
+interface Post {
+  id: string;
+  title: string;
+  content: string;
+  coverImageUrl: string | null;
+  isPublic: boolean;
+  status: string;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+  author: {
+    id: string;
+    name: string;
+    role?: string;
+  };
+  department: {
+    id: string;
+    name: string;
+  } | null;
+}
+
 // Skeleton loading components
 const NotificationSkeleton = () => (
   <div className="p-6 space-y-4">
@@ -58,27 +79,6 @@ const NotificationSkeleton = () => (
         <div className="mt-3 flex justify-between">
           <div className="h-3 bg-gray-200 rounded w-24"></div>
           <div className="h-3 bg-gray-200 rounded w-32"></div>
-        </div>
-      </div>
-    ))}
-  </div>
-);
-
-const EventSkeleton = () => (
-  <div className="p-6 space-y-4">
-    {[1, 2, 3].map((i) => (
-      <div key={i} className="animate-pulse">
-        <div className="flex justify-between">
-          <div className="h-4 bg-gray-200 rounded w-40"></div>
-          <div className="h-3 bg-gray-200 rounded w-20"></div>
-        </div>
-        <div className="mt-2 flex items-center space-x-1">
-          <div className="h-3 bg-gray-200 rounded w-12"></div>
-          <div className="h-3 bg-gray-200 rounded w-1"></div>
-          <div className="h-3 bg-gray-200 rounded w-24"></div>
-        </div>
-        <div className="mt-2">
-          <div className="h-3 bg-gray-200 rounded w-28"></div>
         </div>
       </div>
     ))}
@@ -132,6 +132,23 @@ const DocumentTableSkeleton = () => (
   </div>
 );
 
+const PostSkeleton = () => (
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {[1, 2, 3].map((i) => (
+      <div key={i} className="bg-gray-50 rounded-lg p-4 animate-pulse">
+        <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+        <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
+        <div className="h-3 bg-gray-200 rounded w-5/6 mb-2"></div>
+        <div className="h-3 bg-gray-200 rounded w-4/6 mb-4"></div>
+        <div className="flex justify-between mt-4">
+          <div className="h-3 bg-gray-200 rounded w-1/4"></div>
+          <div className="h-3 bg-gray-200 rounded w-1/4"></div>
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
 export default function DashboardPage() {
   const { data: session } = useSession();
   const isAdmin = session?.user?.role === 'ADMIN';
@@ -141,9 +158,11 @@ export default function DashboardPage() {
   // State for data
   const [documents, setDocuments] = useState<Document[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState({
     documents: true,
     events: true,
+    posts: true,
   });
   const { 
     notifications, 
@@ -190,11 +209,30 @@ export default function DashboardPage() {
     }
   }, []);
 
+  // Fetch posts
+  const fetchPosts = useCallback(async () => {
+    try {
+      // Fetch approved posts for dashboard
+      const departmentId = session?.user?.department || '';
+      const response = await fetch(`/api/posts?limit=3&status=APPROVED&sort=createdAt:desc&departmentAccess=${departmentId}&includeAdminPosts=true`);
+      if (response.ok) {
+        const data = await response.json();
+        setPosts(data.posts || []);
+      }
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      toast.error('Không thể tải tin tức');
+    } finally {
+      setLoading(prev => ({ ...prev, posts: false }));
+    }
+  }, [session?.user?.department]);
+
   useEffect(() => {
     if (session?.user) {
       fetchEvents();
+      fetchPosts();
     }
-  }, [session, fetchEvents]);
+  }, [session, fetchEvents, fetchPosts]);
 
   // Fetch documents
   const fetchDocuments = useCallback(async () => {
@@ -292,6 +330,11 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
+      {/* Search Modal */}
+      {isSearchModalOpen && (
+        <SearchModal isOpen={isSearchModalOpen} onClose={() => setIsSearchModalOpen(false)} />
+      )}
+
       {/* Phần chào mừng */}
       <motion.div 
         className="bg-white shadow rounded-lg p-6"
@@ -333,12 +376,6 @@ export default function DashboardPage() {
           </div>
         </div>
       </motion.div>
-
-      {/* Search Modal */}
-      <SearchModal 
-        isOpen={isSearchModalOpen} 
-        onClose={() => setIsSearchModalOpen(false)} 
-      />
 
       {/* Các chức năng quản trị dành cho Admin */}
       {isAdmin && (
@@ -593,13 +630,13 @@ export default function DashboardPage() {
             </div>
           </div>
           
-          {loading.events ? (
+          {loading.posts ? (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <EventSkeleton />
+              <PostSkeleton />
             </motion.div>
           ) : events.length === 0 ? (
             <motion.div 
@@ -645,6 +682,67 @@ export default function DashboardPage() {
             </motion.ul>
           )}
         </motion.div>
+      </motion.div>
+
+      {/* Tin tức phần mới */}
+      <motion.div 
+        className="bg-white shadow rounded-lg overflow-hidden"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+      >
+        <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
+          <h3 className="text-lg font-medium text-gray-900 flex items-center">
+            <FiEdit className="mr-2 h-5 w-5 text-gray-500" />
+            Tin tức
+          </h3>
+          <div className="flex items-center space-x-2">
+            {isDepartmentHead && (
+              <Link href="/manager/posts/create" className="text-sm text-green-600 hover:text-green-800 flex items-center mr-3">
+                <FiPlusCircle className="mr-1 h-4 w-4" /> Tạo mới
+              </Link>
+            )}
+            <Link href="/company/posts" className="text-sm text-orange-600 hover:text-orange-800 flex items-center">
+              Xem tất cả <FiChevronRight className="ml-1" />
+            </Link>
+          </div>
+        </div>
+        
+        <div className="p-6">
+          {loading.posts ? (
+            <PostSkeleton />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {posts && posts.length > 0 ? (
+                posts.slice(0, 3).map((post) => (
+                  <motion.div
+                    key={post.id}
+                    className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 transition-colors"
+                    whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                    variants={itemVariants}
+                  >
+                    <Link href={`/company/posts/${post.id}`} className="block">
+                      <h4 className="text-md font-medium text-gray-900 mb-2">{post.title}</h4>
+                      <p className="text-sm text-gray-600 line-clamp-3">
+                        {post.content.replace(/<[^>]*>?/gm, '').substring(0, 120)}...
+                      </p>
+                      <div className="flex justify-between items-center mt-4">
+                        <span className="text-xs text-gray-500">{formatDate(post.createdAt)}</span>
+                        <span className="text-xs text-orange-600 hover:text-orange-800 flex items-center">
+                          Đọc tiếp <FiChevronRight className="ml-1 h-3 w-3" />
+                        </span>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))
+              ) : (
+                <div className="col-span-3 text-center text-gray-500 py-8">
+                  Không có tin tức nào
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </motion.div>
 
       {/* Tài liệu phần mới */}

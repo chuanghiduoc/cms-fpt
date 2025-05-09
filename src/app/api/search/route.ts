@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { Prisma, Document, Event, Notification } from '@prisma/client';
+import { Prisma, Document, Event, Notification, Post } from '@prisma/client';
 
 type DocumentWithRelations = Document & {
   department: { id: string; name: string } | null;
@@ -19,6 +19,11 @@ type NotificationWithRelations = Notification & {
   createdBy: { id: string; name: string; email: string };
 };
 
+type PostWithRelations = Post & {
+  department: { id: string; name: string } | null;
+  author: { id: string; name: string; email: string; role: string };
+};
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -29,7 +34,7 @@ export async function GET(request: NextRequest) {
     
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('query') || '';
-    const type = searchParams.get('type') || 'all'; // all, documents, events, announcements
+    const type = searchParams.get('type') || 'all'; // all, documents, events, announcements, posts
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
     const skip = (page - 1) * limit;
@@ -40,6 +45,7 @@ export async function GET(request: NextRequest) {
         documents: [],
         events: [],
         announcements: [],
+        posts: [],
         totalResults: 0
       });
     }
@@ -52,6 +58,7 @@ export async function GET(request: NextRequest) {
     const documentsWhere: Prisma.DocumentWhereInput = {};
     const eventsWhere: Prisma.EventWhereInput = {};
     const announcementsWhere: Prisma.NotificationWhereInput = {};
+    const postsWhere: Prisma.PostWhereInput = {};
 
     // Add search conditions
     documentsWhere.OR = [
@@ -68,6 +75,12 @@ export async function GET(request: NextRequest) {
     announcementsWhere.OR = [
       { title: { contains: query, mode: 'insensitive' } },
       { content: { contains: query, mode: 'insensitive' } }
+    ];
+    
+    postsWhere.OR = [
+      { title: { contains: query, mode: 'insensitive' } },
+      { content: { contains: query, mode: 'insensitive' } },
+      { tags: { hasSome: [query] } }
     ];
 
     // Apply access filters based on user role
@@ -94,18 +107,37 @@ export async function GET(request: NextRequest) {
         { isPublic: true },
         { departmentId: userDepartmentId }
       ];
+      
+      // For posts: Users can see public posts, posts from their department, or posts created by admin
+      postsWhere.AND = [
+        {
+          OR: [
+            { isPublic: true },
+            { departmentId: userDepartmentId },
+            { 
+              author: {
+                role: 'ADMIN'
+              } 
+            }
+          ]
+        },
+        { status: 'APPROVED' } // Only show approved posts
+      ];
     } else {
       // Admins can see all content
       documentsWhere.status = 'APPROVED'; // Still only show approved documents
+      postsWhere.status = 'APPROVED'; // Only show approved posts
     }
 
     // Execute searches based on the requested type
     let documents: DocumentWithRelations[] = [];
     let events: EventWithRelations[] = [];
     let announcements: NotificationWithRelations[] = [];
+    let posts: PostWithRelations[] = [];
     let totalDocuments = 0;
     let totalEvents = 0;
     let totalAnnouncements = 0;
+    let totalPosts = 0;
 
     if (type === 'all' || type === 'documents') {
       [documents, totalDocuments] = await Promise.all([
@@ -187,25 +219,56 @@ export async function GET(request: NextRequest) {
         prisma.notification.count({ where: announcementsWhere })
       ]);
     }
+    
+    if (type === 'all' || type === 'posts') {
+      [posts, totalPosts] = await Promise.all([
+        prisma.post.findMany({
+          where: postsWhere,
+          orderBy: { createdAt: 'desc' },
+          include: {
+            department: {
+              select: {
+                id: true,
+                name: true
+              }
+            },
+            author: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true
+              }
+            }
+          },
+          skip: type === 'posts' ? skip : 0,
+          take: type === 'posts' ? limit : 5 // Limit to 5 items if showing all types
+        }) as Promise<PostWithRelations[]>,
+        prisma.post.count({ where: postsWhere })
+      ]);
+    }
 
-    const totalResults = totalDocuments + totalEvents + totalAnnouncements;
+    const totalResults = totalDocuments + totalEvents + totalAnnouncements + totalPosts;
 
     // Return search results
     return NextResponse.json({
       documents,
       events,
       announcements,
+      posts,
       pagination: {
         total: totalResults,
         totalDocuments,
         totalEvents,
         totalAnnouncements,
+        totalPosts,
         page,
         limit,
         totalPages: Math.ceil(
           (type === 'all' ? totalResults : 
            type === 'documents' ? totalDocuments : 
-           type === 'events' ? totalEvents : 
+           type === 'events' ? totalEvents :
+           type === 'posts' ? totalPosts :
            totalAnnouncements) / limit
         )
       }

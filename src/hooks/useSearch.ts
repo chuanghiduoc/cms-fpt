@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
-type SearchType = 'all' | 'documents' | 'events' | 'announcements';
+type SearchType = 'all' | 'documents' | 'events' | 'announcements' | 'posts';
 
 interface Department {
   id: string;
@@ -48,11 +48,30 @@ export interface AnnouncementResult {
   createdBy: User;
 }
 
+export interface PostResult {
+  id: string;
+  title: string;
+  content: string;
+  coverImageUrl: string | null;
+  isPublic: boolean;
+  status: string;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+  author: {
+    id: string;
+    name: string;
+    role?: string;
+  };
+  department?: Department;
+}
+
 interface Pagination {
   total: number;
   totalDocuments: number;
   totalEvents: number;
   totalAnnouncements: number;
+  totalPosts: number;
   page: number;
   limit: number;
   totalPages: number;
@@ -62,6 +81,7 @@ interface SearchResults {
   documents: DocumentResult[];
   events: EventResult[];
   announcements: AnnouncementResult[];
+  posts: PostResult[];
   pagination: Pagination;
 }
 
