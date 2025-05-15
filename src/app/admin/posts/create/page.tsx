@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { FiSave, FiX, FiPaperclip, FiImage, FiEye, FiCheckCircle, FiArrowLeft } from 'react-icons/fi';
+import { FiX, FiPaperclip, FiImage, FiEye, FiCheckCircle, FiArrowLeft } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -293,7 +293,7 @@ export default function CreatePostPage() {
     'blockquote', 'code-block'
   ];
 
-  const handleSubmit = async (e: React.FormEvent, isDraft: boolean = false) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!title.trim()) {
@@ -315,7 +315,7 @@ export default function CreatePostPage() {
         isPublic,
         tags,
         coverImageUrl: coverImage?.url || null,
-        status: isDraft ? 'DRAFT' : 'PENDING'
+        status: session?.user?.role === 'ADMIN' ? 'APPROVED' : 'PENDING'
       };
 
       const response = await fetch('/api/posts', {
@@ -330,7 +330,7 @@ export default function CreatePostPage() {
         throw new Error('Không thể tạo bài viết');
       }
 
-      toast.success(isDraft ? 'Đã lưu bài viết nháp' : 'Đã tạo bài viết mới');
+      toast.success('Đã tạo bài viết mới');
       router.push('/admin/posts');
     } catch (error) {
       console.error('Lỗi khi tạo bài viết:', error);
@@ -359,7 +359,7 @@ export default function CreatePostPage() {
             className={`inline-flex items-center px-4 py-2 ${
               showPreview 
                 ? 'bg-blue-100 text-blue-700 hover:bg-blue-200'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
             } border border-transparent rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors`}
           >
             <FiEye className="mr-2 h-4 w-4" />
@@ -639,21 +639,12 @@ export default function CreatePostPage() {
                 </div>
                 <div className="ml-3 text-sm">
                   <label htmlFor="isPublic" className="font-medium text-gray-700 cursor-pointer">
-                    Đăng bài viết công khai cho phòng ban {isPublic && <span className="text-orange-600">(cần phê duyệt)</span>}
+                    Đăng bài viết công khai cho phòng ban {isPublic && session?.user?.role !== 'ADMIN' && <span className="text-orange-600">(cần phê duyệt)</span>}
                   </label>
                 </div>
               </div>
               
               <div className="flex justify-end space-x-3 pt-4 border-t border-gray-100">
-                <button
-                  type="button"
-                  onClick={(e) => handleSubmit(e, true)}
-                  disabled={loading}
-                  className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 cursor-pointer disabled:opacity-50"
-                >
-                  <FiSave className="mr-2 -ml-1 h-4 w-4" />
-                  Lưu nháp
-                </button>
                 <button
                   type="button"
                   onClick={() => router.back()}
@@ -663,7 +654,7 @@ export default function CreatePostPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={(e) => handleSubmit(e, false)}
+                  onClick={(e) => handleSubmit(e)}
                   disabled={loading}
                   className="inline-flex items-center rounded-md border border-transparent bg-orange-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 cursor-pointer disabled:opacity-50"
                 >
@@ -678,7 +669,7 @@ export default function CreatePostPage() {
                   ) : (
                     <>
                       <FiCheckCircle className="mr-2 -ml-1 h-4 w-4" />
-                      {isPublic ? 'Gửi bài viết để duyệt' : 'Đăng bài viết nội bộ'}
+                      {session?.user?.role === 'ADMIN' ? 'Đăng bài viết' : (isPublic ? 'Gửi bài viết để duyệt' : 'Đăng bài viết nội bộ')}
                     </>
                   )}
                 </button>

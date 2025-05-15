@@ -7,9 +7,7 @@ import Link from 'next/link';
 import {
   FiFilter,
   FiSearch,
-  FiPlus,
   FiCheckCircle,
-  FiXCircle,
   FiInfo,
   FiRefreshCw,
   FiCheck,
@@ -464,13 +462,6 @@ export default function AdminDocumentsReviewPage() {
             Làm mới
           </button>
           
-          <Link
-            href="/admin/content-review/documents/add"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 cursor-pointer"
-          >
-            <FiPlus className="-ml-1 mr-2 h-4 w-4" />
-            Thêm tài liệu
-          </Link>
         </div>
       </div>
 
@@ -750,23 +741,22 @@ export default function AdminDocumentsReviewPage() {
                         </button>
                         
                         {!doc.isPublic && (
-                          <button
-                            onClick={() => handleApproveDocument(doc.id, true)}
-                            className="text-green-600 hover:text-green-900 p-1.5 rounded-full hover:bg-green-50 cursor-pointer"
-                            title="Phê duyệt"
-                          >
-                            <FiCheckCircle className="h-5 w-5" />
-                          </button>
-                        )}
-                        
-                        {doc.isPublic && (
-                          <button
-                            onClick={() => handleApproveDocument(doc.id, false)}
-                            className="text-red-600 hover:text-red-900 p-1.5 rounded-full hover:bg-red-50 cursor-pointer"
-                            title="Hủy duyệt"
-                          >
-                            <FiXCircle className="h-5 w-5" />
-                          </button>
+                          <>
+                            <button
+                              onClick={() => handleApproveDocument(doc.id, true)}
+                              className="text-green-600 hover:text-green-900 p-1.5 rounded-full hover:bg-green-50 cursor-pointer"
+                              title="Phê duyệt"
+                            >
+                              <FiCheckCircle className="h-5 w-5" />
+                            </button>
+                            <button
+                              onClick={() => handleApproveDocument(doc.id, false)}
+                              className="text-red-600 hover:text-red-900 p-1.5 rounded-full hover:bg-red-50 cursor-pointer"
+                              title="Từ chối"
+                            >
+                              <FiX className="h-5 w-5" />
+                            </button>
+                          </>
                         )}
                       </div>
                     </td>

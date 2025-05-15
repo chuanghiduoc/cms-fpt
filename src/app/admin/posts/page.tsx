@@ -129,6 +129,9 @@ export default function AdminPostsPage() {
       searchParams.append('page', currentPage.toString());
       searchParams.append('limit', itemsPerPage.toString());
       
+      // Add authorId filter to only fetch posts created by the current admin
+      searchParams.append('authorId', session?.user?.id || '');
+      
       const response = await fetch(`/api/posts?${searchParams.toString()}`);
       
       if (!response.ok) {

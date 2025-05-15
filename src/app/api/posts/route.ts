@@ -22,13 +22,19 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit;
     const includeAdminPosts = searchParams.get('includeAdminPosts') === 'true';
     const departmentAccess = searchParams.get('departmentAccess') || '';
+    const authorId = searchParams.get('authorId') || '';
 
 
     // Query conditions
     const where: Prisma.PostWhereInput = {};
     
+    // Filter by specified author if provided
+    if (authorId) {
+      where.authorId = authorId;
+    }
+    
     // Filter by department
-    if (departmentId) {
+    if (departmentId && !authorId) {
       where.departmentId = departmentId;
     }
 
@@ -161,15 +167,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Only department heads can create posts
+    // Only department heads and admins can create posts
     if (session.user.role !== 'DEPARTMENT_HEAD' && session.user.role !== 'ADMIN') {
       return NextResponse.json(
-        { error: 'Only department heads can create posts' },
+        { error: 'Only department heads and admins can create posts' },
         { status: 403 }
       );
     }
 
-    const { title, content, isPublic, tags, coverImageUrl, status: clientStatus, isDraft } = await request.json();
+    const { title, content, isPublic, tags, coverImageUrl, status: clientStatus } = await request.json();
 
     // Validate required fields
     if (!title || !content) {
@@ -179,19 +185,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Sử dụng trạng thái từ client nếu có, nếu không thì sử dụng logic cũ
+    // Determine post status
     let status: ContentStatus;
     
-    if (isDraft) {
-      // Nếu bài viết là bản nháp, vẫn cần chọn 1 trong các trạng thái hiện có
-      // Do không có trạng thái DRAFT, nên ta đặt là PENDING
-      status = ContentStatus.PENDING;
-    } else if (clientStatus) {
+    if (clientStatus) {
       status = clientStatus as ContentStatus;
     } else if (session.user.role === 'ADMIN') {
       status = ContentStatus.APPROVED; // Admin-created posts are auto-approved
     } else {
       status = ContentStatus.PENDING; // Default to pending for non-admin users
+    }
+    
+    // Department connection data
+    let departmentData = {};
+    if (session.user.department) {
+      departmentData = {
+        department: {
+          connect: { id: session.user.department }
+        }
+      };
     }
 
     // Create new post
@@ -206,9 +218,7 @@ export async function POST(request: NextRequest) {
         author: {
           connect: { id: session.user.id }
         },
-        department: {
-          connect: { id: session.user.department || undefined }
-        },
+        ...departmentData,
         // If admin is creating post, set them as reviewer too
         ...(session.user.role === 'ADMIN' ? {
           reviewedBy: {

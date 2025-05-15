@@ -8,9 +8,7 @@ import {
   FiEye,
   FiFilter,
   FiSearch,
-  FiPlus,
   FiCheckCircle,
-  FiXCircle,
   FiInfo,
   FiRefreshCw,
   FiCheck,
@@ -135,12 +133,8 @@ export default function AdminPostsReviewPage() {
       }
       
       if (selectedStatus) {
-        // Map the selected status to the isPublic parameter
-        if (selectedStatus === 'PUBLIC') {
-          searchParams.append('isPublic', 'true');
-        } else if (selectedStatus === 'PRIVATE') {
-          searchParams.append('isPublic', 'false');
-        }
+        // Map the selected status to the status parameter
+        searchParams.append('status', selectedStatus);
       }
       
       const response = await fetch(`/api/posts?${searchParams.toString()}`);
@@ -238,7 +232,7 @@ export default function AdminPostsReviewPage() {
         },
         body: JSON.stringify({
           postId,
-          isApproved: approve
+          status: approve ? 'APPROVED' : 'PENDING'
         }),
       });
       
@@ -252,6 +246,32 @@ export default function AdminPostsReviewPage() {
     } catch (error) {
       console.error('Error updating post approval:', error);
       toast.error('Đã xảy ra lỗi khi cập nhật trạng thái phê duyệt');
+    }
+  };
+
+  const handleRejectPost = async (postId: string) => {
+    try {
+      const response = await fetch('/api/posts/approve', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          postId,
+          status: 'REJECTED'
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to reject post');
+      }
+      
+      // Update posts list after successful rejection
+      fetchPosts();
+      toast.success('Bài viết đã bị từ chối');
+    } catch (error) {
+      console.error('Error rejecting post:', error);
+      toast.error('Đã xảy ra lỗi khi từ chối bài viết');
     }
   };
 
@@ -451,13 +471,6 @@ export default function AdminPostsReviewPage() {
             Làm mới
           </button>
           
-          <Link
-            href="/admin/content-review/posts/add"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 cursor-pointer"
-          >
-            <FiPlus className="-ml-1 mr-2 h-4 w-4" />
-            Thêm bài viết
-          </Link>
         </div>
       </div>
 
@@ -495,7 +508,7 @@ export default function AdminPostsReviewPage() {
             {selectedStatus && (
               <div className="inline-flex items-center bg-yellow-50 text-yellow-700 rounded-full text-xs px-2.5 py-1">
                 <span className="mr-1 font-medium">
-                  Trạng thái: {selectedStatus === 'PUBLIC' ? 'Đã duyệt' : 'Chưa duyệt'}
+                  Trạng thái: {selectedStatus === 'APPROVED' ? 'Đã duyệt' : selectedStatus === 'PENDING' ? 'Chờ duyệt' : 'Đã từ chối'}
                 </span>
                 <button 
                   onClick={() => handleStatusFilterChange('')}
@@ -528,8 +541,9 @@ export default function AdminPostsReviewPage() {
                   onChange={(e) => handleStatusFilterChange(e.target.value)}
                 >
                   <option value="">Tất cả trạng thái</option>
-                  <option value="PUBLIC">Đã duyệt</option>
-                  <option value="PRIVATE">Chưa duyệt</option>
+                  <option value="APPROVED">Đã duyệt</option>
+                  <option value="PENDING">Chờ duyệt</option>
+                  <option value="REJECTED">Đã từ chối</option>
                 </select>
               </div>
             </div>
@@ -558,7 +572,7 @@ export default function AdminPostsReviewPage() {
       </div>
 
       {/* Banner for pending posts */}
-      {filteredPosts.filter(post => !post.isPublic).length > 0 && (
+      {filteredPosts.filter(post => post.status === 'PENDING').length > 0 && (
         <div className="rounded-md bg-yellow-50 p-4 mb-4 cursor-default">
           <div className="flex">
             <div className="flex-shrink-0">
@@ -566,7 +580,7 @@ export default function AdminPostsReviewPage() {
             </div>
             <div className="ml-3">
               <h3 className="text-sm font-medium text-yellow-800">
-                Có {filteredPosts.filter(post => !post.isPublic).length} bài viết đang chờ phê duyệt
+                Có {filteredPosts.filter(post => post.status === 'PENDING').length} bài viết đang chờ phê duyệt
               </h3>
               <div className="mt-2 text-sm text-yellow-700">
                 <p>
@@ -583,11 +597,11 @@ export default function AdminPostsReviewPage() {
         <div className="flex flex-wrap gap-2">
           <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-green-100 text-green-800 cursor-default">
             <FiCheck className="mr-1 h-3 w-3" />
-            Đã phê duyệt: {filteredPosts.filter(post => post.isPublic).length}
+            Đã phê duyệt: {filteredPosts.filter(post => post.status === 'APPROVED').length}
           </span>
           <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 cursor-default">
             <FiX className="mr-1 h-3 w-3" />
-            Chờ phê duyệt: {filteredPosts.filter(post => !post.isPublic).length}
+            Chờ phê duyệt: {filteredPosts.filter(post => post.status === 'PENDING').length}
           </span>
           <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 cursor-default">
             <FiInfo className="mr-1 h-3 w-3" />
@@ -631,7 +645,7 @@ export default function AdminPostsReviewPage() {
                 </tr>
               ) : (
                 currentItems.map((post) => (
-                  <tr key={post.id} className={!post.isPublic ? "bg-yellow-50 hover:bg-yellow-100" : "hover:bg-gray-50"}>
+                  <tr key={post.id} className={post.status === 'PENDING' ? "bg-yellow-50 hover:bg-yellow-100" : "hover:bg-gray-50"}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center bg-orange-100 rounded-md">
@@ -668,13 +682,17 @@ export default function AdminPostsReviewPage() {
                       {formatDate(post.createdAt)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {post.isPublic ? (
+                      {post.status === 'APPROVED' ? (
                         <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 cursor-default">
                           Đã duyệt
                         </span>
-                      ) : (
+                      ) : post.status === 'PENDING' ? (
                         <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 cursor-default">
                           Chờ duyệt
+                        </span>
+                      ) : (
+                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 cursor-default">
+                          Từ chối
                         </span>
                       )}
                     </td>
@@ -704,24 +722,24 @@ export default function AdminPostsReviewPage() {
                           <FiTrash2 className="h-5 w-5" />
                         </button>
                         
-                        {!post.isPublic && (
-                          <button
-                            onClick={() => handleApprovePost(post.id, true)}
-                            className="text-green-600 hover:text-green-900 p-1.5 rounded-full hover:bg-green-50 cursor-pointer"
-                            title="Phê duyệt"
-                          >
-                            <FiCheckCircle className="h-5 w-5" />
-                          </button>
-                        )}
-                        
-                        {post.isPublic && (
-                          <button
-                            onClick={() => handleApprovePost(post.id, false)}
-                            className="text-red-600 hover:text-red-900 p-1.5 rounded-full hover:bg-red-50 cursor-pointer"
-                            title="Hủy duyệt"
-                          >
-                            <FiXCircle className="h-5 w-5" />
-                          </button>
+                        {post.status === 'PENDING' && (
+                          <>
+                            <button
+                              onClick={() => handleApprovePost(post.id, true)}
+                              className="text-green-600 hover:text-green-900 p-1.5 rounded-full hover:bg-green-50 cursor-pointer"
+                              title="Phê duyệt"
+                            >
+                              <FiCheckCircle className="h-5 w-5" />
+                            </button>
+                            
+                            <button
+                              onClick={() => handleRejectPost(post.id)}
+                              className="text-orange-600 hover:text-orange-900 p-1.5 rounded-full hover:bg-orange-50 cursor-pointer"
+                              title="Từ chối"
+                            >
+                              <FiX className="h-5 w-5" />
+                            </button>
+                          </>
                         )}
                       </div>
                     </td>
