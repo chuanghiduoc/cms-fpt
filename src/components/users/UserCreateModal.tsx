@@ -235,6 +235,7 @@ export default function UserCreateModal({
                           value={formData.name}
                           onChange={handleChange}
                           className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
+                          placeholder="Nhập tên người dùng"
                           required
                         />
                       </div>
@@ -258,6 +259,7 @@ export default function UserCreateModal({
                           value={formData.email}
                           onChange={handleChange}
                           className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
+                          placeholder="Nhập địa chỉ email"
                           required
                         />
                       </div>
@@ -281,6 +283,7 @@ export default function UserCreateModal({
                           value={formData.password}
                           onChange={handleChange}
                           className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
+                          placeholder="Nhập mật khẩu (ít nhất 6 ký tự)"
                           required
                         />
                       </div>

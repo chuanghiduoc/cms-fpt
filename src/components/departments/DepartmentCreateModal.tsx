@@ -188,6 +188,7 @@ export default function DepartmentCreateModal({
                           onChange={handleInputChange}
                           className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                           disabled={isLoading}
+                          placeholder="Nhập tên phòng ban"
                           required
                         />
                       </div>
@@ -212,6 +213,7 @@ export default function DepartmentCreateModal({
                           onChange={handleInputChange}
                           className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
                           disabled={isLoading}
+                          placeholder="Nhập mô tả cho phòng ban (không bắt buộc)"
                         />
                       </div>
                     </div>
