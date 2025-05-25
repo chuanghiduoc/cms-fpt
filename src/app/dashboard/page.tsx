@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useState, useEffect, useCallback } from 'react';
-import { FiFileText, FiBell, FiCalendar, FiSearch, FiDownload, FiChevronRight, FiUsers, FiEdit, FiClock, FiMapPin } from 'react-icons/fi';
+import { FiFileText, FiBell, FiCalendar, FiSearch, FiDownload, FiChevronRight, FiUsers, FiEdit, FiClock, FiMapPin, FiCheckSquare } from 'react-icons/fi';
 import {MdOutlineCorporateFare} from 'react-icons/md';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
@@ -276,7 +276,7 @@ export default function DashboardPage() {
                 <Link href="/admin/content-review" className="group bg-white rounded-xl p-4 hover:shadow-md transition-all">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
-                      <FiEdit className="h-5 w-5 text-orange-600" />
+                      <FiCheckSquare className="h-5 w-5 text-orange-600" />
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-900">Kiểm duyệt nội dung</h3>
