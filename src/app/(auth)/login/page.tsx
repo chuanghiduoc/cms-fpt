@@ -112,13 +112,13 @@ export default function LoginPage() {
               className="text-2xl font-bold text-center text-gray-800 mb-2"
               variants={itemVariants}
             >
-              Chào mừng trở lại
+              Đăng nhập hệ thống
             </motion.h2>
             <motion.p 
               className="text-center text-gray-500 mb-8"
               variants={itemVariants}
             >
-              Đăng nhập để truy cập hệ thống quản lý nội dung FPT
+              Vui lòng đăng nhập để truy cập hệ thống quản lý nội dung FPT
             </motion.p>
 
             <AnimatePresence>

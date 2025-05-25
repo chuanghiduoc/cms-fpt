@@ -3,11 +3,11 @@
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useState, useEffect, useCallback } from 'react';
-import { FiFileText, FiBell, FiCalendar, FiSearch, FiDownload, FiChevronRight, FiUsers, FiEdit, FiPlusCircle } from 'react-icons/fi';
+import { FiFileText, FiBell, FiCalendar, FiSearch, FiDownload, FiChevronRight, FiUsers, FiEdit, FiClock, FiMapPin } from 'react-icons/fi';
+import {MdOutlineCorporateFare} from 'react-icons/md';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNotifications } from '@/hooks/useNotifications';
-import { motion, AnimatePresence } from 'framer-motion';
 import SearchModal from '@/components/SearchModal';
 
 // Define types for the data structures
@@ -64,85 +64,22 @@ interface Post {
 }
 
 // Skeleton loading components
-const NotificationSkeleton = () => (
-  <div className="p-6 space-y-4">
-    {[1, 2, 3].map((i) => (
-      <div key={i} className="animate-pulse">
-        <div className="flex justify-between">
-          <div className="flex items-center">
-            <div className="w-2 h-2 bg-gray-200 rounded-full mr-2"></div>
-            <div className="h-4 bg-gray-200 rounded w-48"></div>
-          </div>
-          <div className="h-3 bg-gray-200 rounded w-16"></div>
-        </div>
-        <div className="mt-2 h-3 bg-gray-200 rounded w-full"></div>
-        <div className="mt-3 flex justify-between">
-          <div className="h-3 bg-gray-200 rounded w-24"></div>
-          <div className="h-3 bg-gray-200 rounded w-32"></div>
-        </div>
-      </div>
-    ))}
+const SkeletonCard = () => (
+  <div className="bg-white rounded-xl p-6 animate-pulse">
+    <div className="h-4 bg-gray-200 rounded w-3/4 mb-3"></div>
+    <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
+    <div className="h-3 bg-gray-200 rounded w-2/3"></div>
   </div>
 );
 
-const DocumentTableSkeleton = () => (
-  <div className="overflow-x-auto">
-    <table className="min-w-full divide-y divide-gray-200">
-      <thead className="bg-gray-50">
-        <tr>
-          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Tiêu đề
-          </th>
-          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Phân loại
-          </th>
-          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Phòng ban
-          </th>
-          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Ngày
-          </th>
-          <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Thao tác
-          </th>
-        </tr>
-      </thead>
-      <tbody className="bg-white divide-y divide-gray-200">
-        {[1, 2, 3, 4].map((i) => (
-          <tr key={i} className="animate-pulse">
-            <td className="px-6 py-4 whitespace-nowrap">
-              <div className="h-4 bg-gray-200 rounded w-36"></div>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <div className="h-5 bg-gray-200 rounded-full w-20"></div>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <div className="h-4 bg-gray-200 rounded w-24"></div>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <div className="h-4 bg-gray-200 rounded w-20"></div>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-right">
-              <div className="h-4 bg-gray-200 rounded w-24 ml-auto"></div>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-);
-
-const PostSkeleton = () => (
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+const SkeletonList = () => (
+  <div className="space-y-4">
     {[1, 2, 3].map((i) => (
-      <div key={i} className="bg-gray-50 rounded-lg p-4 animate-pulse">
-        <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-        <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
-        <div className="h-3 bg-gray-200 rounded w-5/6 mb-2"></div>
-        <div className="h-3 bg-gray-200 rounded w-4/6 mb-4"></div>
-        <div className="flex justify-between mt-4">
-          <div className="h-3 bg-gray-200 rounded w-1/4"></div>
-          <div className="h-3 bg-gray-200 rounded w-1/4"></div>
+      <div key={i} className="flex items-center space-x-3 animate-pulse">
+        <div className="w-2 h-2 bg-gray-200 rounded-full"></div>
+        <div className="flex-1">
+          <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+          <div className="h-3 bg-gray-200 rounded w-1/2"></div>
         </div>
       </div>
     ))}
@@ -166,37 +103,22 @@ export default function DashboardPage() {
   });
   const { 
     notifications, 
-    loading: notificationsLoading, 
-    markAsRead 
-  } = useNotifications({ limit: 3 });
+    loading: notificationsLoading
+  } = useNotifications({ limit: 5 });
 
   // Category mappings for display
-  const categoryMapping: Record<string, { label: string, bgClass: string, textClass: string }> = {
-    'REPORT': { label: 'Báo cáo', bgClass: 'bg-blue-100', textClass: 'text-blue-800' },
-    'CONTRACT': { label: 'Hợp đồng', bgClass: 'bg-green-100', textClass: 'text-green-800' },
-    'GUIDE': { label: 'Hướng dẫn', bgClass: 'bg-yellow-100', textClass: 'text-yellow-800' },
-    'FORM': { label: 'Biểu mẫu', bgClass: 'bg-purple-100', textClass: 'text-purple-800' },
-    'OTHER': { label: 'Khác', bgClass: 'bg-gray-100', textClass: 'text-gray-800' }
+  const categoryMapping: Record<string, { label: string, color: string }> = {
+    'REPORT': { label: 'Báo cáo', color: 'bg-blue-50 text-blue-700 border-blue-200' },
+    'CONTRACT': { label: 'Hợp đồng', color: 'bg-green-50 text-green-700 border-green-200' },
+    'GUIDE': { label: 'Hướng dẫn', color: 'bg-amber-50 text-amber-700 border-amber-200' },
+    'FORM': { label: 'Biểu mẫu', color: 'bg-purple-50 text-purple-700 border-purple-200' },
+    'OTHER': { label: 'Khác', color: 'bg-gray-50 text-gray-700 border-gray-200' }
   };
-
-  // State for document categories
-  const [activeCategory, setActiveCategory] = useState('all');
-  const documentCategories = [
-    { id: 'all', name: 'Tất cả' },
-    { id: 'REPORT', name: 'Báo cáo' },
-    { id: 'CONTRACT', name: 'Hợp đồng' },
-    { id: 'GUIDE', name: 'Hướng dẫn' },
-    { id: 'FORM', name: 'Biểu mẫu' },
-    { id: 'OTHER', name: 'Khác' },
-  ];
 
   // Fetch upcoming events
   const fetchEvents = useCallback(async () => {
     try {
-      // The API already handles proper visibility filtering based on user's role:
-      // - Admins see all events
-      // - Department heads and employees see public events + their department's events
-      const response = await fetch(`/api/events?timeframe=upcoming&limit=3&sort=startDate:asc`);
+      const response = await fetch(`/api/events?timeframe=upcoming&limit=5&sort=startDate:asc`);
       if (response.ok) {
         const data = await response.json();
         setEvents(data.events || []);
@@ -212,9 +134,8 @@ export default function DashboardPage() {
   // Fetch posts
   const fetchPosts = useCallback(async () => {
     try {
-      // Fetch approved posts for dashboard
       const departmentId = session?.user?.department || '';
-      const response = await fetch(`/api/posts?limit=3&status=APPROVED&sort=createdAt:desc&departmentAccess=${departmentId}&includeAdminPosts=true`);
+      const response = await fetch(`/api/posts?limit=6&status=APPROVED&sort=createdAt:desc&departmentAccess=${departmentId}&includeAdminPosts=true`);
       if (response.ok) {
         const data = await response.json();
         setPosts(data.posts || []);
@@ -227,22 +148,11 @@ export default function DashboardPage() {
     }
   }, [session?.user?.department]);
 
-  useEffect(() => {
-    if (session?.user) {
-      fetchEvents();
-      fetchPosts();
-    }
-  }, [session, fetchEvents, fetchPosts]);
-
   // Fetch documents
   const fetchDocuments = useCallback(async () => {
     try {
-      // Lấy tài liệu theo điều kiện:
-      // 1. Tài liệu cùng phòng (bất kể public hay không)
-      // 2. Tài liệu khác phòng nhưng là public
-      const category = activeCategory !== 'all' ? `&category=${activeCategory}` : '';
       const departmentId = session?.user?.department || '';
-      const response = await fetch(`/api/documents?limit=4${category}&sort=createdAt:desc&status=APPROVED&departmentAccess=${departmentId}`);
+      const response = await fetch(`/api/documents?limit=6&sort=createdAt:desc&status=APPROVED&departmentAccess=${departmentId}`);
       if (response.ok) {
         const data = await response.json();
         setDocuments(data.documents || []);
@@ -253,13 +163,15 @@ export default function DashboardPage() {
     } finally {
       setLoading(prev => ({ ...prev, documents: false }));
     }
-  }, [activeCategory, session?.user?.department]);
+  }, [session?.user?.department]);
 
   useEffect(() => {
     if (session?.user) {
+      fetchEvents();
+      fetchPosts();
       fetchDocuments();
     }
-  }, [session, fetchDocuments]);
+  }, [session, fetchEvents, fetchPosts, fetchDocuments]);
 
   // Format date for display
   const formatDate = useCallback((dateString: string): string => {
@@ -275,41 +187,6 @@ export default function DashboardPage() {
     return format(date, 'HH:mm');
   }, []);
 
-  // Handle marking notification as read
-  const handleMarkAsRead = useCallback(async (notificationId: string, event: React.MouseEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-    await markAsRead(notificationId);
-  }, [markAsRead]);
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
-      opacity: 1,
-      transition: { type: 'spring', stiffness: 300, damping: 24 }
-    }
-  };
-
-  const fadeInVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { duration: 0.5 }
-    }
-  };
-
   // Open search modal
   const openSearchModal = useCallback(() => {
     setIsSearchModalOpen(true);
@@ -319,8 +196,8 @@ export default function DashboardPage() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault(); // Prevent browser default behavior
-        setIsSearchModalOpen(prev => !prev); // Toggle the search modal
+        e.preventDefault();
+        setIsSearchModalOpen(prev => !prev);
       }
     };
 
@@ -335,600 +212,325 @@ export default function DashboardPage() {
         <SearchModal isOpen={isSearchModalOpen} onClose={() => setIsSearchModalOpen(false)} />
       )}
 
-      {/* Phần chào mừng */}
-      <motion.div 
-        className="bg-white shadow rounded-lg p-6"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h2 className="text-xl font-semibold text-gray-800">
+      {/* Header Section */}
+      <div className="text-center">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
           Chào mừng trở lại, {session?.user?.name}!
-        </h2>
-        <p className="mt-1 text-gray-600">
-          Đây là những gì đang diễn ra trong không gian làm việc của bạn hôm nay.
+        </h1>
+        <p className="text-gray-600">
+          Tổng quan về hoạt động và thông tin quan trọng trong không gian làm việc của bạn
         </p>
-      </motion.div>
+      </div>
 
-      {/* Tìm kiếm nhanh */}
-      <motion.div 
-        className="bg-white shadow rounded-lg p-4"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-      >
+      {/* Search Bar */}
+      <div className="max-w-2xl mx-auto">
         <div 
-          className="relative cursor-text group hover:shadow-md transition-shadow rounded-md"
+          className="relative cursor-text group"
           onClick={openSearchModal}
         >
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
             <FiSearch className="h-5 w-5 text-gray-400 group-hover:text-orange-500 transition-colors" />
           </div>
-          <div
-            className="block w-full rounded-md border border-gray-300 pl-10 pr-4 py-3 text-gray-500 bg-white hover:border-orange-300 transition-colors focus:outline-none cursor-text"
-          >
+          <div className="block w-full rounded-xl border border-gray-200 pl-12 pr-20 py-4 text-gray-500 bg-white hover:border-orange-300 hover:shadow-sm transition-all cursor-text">
             Tìm kiếm tài liệu, thông báo, sự kiện...
           </div>
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-xs text-gray-400">
-            <kbd className="mx-1 px-2 py-0.5 rounded border border-gray-300 bg-gray-100 font-sans">Ctrl</kbd>
-            <span>+</span>
-            <kbd className="mx-1 px-2 py-0.5 rounded border border-gray-300 bg-gray-100 font-sans">K</kbd>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Các chức năng quản trị dành cho Admin */}
-      {isAdmin && (
-        <motion.div 
-          className="grid grid-cols-1 gap-6 md:grid-cols-3"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.div variants={itemVariants} className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-            <Link href="/admin/users" className="block">
-              <div className="p-6">
-                <div className="flex items-center justify-center h-12 w-12 rounded-md bg-orange-100 text-orange-600 mb-4">
-                  <FiUsers className="h-6 w-6" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900">Quản lý người dùng</h3>
-                <p className="mt-2 text-sm text-gray-500">
-                  Thêm, sửa, xóa người dùng và phân quyền cho từng người dùng.
-                </p>
-              </div>
-              <div className="bg-gray-50 px-6 py-3 flex justify-between items-center">
-                <span className="text-sm font-medium text-orange-600">Truy cập</span>
-                <FiChevronRight className="h-5 w-5 text-orange-500" />
-              </div>
-            </Link>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-            <Link href="/admin/departments" className="block">
-              <div className="p-6">
-                <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600 mb-4">
-                  <FiUsers className="h-6 w-6" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900">Quản lý phòng ban</h3>
-                <p className="mt-2 text-sm text-gray-500">
-                  Tạo, chỉnh sửa và quản lý các phòng ban trong công ty.
-                </p>
-              </div>
-              <div className="bg-gray-50 px-6 py-3 flex justify-between items-center">
-                <span className="text-sm font-medium text-blue-600">Truy cập</span>
-                <FiChevronRight className="h-5 w-5 text-blue-500" />
-              </div>
-            </Link>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-            <Link href="/admin/content-review" className="block">
-              <div className="p-6">
-                <div className="flex items-center justify-center h-12 w-12 rounded-md bg-green-100 text-green-600 mb-4">
-                  <FiEdit className="h-6 w-6" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900">Kiểm duyệt nội dung</h3>
-                <p className="mt-2 text-sm text-gray-500">
-                  Duyệt các thông báo, bài viết và tài liệu trước khi xuất bản.
-                </p>
-              </div>
-              <div className="bg-gray-50 px-6 py-3 flex justify-between items-center">
-                <span className="text-sm font-medium text-green-600">Truy cập</span>
-                <FiChevronRight className="h-5 w-5 text-green-500" />
-              </div>
-            </Link>
-          </motion.div>
-        </motion.div>
-      )}
-      
-      {/* Các chức năng dành cho Trưởng phòng */}
-      {isDepartmentHead && (
-        <motion.div 
-          className="grid grid-cols-1 gap-6 md:grid-cols-3"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.div variants={itemVariants} className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-            <Link href="/manager/documents" className="block">
-              <div className="p-6">
-                <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600 mb-4">
-                  <FiFileText className="h-6 w-6" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900">Quản lý tài liệu</h3>
-                <p className="mt-2 text-sm text-gray-500">
-                  Quản lý tài liệu và phân phối cho phòng ban.
-                </p>
-              </div>
-              <div className="bg-gray-50 px-6 py-3 flex justify-between items-center">
-                <span className="text-sm font-medium text-blue-600">Truy cập</span>
-                <FiChevronRight className="h-5 w-5 text-blue-500" />
-              </div>
-            </Link>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-            <Link href="/manager/announcements" className="block">
-              <div className="p-6">
-                <div className="flex items-center justify-center h-12 w-12 rounded-md bg-yellow-100 text-yellow-600 mb-4">
-                  <FiBell className="h-6 w-6" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900">Quản lý thông báo</h3>
-                <p className="mt-2 text-sm text-gray-500">
-                  Tạo và quản lý thông báo cho phòng ban của bạn.
-                </p>
-              </div>
-              <div className="bg-gray-50 px-6 py-3 flex justify-between items-center">
-                <span className="text-sm font-medium text-yellow-600">Truy cập</span>
-                <FiChevronRight className="h-5 w-5 text-yellow-500" />
-              </div>
-            </Link>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-            <Link href="/manager/events" className="block">
-              <div className="p-6">
-                <div className="flex items-center justify-center h-12 w-12 rounded-md bg-green-100 text-green-600 mb-4">
-                  <FiCalendar className="h-6 w-6" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900">Quản lý sự kiện</h3>
-                <p className="mt-2 text-sm text-gray-500">
-                  Tạo và quản lý sự kiện hoặc lịch họp cho phòng ban.
-                </p>
-              </div>
-              <div className="bg-gray-50 px-6 py-3 flex justify-between items-center">
-                <span className="text-sm font-medium text-green-600">Truy cập</span>
-                <FiChevronRight className="h-5 w-5 text-green-500" />
-              </div>
-            </Link>
-          </motion.div>
-        </motion.div>
-      )}
-
-      <motion.div 
-        className="grid grid-cols-1 gap-6 lg:grid-cols-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.5 }}
-      >
-        {/* Thông báo gần đây */}
-        <motion.div 
-          className="bg-white shadow rounded-lg overflow-hidden"
-          variants={fadeInVariants}
-        >
-          <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
-            <h3 className="text-lg font-medium text-gray-900 flex items-center">
-              <FiBell className="mr-2 h-5 w-5 text-gray-500" />
-              Thông báo gần đây
-            </h3>
-            <div className="flex items-center space-x-2">
-              {isDepartmentHead && (
-                <Link href="/manager/announcements/create" className="text-sm text-green-600 hover:text-green-800 flex items-center mr-3">
-                  <FiPlusCircle className="mr-1 h-4 w-4" /> Tạo mới
-                </Link>
-              )}
-              <Link href="/company/announcements" className="text-sm text-orange-600 hover:text-orange-800 flex items-center">
-                Xem tất cả <FiChevronRight className="ml-1" />
-              </Link>
+          <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+            <div className="flex items-center space-x-1 text-xs text-gray-400">
+              <kbd className="px-2 py-1 rounded border border-gray-300 bg-gray-50 font-mono">Ctrl</kbd>
+              <span>+</span>
+              <kbd className="px-2 py-1 rounded border border-gray-300 bg-gray-50 font-mono">K</kbd>
             </div>
           </div>
-          
-          {notificationsLoading ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <NotificationSkeleton />
-            </motion.div>
-          ) : notifications.length === 0 ? (
-            <motion.div 
-              className="p-6 text-center text-gray-500"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              Không có thông báo nào
-            </motion.div>
-          ) : (
-            <motion.ul 
-              className="divide-y divide-gray-200"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <AnimatePresence>
-                {notifications.map((notification) => (
-                  <motion.li 
-                    key={notification.id}
-                    variants={itemVariants}
-                    layout
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    <Link href={`/company/announcements/${notification.id}`} className="block hover:bg-gray-50">
-                      <div className="px-6 py-4">
-                        <div className="flex justify-between">
-                          <div className="flex items-center">
-                            {!notification.isRead && (
-                              <motion.span 
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                className="inline-block w-2 h-2 bg-orange-500 rounded-full mr-2"
-                              ></motion.span>
-                            )}
-                            <p className={`text-sm font-medium ${notification.isRead ? 'text-gray-600' : 'text-gray-900'}`}>
-                              {notification.title}
-                            </p>
-                          </div>
-                          <p className="text-xs text-gray-500">{formatDate(notification.createdAt)}</p>
-                        </div>
-                        <p className="mt-1 text-sm text-gray-500 line-clamp-1">{notification.content}</p>
-                        <div className="mt-2 flex justify-between">
-                          <span className="inline-flex items-center text-xs font-medium text-orange-600 hover:text-orange-800">
-                            Đọc tiếp <FiChevronRight className="ml-1 h-3 w-3" />
-                          </span>
-                          <motion.button 
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={(e) => handleMarkAsRead(notification.id, e)}
-                            className="text-xs text-blue-600 hover:text-blue-800"
-                            style={{ visibility: notification.isRead ? 'hidden' : 'visible' }}
-                          >
-                            Đánh dấu đã đọc
-                          </motion.button>
+        </div>
+      </div>
+
+      {/* Quick Actions for Admin/Department Head */}
+      {(isAdmin || isDepartmentHead) && (
+        <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Thao tác nhanh</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {isAdmin ? (
+              <>
+                <Link href="/admin/users" className="group bg-white rounded-xl p-4 hover:shadow-md transition-all">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
+                      <FiUsers className="h-5 w-5 text-orange-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Quản lý người dùng</h3>
+                      <p className="text-sm text-gray-500">Phân quyền & quản lý</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link href="/admin/departments" className="group bg-white rounded-xl p-4 hover:shadow-md transition-all">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
+                      <MdOutlineCorporateFare className="h-5 w-5 text-orange-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Quản lý phòng ban</h3>
+                      <p className="text-sm text-gray-500">Tổ chức & cấu trúc</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link href="/admin/content-review" className="group bg-white rounded-xl p-4 hover:shadow-md transition-all">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
+                      <FiEdit className="h-5 w-5 text-orange-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Kiểm duyệt nội dung</h3>
+                      <p className="text-sm text-gray-500">Duyệt & xuất bản</p>
+                    </div>
+                  </div>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link href="/manager/documents/upload" className="group bg-white rounded-xl p-4 hover:shadow-md transition-all">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
+                      <FiFileText className="h-5 w-5 text-orange-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Tải lên tài liệu</h3>
+                      <p className="text-sm text-gray-500">Chia sẻ tài liệu</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link href="/manager/announcements/create" className="group bg-white rounded-xl p-4 hover:shadow-md transition-all">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
+                      <FiBell className="h-5 w-5 text-orange-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Tạo thông báo</h3>
+                      <p className="text-sm text-gray-500">Thông báo mới</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link href="/manager/events/create" className="group bg-white rounded-xl p-4 hover:shadow-md transition-all">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
+                      <FiCalendar className="h-5 w-5 text-orange-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Tạo sự kiện</h3>
+                      <p className="text-sm text-gray-500">Lịch họp & sự kiện</p>
+                    </div>
+                  </div>
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Left Column - Notifications & Events */}
+        <div className="lg:col-span-1 space-y-6">
+          {/* Recent Notifications */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+            <div className="p-6 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900">Thông báo</h3>
+                <Link href="/company/announcements" className="text-sm text-orange-600 hover:text-orange-700 flex items-center">
+                  Xem tất cả <FiChevronRight className="ml-1 h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+            
+            <div className="p-6">
+              {notificationsLoading ? (
+                <SkeletonList />
+              ) : notifications.length === 0 ? (
+                <div className="text-center py-8">
+                  <FiBell className="h-12 w-12 text-gray-300 mx-auto mb-3" />
+                  <p className="text-gray-500">Không có thông báo mới</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {notifications.slice(0, 3).map((notification) => (
+                    <Link key={notification.id} href={`/company/announcements/${notification.id}`} className="block group">
+                      <div className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                        {!notification.isRead && (
+                          <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className={`text-sm font-medium ${notification.isRead ? 'text-gray-600' : 'text-gray-900'} line-clamp-2`}>
+                            {notification.title}
+                          </p>
+                          <p className="text-xs text-gray-500 mt-1">{formatDate(notification.createdAt)}</p>
                         </div>
                       </div>
                     </Link>
-                  </motion.li>
-                ))}
-              </AnimatePresence>
-            </motion.ul>
-          )}
-        </motion.div>
-
-        {/* Sự kiện sắp tới */}
-        <motion.div 
-          className="bg-white shadow rounded-lg overflow-hidden"
-          variants={fadeInVariants}
-        >
-          <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
-            <h3 className="text-lg font-medium text-gray-900 flex items-center">
-              <FiCalendar className="mr-2 h-5 w-5 text-gray-500" />
-              Sự kiện sắp tới
-            </h3>
-            <div className="flex items-center space-x-2">
-              {isDepartmentHead && (
-                <Link href="/manager/events/create" className="text-sm text-green-600 hover:text-green-800 flex items-center mr-3">
-                  <FiPlusCircle className="mr-1 h-4 w-4" /> Tạo mới
-                </Link>
-              )}
-              <Link href="/company/events" className="text-sm text-orange-600 hover:text-orange-800 flex items-center">
-                Xem tất cả <FiChevronRight className="ml-1" />
-              </Link>
-            </div>
-          </div>
-          
-          {loading.posts ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <PostSkeleton />
-            </motion.div>
-          ) : events.length === 0 ? (
-            <motion.div 
-              className="p-6 text-center text-gray-500"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              Không có sự kiện sắp tới
-            </motion.div>
-          ) : (
-            <motion.ul 
-              className="divide-y divide-gray-200"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              {events.map((event) => (
-                <motion.li 
-                  key={event.id}
-                  variants={itemVariants}
-                >
-                  <Link href={`/company/events/${event.id}`} className="block hover:bg-gray-50">
-                    <div className="px-6 py-4">
-                      <div className="flex justify-between">
-                        <p className="text-sm font-medium text-gray-900">{event.title}</p>
-                        <p className="text-xs text-gray-500">{formatDate(event.startDate)}</p>
-                      </div>
-                      <div className="mt-1 flex items-center text-sm text-gray-500">
-                        <span>{formatTime(event.startDate)}</span>
-                        <span className="mx-1">•</span>
-                        <span>{event.location || 'Không xác định'}</span>
-                      </div>
-                      <div className="mt-2">
-                        <span className="inline-flex items-center text-xs font-medium text-orange-600 hover:text-orange-800">
-                          Xem chi tiết <FiChevronRight className="ml-1 h-3 w-3" />
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.li>
-              ))}
-            </motion.ul>
-          )}
-        </motion.div>
-      </motion.div>
-
-      {/* Tin tức phần mới */}
-      <motion.div 
-        className="bg-white shadow rounded-lg overflow-hidden"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-      >
-        <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
-          <h3 className="text-lg font-medium text-gray-900 flex items-center">
-            <FiEdit className="mr-2 h-5 w-5 text-gray-500" />
-            Tin tức
-          </h3>
-          <div className="flex items-center space-x-2">
-            {isDepartmentHead && (
-              <Link href="/manager/posts/create" className="text-sm text-green-600 hover:text-green-800 flex items-center mr-3">
-                <FiPlusCircle className="mr-1 h-4 w-4" /> Tạo mới
-              </Link>
-            )}
-            <Link href="/company/posts" className="text-sm text-orange-600 hover:text-orange-800 flex items-center">
-              Xem tất cả <FiChevronRight className="ml-1" />
-            </Link>
-          </div>
-        </div>
-        
-        <div className="p-6">
-          {loading.posts ? (
-            <PostSkeleton />
-          ) : posts.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="text-gray-400 mb-4">
-                <FiEdit className="h-12 w-12 mx-auto" />
-              </div>
-              <h4 className="text-lg font-medium text-gray-900 mb-2">Chưa có tin tức nào</h4>
-              <p className="text-sm text-gray-500 max-w-md mx-auto">
-                Hiện tại chưa có tin tức nào được đăng. Tin tức mới sẽ xuất hiện ở đây.
-              </p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {posts.slice(0, 3).map((post) => (
-                <motion.div
-                  key={post.id}
-                  className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition-shadow flex flex-col h-full"
-                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                  variants={itemVariants}
-                >
-                  <Link href={`/company/posts/${post.id}`}>
-                    <div className="relative h-36 overflow-hidden w-full bg-gray-100">
-                      {post.coverImageUrl ? (
-                        <div 
-                          className="absolute inset-0 bg-cover bg-center" 
-                          style={{ backgroundImage: `url(${post.coverImageUrl})` }}
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <FiEdit className="h-8 w-8 text-gray-300" />
-                        </div>
-                      )}
-                      {post.department && (
-                        <div className="absolute top-3 left-3 bg-gray-900 bg-opacity-70 text-white text-xs px-2 py-1 rounded">
-                          {post.department.name}
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-4 flex-grow flex flex-col">
-                      <h4 className="text-lg font-semibold text-gray-900 line-clamp-2 mb-2 hover:text-orange-600 transition-colors">
-                        {post.title}
-                      </h4>
-                      <p className="text-sm text-gray-600 line-clamp-3 mb-4 flex-grow">
-                        {post.content.replace(/<[^>]*>?/gm, '')}
-                      </p>
-                      
-                      {post.tags && post.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mb-3">
-                          {post.tags.slice(0, 3).map((tag, index) => (
-                            <span key={index} className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full">
-                              {tag}
-                            </span>
-                          ))}
-                          {post.tags.length > 3 && (
-                            <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full">
-                              +{post.tags.length - 3}
-                            </span>
-                          )}
-                        </div>
-                      )}
-                      
-                      <div className="flex justify-between items-center mt-auto pt-3 border-t border-gray-100">
-                        <div className="flex items-center text-xs text-gray-500">
-                          <span>{formatDate(post.createdAt)}</span>
-                          {post.author && (
-                            <>
-                              <span className="mx-1">•</span>
-                              <span>{post.author.name}</span>
-                            </>
-                          )}
-                        </div>
-                        <span className="text-xs text-orange-600 hover:text-orange-800 flex items-center">
-                          Đọc tiếp <FiChevronRight className="ml-1 h-3 w-3" />
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          )}
-        </div>
-      </motion.div>
-
-      {/* Tài liệu phần mới */}
-      <motion.div 
-        className="bg-white shadow rounded-lg overflow-hidden"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-      >
-        <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
-          <h3 className="text-lg font-medium text-gray-900 flex items-center">
-            <FiFileText className="mr-2 h-5 w-5 text-gray-500" />
-            Tài liệu
-          </h3>
-          <div className="flex items-center space-x-2">
-            {isDepartmentHead && (
-              <Link href="/manager/documents/upload" className="text-sm text-green-600 hover:text-green-800 flex items-center mr-3">
-                <FiPlusCircle className="mr-1 h-4 w-4" /> Tải lên
-              </Link>
-            )}
-            <Link href="/company/documents" className="text-sm text-orange-600 hover:text-orange-800 flex items-center">
-              Xem tất cả <FiChevronRight className="ml-1" />
-            </Link>
-          </div>
-        </div>
-
-        {/* Filter categories */}
-        <div className="px-6 py-2 border-b border-gray-200 flex overflow-x-auto">
-          <AnimatePresence>
-            {documentCategories.map((category) => (
-              <motion.button
-                key={category.id}
-                className={`mr-2 px-3 py-1 rounded-full text-sm font-medium ${
-                  activeCategory === category.id 
-                    ? category.id === 'all'
-                      ? 'bg-orange-100 text-orange-700' 
-                      : `${categoryMapping[category.id]?.bgClass || 'bg-orange-100'} ${categoryMapping[category.id]?.textClass || 'text-orange-700'}`
-                    : 'hover:bg-gray-100 text-gray-600'
-                }`}
-                onClick={() => setActiveCategory(category.id)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                layout
-              >
-                {category.name}
-              </motion.button>
-            ))}
-          </AnimatePresence>
-        </div>
-
-        {loading.documents ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <DocumentTableSkeleton />
-          </motion.div>
-        ) : documents.length === 0 ? (
-          <motion.div 
-            className="p-6 text-center text-gray-500"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            Không có tài liệu nào
-          </motion.div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Tiêu đề
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Phân loại
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Phòng ban
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Ngày
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Thao tác
-                  </th>
-                </tr>
-              </thead>
-              <motion.tbody 
-                className="bg-white divide-y divide-gray-200"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                <AnimatePresence>
-                  {documents.map((document) => (
-                    <motion.tr 
-                      key={document.id} 
-                      className="hover:bg-gray-50"
-                      variants={itemVariants}
-                      layout
-                      exit={{ opacity: 0, height: 0 }}
-                    >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">{document.title}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${categoryMapping[document.category]?.bgClass || 'bg-blue-100'} ${categoryMapping[document.category]?.textClass || 'text-blue-800'}`}>
-                          {categoryMapping[document.category]?.label || document.category}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-500">{document.department?.name || 'Công ty'}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {formatDate(document.createdAt)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <motion.a 
-                          href={document.filePath}
-                          download
-                          className="text-orange-600 hover:text-orange-900 inline-flex items-center cursor-pointer"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <FiDownload className="mr-1 h-4 w-4" /> Tải xuống
-                        </motion.a>
-                      </td>
-                    </motion.tr>
                   ))}
-                </AnimatePresence>
-              </motion.tbody>
-            </table>
+                </div>
+              )}
+            </div>
           </div>
-        )}
-      </motion.div>
+
+          {/* Upcoming Events */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+            <div className="p-6 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900">Sự kiện sắp tới</h3>
+                <Link href="/company/events" className="text-sm text-orange-600 hover:text-orange-700 flex items-center">
+                  Xem tất cả <FiChevronRight className="ml-1 h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+            
+            <div className="p-6">
+              {loading.events ? (
+                <SkeletonList />
+              ) : events.length === 0 ? (
+                <div className="text-center py-8">
+                  <FiCalendar className="h-12 w-12 text-gray-300 mx-auto mb-3" />
+                  <p className="text-gray-500">Không có sự kiện sắp tới</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {events.slice(0, 3).map((event) => (
+                    <Link key={event.id} href={`/company/events/${event.id}`} className="block group">
+                      <div className="p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                        <h4 className="font-medium text-gray-900 line-clamp-1 group-hover:text-orange-600">
+                          {event.title}
+                        </h4>
+                        <div className="flex items-center text-sm text-gray-500 mt-1">
+                          <FiClock className="h-4 w-4 mr-1" />
+                          <span>{formatDate(event.startDate)} • {formatTime(event.startDate)}</span>
+                        </div>
+                        {event.location && (
+                          <div className="flex items-center text-sm text-gray-500 mt-1">
+                            <FiMapPin className="h-4 w-4 mr-1" />
+                            <span className="line-clamp-1">{event.location}</span>
+                          </div>
+                        )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column - Posts & Documents */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Recent Posts */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+            <div className="p-6 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900">Tin tức mới nhất</h3>
+                <Link href="/company/posts" className="text-sm text-orange-600 hover:text-orange-700 flex items-center">
+                  Xem tất cả <FiChevronRight className="ml-1 h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+            
+            <div className="p-6">
+              {loading.posts ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {[1, 2, 3, 4].map((i) => <SkeletonCard key={i} />)}
+                </div>
+              ) : posts.length === 0 ? (
+                <div className="text-center py-12">
+                  <FiEdit className="h-12 w-12 text-gray-300 mx-auto mb-3" />
+                  <p className="text-gray-500">Chưa có tin tức nào</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {posts.slice(0, 4).map((post) => (
+                    <Link key={post.id} href={`/company/posts/${post.id}`} className="group">
+                      <article className="bg-gray-50 rounded-xl overflow-hidden hover:shadow-md transition-all">
+                        {post.coverImageUrl && (
+                          <div className="h-32 bg-gray-200 overflow-hidden">
+                            <img 
+                              src={post.coverImageUrl} 
+                              alt={post.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                          </div>
+                        )}
+                        <div className="p-4">
+                          <h4 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-orange-600 transition-colors">
+                            {post.title}
+                          </h4>
+                          <p className="text-sm text-gray-600 line-clamp-2 mt-2">
+                            {post.content.replace(/<[^>]*>?/gm, '')}
+                          </p>
+                          <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-200">
+                            <span className="text-xs text-gray-500">{formatDate(post.createdAt)}</span>
+                            {post.department && (
+                              <span className="text-xs px-2 py-1 bg-orange-50 text-orange-700 rounded-full">
+                                {post.department.name}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </article>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Recent Documents */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+            <div className="p-6 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900">Tài liệu mới nhất</h3>
+                <Link href="/company/documents" className="text-sm text-orange-600 hover:text-orange-700 flex items-center">
+                  Xem tất cả <FiChevronRight className="ml-1 h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+            
+            <div className="p-6">
+              {loading.documents ? (
+                <SkeletonList />
+              ) : documents.length === 0 ? (
+                <div className="text-center py-8">
+                  <FiFileText className="h-12 w-12 text-gray-300 mx-auto mb-3" />
+                  <p className="text-gray-500">Không có tài liệu nào</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {documents.slice(0, 5).map((document) => (
+                    <div key={document.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                      <div className="flex items-center space-x-3 flex-1 min-w-0">
+                        <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <FiFileText className="h-4 w-4 text-orange-600" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-gray-900 line-clamp-1">{document.title}</h4>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <span className={`text-xs px-2 py-1 rounded-full border ${categoryMapping[document.category]?.color || 'bg-gray-50 text-gray-700 border-gray-200'}`}>
+                              {categoryMapping[document.category]?.label || document.category}
+                            </span>
+                            <span className="text-xs text-gray-500">{formatDate(document.createdAt)}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <a 
+                        href={document.filePath}
+                        download
+                        className="text-orange-600 hover:text-orange-700 p-2 rounded-lg hover:bg-orange-50 transition-colors"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <FiDownload className="h-4 w-4" />
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 } 
