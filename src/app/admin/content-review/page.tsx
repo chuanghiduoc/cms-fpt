@@ -78,11 +78,11 @@ export default function ContentReviewPage() {
           <div className="p-8">
             <div className="flex items-center mb-5">
               <motion.div 
-                className="bg-blue-100 p-4 rounded-full"
-                whileHover={{ scale: 1.1, backgroundColor: "#dbeafe" }}
+                className="bg-orange-50 p-4 rounded-full"
+                whileHover={{ scale: 1.1, backgroundColor: "#ffedd5" }}
                 whileTap={{ scale: 0.95 }}
               >
-                <FiFileText className="text-blue-600 text-2xl" />
+                <FiFileText className="text-orange-600 text-2xl" />
               </motion.div>
               <h2 className="text-2xl font-bold ml-4 text-gray-800">Tài liệu</h2>
             </div>
@@ -93,14 +93,15 @@ export default function ContentReviewPage() {
             
             <motion.div whileTap={{ scale: 0.98 }}>
               <Link href="/admin/content-review/documents" 
-                className="flex items-center justify-between bg-blue-600 text-white font-medium py-4 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 w-full">
-                <span className="text-lg">Quản lý tài liệu</span>
+                className="group flex items-center bg-gray-50 border border-gray-200 text-gray-700 font-medium py-3 px-5 rounded-md hover:bg-orange-50 hover:border-orange-200 hover:text-orange-700 transition-colors duration-300">
+                <span className="text-md mr-auto">Quản lý tài liệu</span>
                 <motion.div
                   initial={{ x: 0 }}
                   whileHover={{ x: 5 }}
                   transition={{ type: "spring", stiffness: 400 }}
+                  className="text-orange-600 group-hover:text-orange-700"
                 >
-                  <FiArrowRight className="ml-2" size={20} />
+                  <FiArrowRight size={18} />
                 </motion.div>
               </Link>
             </motion.div>
@@ -116,11 +117,11 @@ export default function ContentReviewPage() {
           <div className="p-8">
             <div className="flex items-center mb-5">
               <motion.div 
-                className="bg-green-100 p-4 rounded-full"
-                whileHover={{ scale: 1.1, backgroundColor: "#dcfce7" }}
+                className="bg-orange-50 p-4 rounded-full"
+                whileHover={{ scale: 1.1, backgroundColor: "#ffedd5" }}
                 whileTap={{ scale: 0.95 }}
               >
-                <FiEdit className="text-green-600 text-2xl" />
+                <FiEdit className="text-orange-600 text-2xl" />
               </motion.div>
               <h2 className="text-2xl font-bold ml-4 text-gray-800">Bài viết</h2>
             </div>
@@ -131,14 +132,15 @@ export default function ContentReviewPage() {
             
             <motion.div whileTap={{ scale: 0.98 }}>
               <Link href="/admin/content-review/posts" 
-                className="flex items-center justify-between bg-green-600 text-white font-medium py-4 px-6 rounded-lg hover:bg-green-700 transition-colors duration-300 w-full">
-                <span className="text-lg">Quản lý bài viết</span>
+                className="group flex items-center bg-gray-50 border border-gray-200 text-gray-700 font-medium py-3 px-5 rounded-md hover:bg-orange-50 hover:border-orange-200 hover:text-orange-700 transition-colors duration-300">
+                <span className="text-md mr-auto">Quản lý bài viết</span>
                 <motion.div
                   initial={{ x: 0 }}
                   whileHover={{ x: 5 }}
                   transition={{ type: "spring", stiffness: 400 }}
+                  className="text-orange-600 group-hover:text-orange-700"
                 >
-                  <FiArrowRight className="ml-2" size={20} />
+                  <FiArrowRight size={18} />
                 </motion.div>
               </Link>
             </motion.div>

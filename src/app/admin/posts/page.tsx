@@ -484,7 +484,7 @@ export default function AdminPostsPage() {
       <div className="bg-white shadow rounded-lg overflow-hidden relative">
         <div className="px-6 py-4 border-b border-gray-200 bg-white">
           <h2 className="text-lg font-medium text-gray-900 flex items-center">
-            <FiEdit className="mr-2 h-5 w-5 text-gray-500" />
+            <FiEdit className="mr-2 h-5 w-5 text-orange-500" />
             Danh sách bài viết
           </h2>
         </div>

@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 import { format } from 'date-fns';
-import { FiArrowLeft, FiCalendar, FiClock, FiMapPin, FiCheck, FiX, FiInfo, FiUser, FiBriefcase } from 'react-icons/fi';
+import { FiArrowLeft, FiCalendar, FiClock, FiMapPin, FiCheck, FiX, FiInfo, FiUser } from 'react-icons/fi';
+import { MdOutlineCorporateFare } from 'react-icons/md';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 
@@ -426,7 +427,7 @@ export default function EventDetailPage() {
               
               <div className="flex items-start">
                 <div className="p-2 bg-orange-50 rounded-full mr-3 flex-shrink-0">
-                  <FiBriefcase className="text-orange-500 h-5 w-5" />
+                  <MdOutlineCorporateFare className="text-orange-500 h-5 w-5" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Phòng ban</p>

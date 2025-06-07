@@ -383,19 +383,6 @@ export function DashboardLayout({
                 </a>
               </div>
             </div>
-            <div className="border-t border-gray-200 p-4">
-              <button
-                className="w-full flex items-center px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-md cursor-pointer"
-                onClick={() => {
-                  setSidebarOpen(false);
-                  signOut({ callbackUrl: '/login' });
-                }}
-                style={{ cursor: 'pointer', outline: 'none' }}
-              >
-                <FiLogOut className="mr-3 h-5 w-5 text-red-500" />
-                Đăng xuất
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -568,16 +555,6 @@ export function DashboardLayout({
                       <span className="truncate">Trợ giúp</span>
                     </a>
                   </div>
-                </div>
-                <div className="border-t border-gray-200 p-4">
-                  <button
-                    className="w-full flex items-center px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-md"
-                    onClick={() => signOut({ callbackUrl: '/login' })}
-                    style={{ cursor: 'pointer', outline: 'none' }}
-                  >
-                    <FiLogOut className="mr-3 h-5 w-5 text-red-500" />
-                    Đăng xuất
-                  </button>
                 </div>
               </div>
             </div>

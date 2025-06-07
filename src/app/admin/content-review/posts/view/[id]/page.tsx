@@ -241,7 +241,7 @@ export default function ViewPostPage() {
         <div className="mt-6">
           <Link
             href="/admin/content-review/posts"
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 cursor-pointer"
+            className="inline-flex items-center text-md font-medium text-orange-600 hover:text-orange-700 focus:outline-none cursor-pointer"
           >
             <FiArrowLeft className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
             Quay lại danh sách bài viết
@@ -257,8 +257,8 @@ export default function ViewPostPage() {
       <div>
         <Link
           href="/admin/content-review/posts"
-          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 cursor-pointer"
-        >
+          className="inline-flex items-center text-md font-medium text-orange-600 hover:text-orange-700 focus:outline-none cursor-pointer"
+          >
           <FiArrowLeft className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
           Quay lại danh sách bài viết
         </Link>
@@ -270,30 +270,22 @@ export default function ViewPostPage() {
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
             <h1 className="text-2xl font-bold text-gray-900 flex-1 mb-4 md:mb-0">{post.title}</h1>
             
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               <Link
                 href={`/admin/content-review/posts/edit/${post.id}`}
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer"
+                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 cursor-pointer"
               >
-                <FiEdit2 className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+                <FiEdit2 className="-ml-1 mr-2 h-4 w-4" aria-hidden="true" />
                 Chỉnh sửa
               </Link>
-              
-              <button
-                onClick={handleDeletePost}
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer"
-              >
-                <FiTrash2 className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-                Xóa
-              </button>
               
               {post.isPublic ? (
                 <button
                   onClick={() => handleApprovePost(false)}
                   disabled={approving}
-                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  <FiXCircle className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+                  <FiXCircle className="-ml-1 mr-2 h-4 w-4" aria-hidden="true" />
                   Hủy duyệt
                 </button>
               ) : (
@@ -302,10 +294,18 @@ export default function ViewPostPage() {
                   disabled={approving}
                   className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  <FiCheckCircle className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+                  <FiCheckCircle className="-ml-1 mr-2 h-4 w-4" aria-hidden="true" />
                   Phê duyệt
                 </button>
               )}
+              
+              <button
+                onClick={handleDeletePost}
+                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-red-600 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer"
+              >
+                <FiTrash2 className="-ml-1 mr-2 h-4 w-4" aria-hidden="true" />
+                Xóa
+              </button>
             </div>
           </div>
           

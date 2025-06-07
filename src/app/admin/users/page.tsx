@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { FiPlus, FiSearch, FiFilter, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
+import { FiPlus, FiSearch, FiFilter, FiChevronLeft, FiChevronRight, FiX, FiUsers } from 'react-icons/fi';
 import UserEditModal from '@/components/users/UserEditModal';
 import UserCreateModal from '@/components/users/UserCreateModal';
 import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';
@@ -692,7 +692,7 @@ export default function UserManagementPage() {
       <div className="bg-white shadow rounded-lg overflow-hidden relative">
         <div className="px-6 py-4 border-b border-gray-200 bg-white">
           <h2 className="text-lg font-medium text-gray-900 flex items-center">
-            <FiSearch className="mr-2 h-5 w-5 text-gray-500" />
+            <FiUsers className="mr-2 h-5 w-5 text-orange-500" />
             Danh sách người dùng
           </h2>
         </div>

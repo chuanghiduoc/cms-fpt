@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { FiSave, FiX, FiPaperclip, FiImage, FiEye, FiCheckCircle, FiArrowLeft } from 'react-icons/fi';
+import { FiX, FiPaperclip, FiImage, FiEye, FiCheckCircle, FiArrowLeft } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -661,15 +661,6 @@ export default function CreatePostPage() {
               </div>
               
               <div className="flex justify-end space-x-3 pt-4 border-t border-gray-100">
-                <button
-                  type="button"
-                  onClick={(e) => handleSubmit(e, true)}
-                  disabled={loading}
-                  className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 cursor-pointer disabled:opacity-50"
-                >
-                  <FiSave className="mr-2 -ml-1 h-4 w-4" />
-                  Lưu nháp
-                </button>
                 <button
                   type="button"
                   onClick={() => router.back()}

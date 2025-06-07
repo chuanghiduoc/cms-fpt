@@ -6,6 +6,7 @@ import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FiEdit2, FiTrash2, FiArrowLeft, FiCalendar, FiUser, FiTag } from 'react-icons/fi';
+import { MdOutlineCorporateFare } from 'react-icons/md';
 import toast from 'react-hot-toast';
 import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';
 
@@ -269,14 +270,16 @@ export default function PostDetailPage() {
                 <FiUser className="mr-2" /> Tác giả
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {post.author.name} ({post.author.email})
+                {post.author ? `${post.author.name} (${post.author.email})` : 'Không rõ tác giả'}
               </dd>
             </div>
             
             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Phòng ban</dt>
+              <dt className="text-sm font-medium text-gray-500 flex items-center">
+                <MdOutlineCorporateFare className="mr-2" /> Phòng ban
+              </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {post.department.name}
+                {post.department ? post.department.name : 'Không rõ phòng ban'}
               </dd>
             </div>
             

@@ -368,7 +368,7 @@ export default function AdminDocumentsReviewPage() {
                     Phòng ban
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Người tải lên
+                    Ngày tạo
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Trạng thái
@@ -449,7 +449,7 @@ export default function AdminDocumentsReviewPage() {
             <FiArrowLeft className="h-5 w-5" />
           </Link>
           <h1 className="text-2xl font-semibold text-gray-900 flex items-center">
-            <FiFileText className="mr-2 h-6 w-6 text-orange-500" />
+            {/* <FiFileText className="mr-2 h-6 w-6 text-orange-500" /> */}
             Quản lý tài liệu
           </h1>
         </div>
@@ -652,9 +652,6 @@ export default function AdminDocumentsReviewPage() {
                   Phòng ban
                 </th>
                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Người tải lên
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Ngày tạo
                 </th>
                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -695,9 +692,6 @@ export default function AdminDocumentsReviewPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 cursor-default">
                       {doc.department?.name || 'Không có phòng ban'}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 cursor-default">
-                      {doc.uploadedBy.name}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 cursor-default">
                       {formatDate(doc.createdAt)}

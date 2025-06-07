@@ -327,10 +327,10 @@ export default function EditPostPage() {
         <div className="mt-6">
           <Link
             href="/admin/content-review"
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 cursor-pointer"
-          >
+            className="inline-flex items-center text-md font-medium text-orange-600 hover:text-orange-700 focus:outline-none cursor-pointer"
+            >
             <FiArrowLeft className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-            Quay lại danh sách nội dung
+            Quay lại danh sách bài viết
           </Link>
         </div>
       </div>
@@ -343,7 +343,7 @@ export default function EditPostPage() {
       <div>
         <Link
           href={`/admin/content-review/posts/view/${post.id}`}
-          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 cursor-pointer"
+          className="inline-flex items-center text-md font-medium text-orange-600 hover:text-orange-700 focus:outline-none cursor-pointer"
         >
           <FiArrowLeft className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
           Quay lại xem bài viết
@@ -366,7 +366,7 @@ export default function EditPostPage() {
                 name="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
+                className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-blue-400 focus:border-blue-400 outline-none transition duration-150"
                 required
               />
             </div>
@@ -380,7 +380,7 @@ export default function EditPostPage() {
                 name="department"
                 value={departmentId}
                 onChange={(e) => setDepartmentId(e.target.value)}
-                className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
+                className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-blue-400 focus:border-blue-400 outline-none transition duration-150"
               >
                 <option value="">Không có phòng ban</option>
                 {departments.map((department) => (
@@ -476,36 +476,18 @@ export default function EditPostPage() {
                 Thẻ
               </label>
               <div className="mt-1">
-                <div className="flex">
-                  <input
-                    type="text"
-                    id="tags"
-                    value={tagInput}
-                    onChange={(e) => setTagInput(e.target.value)}
-                    onKeyDown={handleTagKeyDown}
-                    className="block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
-                    placeholder="Thêm thẻ và nhấn Enter"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleAddTag}
-                    className="inline-flex items-center px-4 py-2 border border-transparent rounded-r-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                  >
-                    Thêm
-                  </button>
-                </div>
                 {tags.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mb-2">
                     {tags.map((tag, index) => (
                       <span
                         key={index}
-                        className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800"
+                        className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
                       >
                         {tag}
                         <button
                           type="button"
                           onClick={() => handleRemoveTag(tag)}
-                          className="ml-1.5 inline-flex items-center justify-center h-4 w-4 rounded-full text-orange-400 hover:bg-orange-200 hover:text-orange-500 focus:outline-none"
+                          className="ml-1.5 inline-flex items-center justify-center h-4 w-4 rounded-full text-blue-400 hover:bg-blue-200 hover:text-blue-500 focus:outline-none"
                         >
                           <span className="sr-only">Remove tag</span>
                           <svg className="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
@@ -516,6 +498,27 @@ export default function EditPostPage() {
                     ))}
                   </div>
                 )}
+                <div className="flex">
+                  <input
+                    type="text"
+                    id="tags"
+                    value={tagInput}
+                    onChange={(e) => setTagInput(e.target.value)}
+                    onKeyDown={handleTagKeyDown}
+                    className="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:outline-none focus:ring-orange-400 focus:border-orange-400 sm:text-sm text-gray-900 cursor-text"
+                    placeholder="Nhập thẻ và nhấn Enter"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddTag}
+                    className="ml-2 inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
+                  >
+                    Thêm
+                  </button>
+                </div>
+                <p className="mt-1 text-sm text-gray-500">
+                  Thêm thẻ để phân loại bài viết (ví dụ: hướng dẫn, báo cáo, khoa học)
+                </p>
               </div>
             </div>
             
@@ -528,7 +531,7 @@ export default function EditPostPage() {
                     type="checkbox"
                     checked={isPublic}
                     onChange={(e) => setIsPublic(e.target.checked)}
-                    className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                   />
                 </div>
                 <div className="ml-3 text-sm">

@@ -487,7 +487,7 @@ export default function EditPostPage() {
                 <FiArrowLeft className="h-5 w-5" />
               </button>
               <h1 className="text-2xl font-semibold text-gray-900 flex items-center">
-                <FiSave className="mr-2 h-6 w-6 text-orange-500" />
+                {/* <FiSave className="mr-2 h-6 w-6 text-orange-500" /> */}
                 Chỉnh sửa bài viết
               </h1>
             </div>

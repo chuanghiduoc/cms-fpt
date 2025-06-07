@@ -788,7 +788,7 @@ export default function DepartmentEventsPage() {
       <div className="bg-white shadow rounded-lg overflow-hidden relative">
         <div className="px-6 py-4 border-b border-gray-200 bg-white">
           <h2 className="text-lg font-semibold text-gray-800 flex items-center">
-            <FiCalendar className="mr-2 text-gray-500" /> Sự kiện đã diễn ra
+            <FiCalendar className="mr-2 text-orange-500" /> Sự kiện đã diễn ra
           </h2>
         </div>
         
@@ -890,7 +890,7 @@ export default function DepartmentEventsPage() {
                     <td className="px-6 py-4">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center bg-gray-100 rounded-full">
-                          <FiCalendar className="h-5 w-5 text-gray-600" />
+                          <FiCalendar className="h-5 w-5 text-orange-500" />
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900">{event.title}</div>

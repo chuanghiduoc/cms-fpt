@@ -5,11 +5,10 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
-  FiEye,
+  FiInfo,
   FiFilter,
   FiSearch,
   FiCheckCircle,
-  FiInfo,
   FiRefreshCw,
   FiCheck,
   FiX,
@@ -458,7 +457,7 @@ export default function AdminPostsReviewPage() {
             <FiArrowLeft className="h-5 w-5" />
           </Link>
           <h1 className="text-2xl font-semibold text-gray-900 flex items-center">
-            <FiEdit className="mr-2 h-6 w-6 text-orange-500" />
+            {/* <FiEdit className="mr-2 h-6 w-6 text-orange-500" /> */}
             Quản lý bài viết
           </h1>
         </div>
@@ -703,7 +702,7 @@ export default function AdminPostsReviewPage() {
                           className="text-blue-600 hover:text-blue-900 p-1.5 rounded-full hover:bg-blue-50 cursor-pointer"
                           title="Xem"
                         >
-                          <FiEye className="h-5 w-5" />
+                          <FiInfo className="h-5 w-5" />
                         </Link>
                         
                         <Link 

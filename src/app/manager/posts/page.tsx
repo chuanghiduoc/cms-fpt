@@ -481,7 +481,7 @@ export default function DepartmentPostsPage() {
       <div className="bg-white shadow rounded-lg overflow-hidden relative">
         <div className="px-6 py-4 border-b border-gray-200 bg-white">
           <h2 className="text-lg font-medium text-gray-900 flex items-center">
-            <FiEdit className="mr-2 h-5 w-5 text-gray-500" />
+            <FiEdit className="mr-2 h-5 w-5 text-orange-500" />
             Danh sách bài viết
           </h2>
         </div>
@@ -496,9 +496,6 @@ export default function DepartmentPostsPage() {
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Ngày tạo
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Tác giả
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Phạm vi
@@ -531,9 +528,6 @@ export default function DepartmentPostsPage() {
                       <div className="h-4 bg-gray-200 rounded w-24"></div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="h-4 bg-gray-200 rounded w-32"></div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
                       <div className="h-6 bg-gray-200 rounded-full w-20"></div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -561,9 +555,6 @@ export default function DepartmentPostsPage() {
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Ngày tạo
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Tác giả
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Phạm vi
@@ -615,9 +606,6 @@ export default function DepartmentPostsPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {formatDate(post.createdAt)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {post.author.name}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${post.isPublic ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>

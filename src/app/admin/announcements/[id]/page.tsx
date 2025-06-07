@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
-import { FiBell, FiArrowLeft, FiEdit2, FiTrash2, FiCalendar, FiUsers, FiEye } from 'react-icons/fi';
+import { FiArrowLeft, FiEdit2, FiTrash2, FiCalendar, FiUsers, FiEye } from 'react-icons/fi';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';
@@ -227,7 +227,7 @@ export default function SystemAnnouncementDetailPage() {
             <FiArrowLeft className="h-5 w-5" />
           </Link>
           <h1 className="text-2xl font-semibold text-gray-900 flex items-center">
-            <FiBell className="mr-2 h-6 w-6 text-orange-500" />
+            {/* <FiBell className="mr-2 h-6 w-6 text-orange-500" /> */}
             Chi tiết thông báo hệ thống
           </h1>
         </div>

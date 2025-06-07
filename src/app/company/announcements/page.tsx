@@ -245,7 +245,7 @@ export default function EmployeeAnnouncementsPage() {
                       <p className="mt-3 text-sm text-gray-600 line-clamp-2">{announcement.content}</p>
                       <div className="mt-3 flex justify-between items-center">
                         <Link href={`/company/announcements/${announcement.id}`} 
-                          className="text-sm font-medium text-orange-600 hover:text-orange-800 flex items-center group focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-opacity-60 rounded-md px-2 py-1 -mx-2 -my-1">
+                          className="text-sm font-medium text-orange-600 hover:text-orange-800 flex items-center group rounded-md px-2 py-1 -mx-2 -my-1">
                           Xem chi tiết 
                           <motion.div
                             initial={{ x: 0 }}

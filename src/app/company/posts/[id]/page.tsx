@@ -5,7 +5,8 @@ import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FiArrowLeft, FiCalendar, FiUser, FiTag, FiBriefcase, FiShare2 } from 'react-icons/fi';
+import { FiArrowLeft, FiCalendar, FiUser, FiTag, FiShare2 } from 'react-icons/fi';
+import { MdOutlineCorporateFare } from 'react-icons/md';
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
@@ -151,7 +152,7 @@ export default function PostDetailPage() {
       <div>
         <Link 
           href="/company/posts"
-          className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+          className="inline-flex items-center text-orange-600 hover:text-orange-800 font-medium"
         >
           <FiArrowLeft className="mr-2 h-4 w-4" />
           Quay lại danh sách bài viết
@@ -191,7 +192,7 @@ export default function PostDetailPage() {
             </div>
             {post.department && (
               <div className="flex items-center">
-                <FiBriefcase className="mr-1" />
+                <MdOutlineCorporateFare className="mr-1" />
                 <span>{post.department.name}</span>
               </div>
             )}

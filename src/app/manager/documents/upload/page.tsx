@@ -213,17 +213,15 @@ export default function UploadDocumentPage() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <Link href="/manager/documents" className="mr-4 text-gray-500 hover:text-gray-700">
-              <FiArrowLeft className="h-5 w-5" />
-            </Link>
-            <h1 className="text-2xl font-semibold text-gray-900 flex items-center">
-              <FiUpload className="mr-2 h-6 w-6 text-orange-500" />
-              Tải lên tài liệu mới
-            </h1>
-          </div>
-        </div>
+      <div>
+        <Link 
+          href="/company/posts"
+          className="inline-flex items-center text-orange-600 hover:text-orange-800 font-medium"
+        >
+          <FiArrowLeft className="mr-2 h-4 w-4" />
+          Quay lại danh sách bài viết
+        </Link>
+      </div>
         
         <div className="bg-white shadow-sm rounded-lg overflow-hidden p-6">
           <div className="space-y-6 animate-pulse">
@@ -291,7 +289,6 @@ export default function UploadDocumentPage() {
             <FiArrowLeft className="h-5 w-5" />
           </Link>
           <h1 className="text-2xl font-semibold text-gray-900 flex items-center">
-            <FiUpload className="mr-2 h-6 w-6 text-orange-500" />
             Tải lên tài liệu mới
           </h1>
         </div>

@@ -677,7 +677,7 @@ export default function EmployeeDocumentsPage() {
                             whileTap={{ scale: 0.9 }}
                             href={doc.filePath}
                             download
-                            className="text-green-600 hover:text-green-900 p-1.5 rounded-full hover:bg-green-50"
+                            className="text-orange-600 hover:text-orange-900 p-1.5 rounded-full hover:bg-orange-50"
                             title="Tải xuống"
                           >
                             <FiDownload className="h-5 w-5" />

@@ -209,7 +209,7 @@ export default function EditDocumentPage() {
               <FiArrowLeft className="h-5 w-5" />
             </Link>
             <h1 className="text-2xl font-semibold text-gray-900 flex items-center">
-              <FiFileText className="mr-2 h-6 w-6 text-orange-500" />
+              {/* <FiFileText className="mr-2 h-6 w-6 text-orange-500" /> */}
               Chỉnh sửa tài liệu
             </h1>
           </div>
@@ -291,7 +291,7 @@ export default function EditDocumentPage() {
             <FiArrowLeft className="h-5 w-5" />
           </Link>
           <h1 className="text-2xl font-semibold text-gray-900 flex items-center">
-            <FiFileText className="mr-2 h-6 w-6 text-orange-500" />
+            {/* <FiFileText className="mr-2 h-6 w-6 text-orange-500" /> */}
             Chỉnh sửa tài liệu
           </h1>
         </div>

@@ -120,21 +120,6 @@ export default function LoginPage() {
             >
               Vui lòng đăng nhập để truy cập hệ thống quản lý nội dung FPT
             </motion.p>
-
-            <AnimatePresence>
-              {error && (
-                <motion.div 
-                  className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700"
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <FiAlertCircle className="flex-shrink-0" />
-                  <span>{error}</span>
-                </motion.div>
-              )}
-            </AnimatePresence>
             
             <form onSubmit={handleSubmit}>
               <div className="space-y-5">
@@ -194,7 +179,20 @@ export default function LoginPage() {
                     </motion.button>
                   </div>
                 </motion.div>
-                
+                <AnimatePresence>
+              {error && (
+                <motion.div 
+                  className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <FiAlertCircle className="flex-shrink-0" />
+                  <span>{error}</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
                 <motion.div variants={itemVariants}>
                   <motion.button
                     type="submit"

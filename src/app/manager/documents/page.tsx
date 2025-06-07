@@ -480,7 +480,7 @@ export default function DocumentsManagerPage() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  {[...Array(9)].map((_, i) => (
+                  {[...Array(7)].map((_, i) => (
                     <th key={i} scope="col" className="px-6 py-3 text-left">
                       <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
                     </th>
@@ -504,13 +504,6 @@ export default function DocumentsManagerPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="h-5 bg-gray-200 rounded-full w-20 animate-pulse"></div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="h-4 bg-gray-200 rounded w-24 animate-pulse"></div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="h-4 bg-gray-200 rounded w-24 mb-1 animate-pulse"></div>
-                      <div className="h-3 bg-gray-200 rounded w-32 animate-pulse"></div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="h-5 bg-gray-200 rounded-full w-16 animate-pulse"></div>
@@ -822,7 +815,7 @@ export default function DocumentsManagerPage() {
         {/* Header with title */}
         <div className="px-6 py-4 border-b border-gray-200 bg-white">
           <h2 className="text-lg font-medium text-gray-900 flex items-center">
-            <FiFileText className="mr-2 h-5 w-5 text-gray-500" />
+            <FiFileText className="mr-2 h-5 w-5 text-orange-500" />
             Danh sách tài liệu
           </h2>
         </div>
@@ -850,12 +843,6 @@ export default function DocumentsManagerPage() {
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Phân loại
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Phòng ban
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Người tải lên
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Trạng thái
@@ -892,13 +879,6 @@ export default function DocumentsManagerPage() {
                       <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getCategoryColor(doc.category)}`}>
                         {getCategoryName(doc.category)}
                       </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {doc.department?.name || 'Không có phòng ban'}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{doc.uploadedBy.name}</div>
-                      <div className="text-xs text-gray-500">{doc.uploadedBy.email}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(doc.status)}`}>

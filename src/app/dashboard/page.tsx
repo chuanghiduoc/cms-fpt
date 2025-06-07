@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useState, useEffect, useCallback } from 'react';
-import { FiFileText, FiBell, FiCalendar, FiSearch, FiDownload, FiChevronRight, FiUsers, FiEdit, FiClock, FiMapPin, FiCheckSquare } from 'react-icons/fi';
+import { FiFileText, FiBell, FiCalendar, FiSearch, FiDownload, FiChevronRight, FiUsers, FiEdit, FiClock, FiMapPin, FiCheckSquare, FiFile } from 'react-icons/fi';
 import {MdOutlineCorporateFare} from 'react-icons/md';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
@@ -253,8 +253,8 @@ export default function DashboardPage() {
               <>
                 <Link href="/admin/users" className="group bg-white rounded-xl p-4 hover:shadow-md transition-all">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
-                      <FiUsers className="h-5 w-5 text-orange-600" />
+                    <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                      <FiUsers className="h-5 w-5 text-gray-600" />
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-900">Quản lý người dùng</h3>
@@ -264,8 +264,8 @@ export default function DashboardPage() {
                 </Link>
                 <Link href="/admin/departments" className="group bg-white rounded-xl p-4 hover:shadow-md transition-all">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
-                      <MdOutlineCorporateFare className="h-5 w-5 text-orange-600" />
+                    <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                      <MdOutlineCorporateFare className="h-5 w-5 text-gray-600" />
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-900">Quản lý phòng ban</h3>
@@ -275,8 +275,8 @@ export default function DashboardPage() {
                 </Link>
                 <Link href="/admin/content-review" className="group bg-white rounded-xl p-4 hover:shadow-md transition-all">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
-                      <FiCheckSquare className="h-5 w-5 text-orange-600" />
+                    <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                      <FiCheckSquare className="h-5 w-5 text-gray-600" />
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-900">Kiểm duyệt nội dung</h3>
@@ -289,8 +289,8 @@ export default function DashboardPage() {
               <>
                 <Link href="/manager/documents/upload" className="group bg-white rounded-xl p-4 hover:shadow-md transition-all">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
-                      <FiFileText className="h-5 w-5 text-orange-600" />
+                    <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                      <FiFile className="h-5 w-5 text-gray-600" />
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-900">Tải lên tài liệu</h3>
@@ -300,8 +300,8 @@ export default function DashboardPage() {
                 </Link>
                 <Link href="/manager/announcements/create" className="group bg-white rounded-xl p-4 hover:shadow-md transition-all">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
-                      <FiBell className="h-5 w-5 text-orange-600" />
+                    <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                      <FiBell className="h-5 w-5 text-gray-600" />
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-900">Tạo thông báo</h3>
@@ -311,8 +311,8 @@ export default function DashboardPage() {
                 </Link>
                 <Link href="/manager/events/create" className="group bg-white rounded-xl p-4 hover:shadow-md transition-all">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
-                      <FiCalendar className="h-5 w-5 text-orange-600" />
+                    <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                      <FiCalendar className="h-5 w-5 text-gray-600" />
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-900">Tạo sự kiện</h3>
@@ -462,12 +462,12 @@ export default function DashboardPage() {
                             {post.content.replace(/<[^>]*>?/gm, '')}
                           </p>
                           <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-200">
-                            <span className="text-xs text-gray-500">{formatDate(post.createdAt)}</span>
                             {post.department && (
-                              <span className="text-xs px-2 py-1 bg-orange-50 text-orange-700 rounded-full">
+                              <span className="text-xs text-gray-500">
                                 {post.department.name}
                               </span>
                             )}
+                            <span className="text-xs text-gray-500">{formatDate(post.createdAt)}</span>
                           </div>
                         </div>
                       </article>
@@ -502,8 +502,8 @@ export default function DashboardPage() {
                   {documents.slice(0, 5).map((document) => (
                     <div key={document.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
                       <div className="flex items-center space-x-3 flex-1 min-w-0">
-                        <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <FiFileText className="h-4 w-4 text-orange-600" />
+                        <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <FiFileText className="h-4 w-4 text-gray-600" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <h4 className="font-medium text-gray-900 line-clamp-1">{document.title}</h4>

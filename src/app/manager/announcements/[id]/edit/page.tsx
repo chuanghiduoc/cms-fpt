@@ -3,11 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
-import { FiBell, FiArrowLeft } from 'react-icons/fi';
+import { FiArrowLeft } from 'react-icons/fi';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import AnnouncementForm from '@/components/announcements/AnnouncementForm';
-import React from 'react';
 
 interface Announcement {
   id: string;
@@ -145,7 +144,7 @@ export default function EditAnnouncementPage() {
             <FiArrowLeft className="h-5 w-5" />
           </Link>
           <h1 className="text-2xl font-semibold text-gray-900 flex items-center">
-            <FiBell className="mr-2 h-6 w-6 text-orange-500" />
+            {/* <FiBell className="mr-2 h-6 w-6 text-orange-500" /> */}
             Chỉnh sửa thông báo
           </h1>
         </div>

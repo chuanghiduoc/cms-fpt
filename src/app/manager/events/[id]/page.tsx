@@ -423,7 +423,7 @@ export default function EventDetailsPage({ params }: { params: Promise<RoutePara
             <FiArrowLeft className="h-5 w-5" />
           </Link>
           <h1 className="text-2xl font-semibold text-gray-900 flex items-center">
-            <FiCalendar className="mr-2 h-6 w-6 text-orange-500" />
+            {/* <FiCalendar className="mr-2 h-6 w-6 text-orange-500" /> */}
             Chi tiết sự kiện
           </h1>
         </div>
