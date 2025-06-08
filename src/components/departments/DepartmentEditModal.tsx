@@ -258,7 +258,7 @@ export default function DepartmentEditModal({
                     onClick={onClose}
                     disabled={isLoading}
                   >
-                    Hủy
+                    Hủy bỏ
                   </button>
                 </div>
               </form>

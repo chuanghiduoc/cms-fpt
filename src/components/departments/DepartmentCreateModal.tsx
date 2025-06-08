@@ -244,7 +244,7 @@ export default function DepartmentCreateModal({
                     onClick={onClose}
                     disabled={isLoading}
                   >
-                    Hủy
+                    Hủy bỏ
                   </button>
                 </div>
               </form>

@@ -95,7 +95,7 @@ export default function DeleteConfirmModal({
                   onClick={onClose}
                   ref={cancelButtonRef}
                 >
-                  Hủy
+                  Hủy bỏ
                 </button>
               </div>
             </div>

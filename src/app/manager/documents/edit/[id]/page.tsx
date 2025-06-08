@@ -465,7 +465,7 @@ export default function EditDocumentPage() {
               onClick={() => router.back()}
               className="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 outline-none cursor-pointer"
             >
-              Hủy
+              Hủy bỏ
             </button>
             <button
               type="submit"

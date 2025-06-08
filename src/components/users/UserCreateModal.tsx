@@ -373,7 +373,7 @@ export default function UserCreateModal({
                     onClick={onClose}
                     disabled={loading}
                   >
-                    Hủy
+                    Hủy bỏ
                   </button>
                 </div>
               </form>

@@ -518,7 +518,7 @@ export default function DashboardPage() {
                       <a 
                         href={document.filePath}
                         download
-                        className="text-orange-600 hover:text-orange-700 p-2 rounded-lg hover:bg-orange-50 transition-colors"
+                        className="text-green-600 hover:text-green-700 p-2 rounded-lg hover:bg-green-50 transition-colors"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <FiDownload className="h-4 w-4" />

@@ -381,7 +381,7 @@ export default function UserEditModal({
                     onClick={onClose}
                     disabled={loading}
                   >
-                    Hủy
+                    Hủy bỏ
                   </button>
                 </div>
               </form>
