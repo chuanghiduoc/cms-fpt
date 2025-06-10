@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { FiSave, FiArrowLeft, FiUser, FiCalendar, FiMapPin, FiClock, FiAlertCircle, FiLoader, FiSearch } from 'react-icons/fi';
+import { FiArrowLeft, FiUser, FiCalendar, FiMapPin, FiClock, FiAlertCircle, FiLoader, FiSearch } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
 interface DepartmentUser {
@@ -320,7 +320,7 @@ export default function CreateEventPage() {
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-              Tiêu đề sự kiện <span className="text-red-500">*</span>
+              Tiêu đề sự kiện: <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -340,7 +340,7 @@ export default function CreateEventPage() {
           
           <div>
             <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-              Mô tả sự kiện <span className="text-red-500">*</span>
+              Mô tả sự kiện: <span className="text-red-500">*</span>
             </label>
             <textarea
               id="description"
@@ -360,7 +360,7 @@ export default function CreateEventPage() {
           
           <div>
             <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
-              Địa điểm <span className="text-red-500">*</span>
+              Địa điểm: <span className="text-red-500">*</span>
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -386,7 +386,7 @@ export default function CreateEventPage() {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div>
               <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-1">
-                Ngày bắt đầu <span className="text-red-500">*</span>
+                Ngày bắt đầu: <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -411,7 +411,7 @@ export default function CreateEventPage() {
             
             <div>
               <label htmlFor="startTime" className="block text-sm font-medium text-gray-700 mb-1">
-                Giờ bắt đầu <span className="text-red-500">*</span>
+                Giờ bắt đầu: <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -432,7 +432,7 @@ export default function CreateEventPage() {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div>
               <label htmlFor="endDate" className="block text-sm font-medium text-gray-700 mb-1">
-                Ngày kết thúc <span className="text-red-500">*</span>
+                Ngày kết thúc: <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -457,7 +457,7 @@ export default function CreateEventPage() {
             
             <div>
               <label htmlFor="endTime" className="block text-sm font-medium text-gray-700 mb-1">
-                Giờ kết thúc <span className="text-red-500">*</span>
+                Giờ kết thúc: <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -620,7 +620,6 @@ export default function CreateEventPage() {
                 </>
               ) : (
                 <>
-                  <FiSave className="mr-2" />
                   Tạo sự kiện
                 </>
               )}

@@ -68,11 +68,11 @@ export default function AdminDocumentsReviewPage() {
   
   // Document categories from the schema
   const documentCategories = [
-    { value: 'REPORT', label: 'Báo cáo', color: 'bg-blue-100 text-blue-800' },
-    { value: 'CONTRACT', label: 'Hợp đồng', color: 'bg-purple-100 text-purple-800' },
-    { value: 'GUIDE', label: 'Hướng dẫn', color: 'bg-green-100 text-green-800' },
-    { value: 'FORM', label: 'Biểu mẫu', color: 'bg-yellow-100 text-yellow-800' },
-    { value: 'OTHER', label: 'Khác', color: 'bg-gray-100 text-gray-800' }
+    { value: 'REPORT', label: 'Báo cáo' },
+    { value: 'CONTRACT', label: 'Hợp đồng' },
+    { value: 'GUIDE', label: 'Hướng dẫn' },
+    { value: 'FORM', label: 'Biểu mẫu' },
+    { value: 'OTHER', label: 'Khác' }
   ];
 
   // Add animation styles for slide down effect
@@ -200,11 +200,6 @@ export default function AdminDocumentsReviewPage() {
   const getCategoryName = (categoryValue: string) => {
     const category = documentCategories.find(cat => cat.value === categoryValue);
     return category ? category.label : categoryValue;
-  };
-
-  const getCategoryColor = (categoryValue: string) => {
-    const category = documentCategories.find(cat => cat.value === categoryValue);
-    return category ? category.color : 'bg-gray-100 text-gray-800';
   };
 
   const handleDeleteDocument = (document: Document) => {
@@ -686,7 +681,7 @@ export default function AdminDocumentsReviewPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getCategoryColor(doc.category)}`}>
+                      <span className="text-sm text-gray-500">
                         {getCategoryName(doc.category)}
                       </span>
                     </td>

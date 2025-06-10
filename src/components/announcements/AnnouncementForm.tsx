@@ -183,7 +183,7 @@ export default function AnnouncementForm({ announcement, isEditing = false }: An
     <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow">
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-          Tiêu đề <span className="text-red-500">*</span>
+          Tiêu đề: <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
@@ -199,7 +199,7 @@ export default function AnnouncementForm({ announcement, isEditing = false }: An
       
       <div>
         <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-          Nội dung <span className="text-red-500">*</span>
+          Nội dung: <span className="text-red-500">*</span>
         </label>
         <textarea
           id="content"
@@ -216,7 +216,7 @@ export default function AnnouncementForm({ announcement, isEditing = false }: An
       {!isSystemAnnouncement && (
         <div>
           <label htmlFor="departmentId" className="block text-sm font-medium text-gray-700">
-            Phòng ban
+            Phòng ban:
           </label>
           {isDepartmentHead ? (
             <div className="mt-1 block w-full rounded-md border border-gray-300 bg-gray-100 py-2 px-3 text-gray-700 sm:text-sm cursor-not-allowed">

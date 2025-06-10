@@ -33,26 +33,11 @@ export default function RootLayout({
       >
         <AuthProvider>{children}</AuthProvider>
         <Toaster 
-          position="top-right"
+          position="top-center"
           toastOptions={{
-            duration: 3000,
-            style: {
-              background: '#363636',
-              color: '#fff',
-            },
-            success: {
-              style: {
-                background: '#22c55e',
-                color: '#fff',
-              },
-            },
-            error: {
-              style: {
-                background: '#ef4444',
-                color: '#fff',
-              },
-            },
+            duration: 3000
           }}
+          reverseOrder={false}
         />
       </body>
     </html>

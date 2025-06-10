@@ -184,15 +184,6 @@ export default function EmployeeDocumentsPage() {
     return category ? category.label : categoryValue;
   };
 
-  const getCategoryColor = (categoryValue: string) => {
-    const category = documentCategories.find(cat => cat.value === categoryValue);
-    return {
-      bgClass: category ? category.bgClass : 'bg-gray-100',
-      textClass: category ? category.textClass : 'text-gray-800',
-      borderClass: category ? category.borderClass : 'border-gray-200'
-    };
-  };
-
   const handlePageChange = (newPage: number) => {
     if (newPage === currentPage) return;
     setCurrentPage(newPage);
@@ -525,7 +516,7 @@ export default function EmployeeDocumentsPage() {
                     onClick={() => handleCategoryFilterChange(category.value)}
                     className={`px-3 py-1.5 rounded-full text-xs font-medium border ${
                       selectedCategory === category.value
-                        ? `${category.bgClass} ${category.textClass} ${category.borderClass}`
+                        ? 'bg-orange-50 text-orange-700 border-orange-200'
                         : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
                     }`}
                     disabled={filterLoading}
@@ -604,7 +595,7 @@ export default function EmployeeDocumentsPage() {
                         <FiFileText className="h-10 w-10 text-gray-400" />
                       </motion.div>
                       <p className="text-gray-500 mb-6 text-center max-w-md">
-                        {selectedCategory || searchTerm ? 
+                        {(selectedCategory || searchTerm) ? 
                           'Không tìm thấy tài liệu nào phù hợp với bộ lọc hiện tại.' : 
                           'Không có tài liệu nào được tìm thấy.'}
                       </p>
@@ -659,7 +650,7 @@ export default function EmployeeDocumentsPage() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <motion.span 
                           whileHover={{ scale: 1.05 }}
-                          className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full border ${getCategoryColor(doc.category).bgClass} ${getCategoryColor(doc.category).textClass} ${getCategoryColor(doc.category).borderClass}`}
+                          className="text-sm text-gray-700"
                         >
                           {getCategoryName(doc.category)}
                         </motion.span>

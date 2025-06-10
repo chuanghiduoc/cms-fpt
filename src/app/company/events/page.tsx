@@ -452,7 +452,7 @@ export default function EmployeeEventsPage() {
                   }}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium border ${
                     confirmationFilter === 'confirmed'
-                      ? 'bg-green-50 text-green-700 border-green-200'
+                      ? 'bg-orange-50 text-orange-700 border-orange-200'
                       : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
                   }`}
                 >
@@ -486,7 +486,7 @@ export default function EmployeeEventsPage() {
                   }}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium border ${
                     confirmationFilter === 'declined'
-                      ? 'bg-red-50 text-red-700 border-red-200'
+                      ? 'bg-orange-50 text-orange-700 border-orange-200'
                       : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
                   }`}
                 >

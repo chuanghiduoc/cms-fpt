@@ -151,7 +151,7 @@ export default function DepartmentTable() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" className="px-6 py-3 text-left text-xs text-gray-500 uppercase tracking-wider">
                   Tên phòng ban
                 </th>
                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -165,27 +165,29 @@ export default function DepartmentTable() {
             <tbody className="bg-white divide-y divide-gray-200">
               {displayedDepartments.map((department) => (
                 <tr key={department.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {department.name}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {department.description || '-'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button
-                      onClick={() => handleEdit(department)}
-                      className="text-indigo-600 hover:text-indigo-900 mr-4"
-                    >
-                      <FiEdit2 className="h-4 w-4" />
-                      <span className="sr-only">Chỉnh sửa</span>
-                    </button>
-                    <button
-                      onClick={() => handleDelete(department)}
-                      className="text-red-600 hover:text-red-900"
-                    >
-                      <FiTrash2 className="h-4 w-4" />
-                      <span className="sr-only">Xóa</span>
-                    </button>
+                    <div className="flex justify-end space-x-3">
+                      <button
+                        onClick={() => handleEdit(department)}
+                        className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
+                        title="Chỉnh sửa"
+                      >
+                        <FiEdit2 className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(department)}
+                        className="text-red-600 hover:text-red-900 cursor-pointer"
+                        title="Xóa"
+                      >
+                        <FiTrash2 className="w-5 h-5" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

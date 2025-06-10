@@ -4,9 +4,8 @@ import { useState, useEffect, FormEvent } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { FiArrowLeft, FiSave, FiTrash } from 'react-icons/fi';
 import toast from 'react-hot-toast';
-
+import { FiArrowLeft } from 'react-icons/fi';
 interface Department {
   id: string;
   name: string;
@@ -274,7 +273,7 @@ export default function EditDocumentPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                Tiêu đề <span className="text-red-500">*</span>
+                Tiêu đề: <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -289,7 +288,7 @@ export default function EditDocumentPage() {
             
             <div>
               <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                Mô tả
+                Mô tả:
               </label>
               <textarea
                 id="description"
@@ -303,7 +302,7 @@ export default function EditDocumentPage() {
             
             <div>
               <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-                Phân loại <span className="text-red-500">*</span>
+                Phân loại: <span className="text-red-500">*</span>
               </label>
               <select
                 id="category"
@@ -324,7 +323,7 @@ export default function EditDocumentPage() {
             
             <div>
               <label htmlFor="department" className="block text-sm font-medium text-gray-700">
-                Phòng ban
+                Phòng ban:
               </label>
               <select
                 id="department"
@@ -348,7 +347,6 @@ export default function EditDocumentPage() {
                 onClick={() => setDeleteModalOpen(true)}
                 className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-red-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer"
               >
-                <FiTrash className="-ml-1 mr-2 h-5 w-5" />
                 Xóa tài liệu
               </button>
               
@@ -357,7 +355,6 @@ export default function EditDocumentPage() {
                 disabled={submitting}
                 className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
-                <FiSave className="-ml-1 mr-2 h-5 w-5" />
                 {submitting ? 'Đang lưu...' : 'Lưu thay đổi'}
               </button>
             </div>
@@ -378,9 +375,6 @@ export default function EditDocumentPage() {
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition duration-150 sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
-                  <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                    <FiTrash className="h-6 w-6 text-red-600" aria-hidden="true" />
-                  </div>
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                     <h3 className="text-lg leading-6 font-medium text-gray-900">
                       Xóa tài liệu

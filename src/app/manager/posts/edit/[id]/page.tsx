@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
-import { FiSave, FiX, FiPaperclip, FiImage, FiEye, FiArrowLeft } from 'react-icons/fi';
+import { FiX, FiPaperclip, FiImage, FiEye, FiArrowLeft } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -505,7 +505,7 @@ export default function EditPostPage() {
             <form className="p-6 space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-                  Tiêu đề bài viết <span className="text-red-500">*</span>
+                  Tiêu đề bài viết: <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -520,7 +520,7 @@ export default function EditPostPage() {
               {/* Cover Image Upload */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Ảnh bìa
+                  Ảnh bìa:
                 </label>
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md cursor-pointer">
                   {coverImage ? (
@@ -580,7 +580,7 @@ export default function EditPostPage() {
               {/* Tags Input */}
               <div>
                 <label htmlFor="tags" className="block text-sm font-medium text-gray-700 mb-1">
-                  Thẻ
+                  Thẻ:
                 </label>
                 <div className="flex flex-wrap gap-2 mb-2">
                   {tags.map((tag, index) => (
@@ -625,7 +625,7 @@ export default function EditPostPage() {
               {/* Rich Text Editor */}
               <div>
                 <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">
-                  Nội dung bài viết <span className="text-red-500">*</span>
+                  Nội dung bài viết: <span className="text-red-500">*</span>
                 </label>
                 <div className="mt-1">
                   <ReactQuill
@@ -646,7 +646,7 @@ export default function EditPostPage() {
               {/* File Attachments */}
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Tệp đính kèm
+                  Tệp đính kèm:
                 </label>
                 
                 {attachments.length > 0 && (
@@ -737,7 +737,6 @@ export default function EditPostPage() {
                     </>
                   ) : (
                     <>
-                      <FiSave className="mr-2 -ml-1" />
                       Lưu thay đổi
                     </>
                   )}

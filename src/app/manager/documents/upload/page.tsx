@@ -299,7 +299,7 @@ export default function UploadDocumentPage() {
           {/* Title */}
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-              Tiêu đề <span className="text-red-500">*</span>
+              Tiêu đề: <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -322,7 +322,7 @@ export default function UploadDocumentPage() {
           {/* Description */}
           <div>
             <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-              Mô tả
+              Mô tả:
             </label>
             <textarea
               id="description"
@@ -344,7 +344,7 @@ export default function UploadDocumentPage() {
           {/* Category */}
           <div>
             <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-              Phân loại
+              Phân loại:
             </label>
             <select
               id="category"
@@ -364,7 +364,7 @@ export default function UploadDocumentPage() {
           {/* Department */}
           <div>
             <label htmlFor="department" className="block text-sm font-medium text-gray-700">
-              Phòng ban {session?.user?.role === 'ADMIN' && <span className="text-red-500">*</span>}
+              Phòng ban: {session?.user?.role === 'ADMIN' && <span className="text-red-500">*</span>}
             </label>
             <select
               id="department"
@@ -419,7 +419,7 @@ export default function UploadDocumentPage() {
           {/* File upload */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Tệp tin <span className="text-red-500">*</span>
+              Tệp tin: <span className="text-red-500">*</span>
             </label>
             <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
               {!file ? (

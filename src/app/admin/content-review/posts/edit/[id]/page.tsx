@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import React from 'react';
-import { FiArrowLeft, FiSave, FiTrash, FiImage } from 'react-icons/fi';
+import { FiArrowLeft, FiTrash, FiImage } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import dynamic from 'next/dynamic';
 
@@ -358,7 +358,7 @@ export default function EditPostPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                Tiêu đề <span className="text-red-500">*</span>
+                Tiêu đề: <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -373,7 +373,7 @@ export default function EditPostPage() {
             
             <div>
               <label htmlFor="department" className="block text-sm font-medium text-gray-700">
-                Phòng ban
+                Phòng ban:
               </label>
               <select
                 id="department"
@@ -393,7 +393,7 @@ export default function EditPostPage() {
             
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Ảnh bìa
+                Ảnh bìa:
               </label>
               <div className="mt-1">
                 {coverImageUrl ? (
@@ -464,7 +464,7 @@ export default function EditPostPage() {
             
             <div>
               <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-                Nội dung <span className="text-red-500">*</span>
+                Nội dung: <span className="text-red-500">*</span>
               </label>
               <div className="mt-1">
                 <RichTextEditor value={content} onChange={setContent} />
@@ -473,7 +473,7 @@ export default function EditPostPage() {
             
             <div>
               <label htmlFor="tags" className="block text-sm font-medium text-gray-700">
-                Thẻ
+                Thẻ:
               </label>
               <div className="mt-1">
                 {tags.length > 0 && (
@@ -536,7 +536,7 @@ export default function EditPostPage() {
                 </div>
                 <div className="ml-3 text-sm">
                   <label htmlFor="isPublic" className="font-medium text-gray-700">
-                    Công khai
+                    Công khai:
                   </label>
                   <p className="text-gray-500">
                     Nếu bật, bài viết sẽ hiển thị công khai trên trang sau khi được duyệt.
@@ -551,7 +551,6 @@ export default function EditPostPage() {
                 onClick={() => setDeleteModalOpen(true)}
                 className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-red-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer"
               >
-                <FiTrash className="-ml-1 mr-2 h-5 w-5" />
                 Xóa bài viết
               </button>
               
@@ -560,7 +559,6 @@ export default function EditPostPage() {
                 disabled={submitting}
                 className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
-                <FiSave className="-ml-1 mr-2 h-5 w-5" />
                 {submitting ? 'Đang lưu...' : 'Lưu thay đổi'}
               </button>
             </div>

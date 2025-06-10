@@ -247,11 +247,6 @@ export default function DocumentsManagerPage() {
     return category ? category.label : categoryValue;
   };
 
-  const getCategoryColor = (categoryValue: string) => {
-    const category = documentCategories.find(cat => cat.value === categoryValue);
-    return category ? category.color : 'bg-gray-100 text-gray-800';
-  };
-
   const getStatusColor = (status: string) => {
     const statusObj = documentStatuses.find(s => s.value === status);
     return statusObj ? statusObj.color : 'bg-gray-100 text-gray-800';
@@ -875,20 +870,16 @@ export default function DocumentsManagerPage() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getCategoryColor(doc.category)}`}>
-                        {getCategoryName(doc.category)}
-                      </span>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {getCategoryName(doc.category)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(doc.status)}`}>
                         {getStatusLabel(doc.status)}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${doc.isPublic ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}`}>
-                        {doc.isPublic ? 'Công khai' : 'Nội bộ'}
-                      </span>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {doc.isPublic ? 'Công khai' : 'Nội bộ'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {formatDate(doc.createdAt)}

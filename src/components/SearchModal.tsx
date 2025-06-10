@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useCallback, useRef } from 'react';
+import { Fragment, useEffect, useCallback, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import {
   FiSearch,
@@ -13,6 +13,9 @@ import {
   FiAlertCircle,
   FiInfo,
   FiEdit,
+  FiFilter,
+  FiChevronDown,
+  FiChevronUp,
 } from 'react-icons/fi';
 import Link from 'next/link';
 import { format } from 'date-fns';
@@ -48,6 +51,7 @@ const formatDateTime = (dateString: string): string => {
 
 const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const [showFilters, setShowFilters] = useState(false);
   
   const {
     query,
@@ -103,6 +107,11 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
     
     // Allow keyboard navigation between results in the future
   }, [query]);
+
+  // Toggle filters visibility
+  const toggleFilters = useCallback(() => {
+    setShowFilters(prev => !prev);
+  }, []);
 
   // Render document results
   const renderDocuments = () => {
@@ -510,7 +519,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                 </div>
 
                 <div className="mt-4 relative">
-                  <div className="relative rounded-lg shadow-sm">
+                  <div className="relative rounded-lg shadow-sm flex items-center">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                       <FiSearch className="h-5 w-5 text-gray-400" />
                     </div>
@@ -524,75 +533,98 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                       placeholder="Tìm kiếm tài liệu, thông báo, sự kiện..."
                       aria-label="Nhập từ khóa tìm kiếm"
                     />
-                    {query && (
+                    <div className="flex items-center absolute right-2">
+                      {query && (
+                        <button
+                          className="text-gray-400 hover:text-gray-600 mr-2"
+                          onClick={() => setQuery('')}
+                          aria-label="Xóa"
+                          title="Xóa tìm kiếm"
+                        >
+                          <FiX className="h-5 w-5" />
+                        </button>
+                      )}
                       <button
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
-                        onClick={() => setQuery('')}
-                        aria-label="Xóa"
-                        title="Xóa tìm kiếm"
+                        onClick={toggleFilters}
+                        className="flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
                       >
-                        <FiX className="h-5 w-5" />
+                        <FiFilter className="mr-1.5" />
+                        Bộ lọc
+                        {showFilters ? <FiChevronUp className="ml-1.5" /> : <FiChevronDown className="ml-1.5" />}
                       </button>
-                    )}
+                    </div>
                   </div>
 
-                  <div className="mt-4 flex flex-wrap gap-2 mt-4">
-                    <button
-                      onClick={() => handleSearchTypeChange('all')}
-                      className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
-                        searchType === 'all'
-                          ? 'bg-gray-900 text-white'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                    >
-                      <FiSearch className="mr-1" />
-                      Tất cả
-                    </button>
-                    <button
-                      onClick={() => handleSearchTypeChange('documents')}
-                      className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
-                        searchType === 'documents'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
-                      }`}
-                    >
-                      <FiFileText className="mr-1" />
-                      Tài liệu
-                    </button>
-                    <button
-                      onClick={() => handleSearchTypeChange('events')}
-                      className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
-                        searchType === 'events'
-                          ? 'bg-green-600 text-white'
-                          : 'bg-green-50 text-green-700 hover:bg-green-100'
-                      }`}
-                    >
-                      <FiCalendar className="mr-1" />
-                      Sự kiện
-                    </button>
-                    <button
-                      onClick={() => handleSearchTypeChange('announcements')}
-                      className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
-                        searchType === 'announcements'
-                          ? 'bg-purple-600 text-white'
-                          : 'bg-purple-50 text-purple-700 hover:bg-purple-100'
-                      }`}
-                    >
-                      <FiBell className="mr-1" />
-                      Thông báo
-                    </button>
-                    <button
-                      onClick={() => handleSearchTypeChange('posts')}
-                      className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
-                        searchType === 'posts'
-                          ? 'bg-orange-600 text-white'
-                          : 'bg-orange-50 text-orange-700 hover:bg-orange-100'
-                      }`}
-                    >
-                      <FiEdit className="mr-1" />
-                      Tin tức
-                    </button>
-                  </div>
+                  <Transition
+                    show={showFilters}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                      <p className="text-xs text-gray-500 mb-2">Lọc theo loại nội dung:</p>
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={() => handleSearchTypeChange('all')}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
+                            searchType === 'all'
+                              ? 'bg-gray-900 text-white'
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          }`}
+                        >
+                          <FiSearch className="mr-1" />
+                          Tất cả
+                        </button>
+                        <button
+                          onClick={() => handleSearchTypeChange('documents')}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
+                            searchType === 'documents'
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+                          }`}
+                        >
+                          <FiFileText className="mr-1" />
+                          Tài liệu
+                        </button>
+                        <button
+                          onClick={() => handleSearchTypeChange('events')}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
+                            searchType === 'events'
+                              ? 'bg-green-600 text-white'
+                              : 'bg-green-50 text-green-700 hover:bg-green-100'
+                          }`}
+                        >
+                          <FiCalendar className="mr-1" />
+                          Sự kiện
+                        </button>
+                        <button
+                          onClick={() => handleSearchTypeChange('announcements')}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
+                            searchType === 'announcements'
+                              ? 'bg-purple-600 text-white'
+                              : 'bg-purple-50 text-purple-700 hover:bg-purple-100'
+                          }`}
+                        >
+                          <FiBell className="mr-1" />
+                          Thông báo
+                        </button>
+                        <button
+                          onClick={() => handleSearchTypeChange('posts')}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-full flex items-center ${
+                            searchType === 'posts'
+                              ? 'bg-orange-600 text-white'
+                              : 'bg-orange-50 text-orange-700 hover:bg-orange-100'
+                          }`}
+                        >
+                          <FiEdit className="mr-1" />
+                          Tin tức
+                        </button>
+                      </div>
+                    </div>
+                  </Transition>
                 </div>
 
                 <div className="mt-4 max-h-[60vh] overflow-y-auto p-1 custom-scrollbar">

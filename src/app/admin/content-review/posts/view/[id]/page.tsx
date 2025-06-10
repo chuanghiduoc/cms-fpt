@@ -6,18 +6,18 @@ import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-  FiEdit2, 
-  FiArrowLeft, 
-  FiTrash2,
-  FiCheckCircle,
-  FiXCircle,
+  FiInfo,
+  FiImage,
   FiUser,
   FiCalendar,
   FiBriefcase,
   FiTag,
   FiClock,
-  FiInfo,
-  FiImage
+  FiCheckCircle,
+  FiXCircle,
+  FiArrowLeft,
+  FiEdit2,
+  FiTrash2
 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';

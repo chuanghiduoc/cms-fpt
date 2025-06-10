@@ -507,6 +507,11 @@ async function main() {
     }
   });
 
+  // Get current date and date + 1 month
+  const currentDate = new Date();
+  const oneMonthLater = new Date();
+  oneMonthLater.setMonth(oneMonthLater.getMonth() + 1);
+
   // Create sample posts
   const welcomePost = await prisma.post.upsert({
     where: { id: 'post-1' },
@@ -519,7 +524,7 @@ async function main() {
       isPublic: true,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['thông báo', 'hệ thống']
     }
   });
@@ -536,7 +541,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['quy trình', 'phát triển', 'kỹ thuật']
     }
   });
@@ -584,7 +589,7 @@ async function main() {
       isPublic: true,
       status: 'REJECTED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['du lịch', 'cuối năm']
     }
   });
@@ -602,7 +607,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['kinh doanh', 'kế hoạch', 'Q4-2023']
     }
   });
@@ -619,7 +624,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['chất lượng', 'quy trình', 'kiểm thử']
     }
   });
@@ -651,7 +656,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['tài chính', 'báo cáo', 'Q2-2023']
     }
   });
@@ -668,7 +673,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['CSKH', 'phản hồi', 'thống kê']
     }
   });
@@ -685,7 +690,7 @@ async function main() {
       isPublic: true,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['pháp luật', 'SHTT', 'quy định mới']
     }
   });
@@ -702,7 +707,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['nhân sự', 'tuyển dụng', 'Q3-2023']
     }
   });
@@ -719,7 +724,7 @@ async function main() {
       isPublic: true,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['hành chính', 'văn phòng', 'quy định']
     }
   });
@@ -736,7 +741,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['kỹ thuật', 'công nghệ', 'đào tạo']
     }
   });
@@ -769,7 +774,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: engineeringHead.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['React', 'frontend', 'tối ưu', 'chia sẻ']
     }
   });
@@ -801,7 +806,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: customerServiceHead.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['CSKH', 'khảo sát', 'báo cáo']
     }
   });
@@ -818,7 +823,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: qaHead.id,
-      reviewedAt: new Date(),
+      reviewedAt: currentDate,
       tags: ['QA', 'bug', 'báo cáo']
     }
   });
@@ -853,7 +858,7 @@ async function main() {
       isPublic: true,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -871,7 +876,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -889,7 +894,7 @@ async function main() {
       isPublic: true,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -925,7 +930,7 @@ async function main() {
       isPublic: false,
       status: 'REJECTED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -944,7 +949,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -962,7 +967,7 @@ async function main() {
       isPublic: true,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -980,7 +985,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -998,7 +1003,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -1016,7 +1021,7 @@ async function main() {
       isPublic: true,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -1034,7 +1039,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -1052,7 +1057,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -1070,7 +1075,7 @@ async function main() {
       isPublic: true,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -1088,7 +1093,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -1106,7 +1111,7 @@ async function main() {
       isPublic: true,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -1140,7 +1145,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -1158,7 +1163,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -1176,7 +1181,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -1194,7 +1199,7 @@ async function main() {
       isPublic: false,
       status: 'APPROVED',
       reviewedById: adminUser.id,
-      reviewedAt: new Date()
+      reviewedAt: currentDate
     }
   });
 
@@ -1207,7 +1212,7 @@ async function main() {
       content: 'Đề xuất cần được cập nhật theo chính sách mới nhất và làm rõ nguồn kinh phí.',
       userId: adminUser.id,
       documentId: rejectedDocument.id,
-      createdAt: new Date()
+      createdAt: currentDate
     }
   });
 
@@ -1219,7 +1224,7 @@ async function main() {
       content: 'Vui lòng cập nhật thêm thông tin chi tiết về ngân sách và chương trình du lịch cụ thể.',
       userId: adminUser.id,
       postId: rejectedPost.id,
-      createdAt: new Date()
+      createdAt: currentDate
     }
   });
 
@@ -1232,7 +1237,7 @@ async function main() {
       content: 'Cần bổ sung thêm phân tích chi tiết về xu hướng thị trường và đối thủ cạnh tranh.',
       userId: adminUser.id,
       documentId: pendingDocument.id,
-      createdAt: new Date()
+      createdAt: currentDate
     }
   });
 
@@ -1244,7 +1249,7 @@ async function main() {
       content: 'Đề nghị bổ sung thêm đánh giá tác động và chi phí thực hiện của chính sách này.',
       userId: adminUser.id,
       postId: pendingPost.id,
-      createdAt: new Date()
+      createdAt: currentDate
     }
   });
 
@@ -1256,7 +1261,7 @@ async function main() {
       content: 'Cần bổ sung thông tin về nguồn lực cần thiết và đánh giá rủi ro cho từng giai đoạn.',
       userId: adminUser.id,
       documentId: productRoadmap.id,
-      createdAt: new Date()
+      createdAt: currentDate
     }
   });
 
@@ -1268,7 +1273,7 @@ async function main() {
       content: 'Đề nghị cập nhật thêm thông tin về đối tượng khách hàng mục tiêu và chỉ số KPI cụ thể.',
       userId: adminUser.id,
       postId: marketingPost.id,
-      createdAt: new Date()
+      createdAt: currentDate
     }
   });
 
@@ -1280,7 +1285,7 @@ async function main() {
       content: 'Đề xuất rất tốt. Cần thêm chi tiết về cách thực hiện và thời gian áp dụng.',
       userId: hrHead.id,
       postId: employeePost2.id,
-      createdAt: new Date()
+      createdAt: currentDate
     }
   });
 
@@ -1292,7 +1297,7 @@ async function main() {
       content: 'Ý tưởng sáng tạo. Cần phân tích thêm về tính khả thi và nguồn lực cần thiết.',
       userId: adminUser.id,
       postId: productPost.id,
-      createdAt: new Date()
+      createdAt: currentDate
     }
   });
 
@@ -1304,7 +1309,7 @@ async function main() {
       content: 'Đề xuất hợp lý. Cần thêm phân tích tác động đến doanh thu và lợi nhuận.',
       userId: salesHead.id,
       postId: employeePost5.id,
-      createdAt: new Date()
+      createdAt: currentDate
     }
   });
 
@@ -1316,7 +1321,7 @@ async function main() {
       content: 'Cần điều chỉnh ngân sách và thời gian thực hiện để phù hợp với kế hoạch Q4.',
       userId: adminUser.id,
       postId: marketingPost2.id,
-      createdAt: new Date()
+      createdAt: currentDate
     }
   });
 
@@ -1329,8 +1334,8 @@ async function main() {
       title: 'Họp Toàn Công ty Quý 3/2023',
       description: 'Cuộc họp tổng kết quý 2 và kế hoạch quý 3 năm 2023',
       location: 'Phòng họp lớn, Tầng 5',
-      startDate: new Date('2023-07-15T09:00:00Z'),
-      endDate: new Date('2023-07-15T11:00:00Z'),
+      startDate: currentDate,
+      endDate: oneMonthLater,
       createdById: adminUser.id,
       isPublic: true
     }
@@ -1344,8 +1349,8 @@ async function main() {
       title: 'Họp Sprint Planning - Sprint 15',
       description: 'Lập kế hoạch cho Sprint 15 của dự án ABC',
       location: 'Phòng họp A, Tầng 3',
-      startDate: new Date('2023-07-10T14:00:00Z'),
-      endDate: new Date('2023-07-10T16:00:00Z'),
+      startDate: currentDate,
+      endDate: oneMonthLater,
       createdById: engineeringHead.id,
       departmentId: engineering.id,
       isPublic: false
@@ -1361,8 +1366,8 @@ async function main() {
       title: 'Đào tạo Kỹ năng Quản lý',
       description: 'Chương trình đào tạo kỹ năng quản lý cho cấp quản lý trung',
       location: 'Phòng hội thảo, Tầng 2',
-      startDate: new Date('2023-07-20T09:00:00Z'),
-      endDate: new Date('2023-07-20T16:00:00Z'),
+      startDate: currentDate,
+      endDate: oneMonthLater,
       createdById: hrHead.id,
       isPublic: true
     }
@@ -1376,8 +1381,8 @@ async function main() {
       title: 'Workshop Chiến lược Content Marketing',
       description: 'Workshop chia sẻ về chiến lược và kỹ thuật content marketing hiệu quả',
       location: 'Phòng hội thảo A, Tầng 3',
-      startDate: new Date('2023-07-25T14:00:00Z'),
-      endDate: new Date('2023-07-25T17:00:00Z'),
+      startDate: currentDate,
+      endDate: oneMonthLater,
       createdById: marketingHead.id,
       departmentId: marketing.id,
       isPublic: false
@@ -1392,8 +1397,8 @@ async function main() {
       title: 'Demo Sản phẩm XYZ phiên bản 2.0',
       description: 'Demo và giới thiệu các tính năng mới của sản phẩm XYZ phiên bản 2.0',
       location: 'Phòng họp lớn, Tầng 5',
-      startDate: new Date('2023-08-01T10:00:00Z'),
-      endDate: new Date('2023-08-01T11:30:00Z'),
+      startDate: currentDate,
+      endDate: oneMonthLater,
       createdById: productHead.id,
       isPublic: true
     }
@@ -1407,8 +1412,8 @@ async function main() {
       title: 'Đào tạo Kỹ năng Bán hàng',
       description: 'Chương trình đào tạo kỹ năng bán hàng và tư vấn khách hàng',
       location: 'Phòng hội thảo B, Tầng 2',
-      startDate: new Date('2023-08-05T09:00:00Z'),
-      endDate: new Date('2023-08-05T16:00:00Z'),
+      startDate: currentDate,
+      endDate: oneMonthLater,
       createdById: salesHead.id,
       departmentId: sales.id,
       isPublic: false
@@ -1423,8 +1428,8 @@ async function main() {
       title: 'Team Building Q3/2023',
       description: 'Hoạt động team building Q3/2023 tại Vũng Tàu',
       location: 'Vũng Tàu',
-      startDate: new Date('2023-08-12T07:00:00Z'),
-      endDate: new Date('2023-08-13T17:00:00Z'),
+      startDate: currentDate,
+      endDate: oneMonthLater,
       createdById: hrHead.id,
       isPublic: true
     }
@@ -1438,8 +1443,8 @@ async function main() {
       title: 'Tech Talk: Microservices Architecture',
       description: 'Buổi chia sẻ về kiến trúc microservices và ứng dụng thực tế',
       location: 'Phòng hội thảo, Tầng 3',
-      startDate: new Date('2023-08-18T14:00:00Z'),
-      endDate: new Date('2023-08-18T16:00:00Z'),
+      startDate: currentDate,
+      endDate: oneMonthLater,
       createdById: engineeringHead.id,
       departmentId: engineering.id,
       isPublic: false
@@ -1454,8 +1459,8 @@ async function main() {
       title: 'Workshop: Quy trình Báo cáo Tài chính',
       description: 'Workshop hướng dẫn quy trình lập và trình bày báo cáo tài chính',
       location: 'Phòng họp B, Tầng 4',
-      startDate: new Date('2023-08-20T09:00:00Z'),
-      endDate: new Date('2023-08-20T11:00:00Z'),
+      startDate: currentDate,
+      endDate: oneMonthLater,
       createdById: financeHead.id,
       departmentId: finance.id,
       isPublic: false
@@ -1470,8 +1475,8 @@ async function main() {
       title: 'Workshop: Phân tích Phản hồi Khách hàng',
       description: 'Workshop về cách thu thập và phân tích phản hồi khách hàng hiệu quả',
       location: 'Phòng họp C, Tầng 3',
-      startDate: new Date('2023-08-25T14:00:00Z'),
-      endDate: new Date('2023-08-25T16:00:00Z'),
+      startDate: currentDate,
+      endDate: oneMonthLater,
       createdById: customerServiceHead.id,
       departmentId: customerService.id,
       isPublic: false
@@ -1486,8 +1491,8 @@ async function main() {
       title: 'Lập kế hoạch Sản phẩm Q4/2023',
       description: 'Cuộc họp lập kế hoạch phát triển sản phẩm Q4/2023',
       location: 'Phòng họp A, Tầng 4',
-      startDate: new Date('2023-08-28T09:00:00Z'),
-      endDate: new Date('2023-08-28T12:00:00Z'),
+      startDate: currentDate,
+      endDate: oneMonthLater,
       createdById: productHead.id,
       departmentId: productDevelopment.id,
       isPublic: false
@@ -1502,8 +1507,8 @@ async function main() {
       title: 'Workshop: Tuân thủ GDPR và Luật Bảo vệ Dữ liệu',
       description: 'Workshop về các quy định GDPR và luật bảo vệ dữ liệu cá nhân',
       location: 'Phòng họp B, Tầng 3',
-      startDate: new Date('2023-08-30T14:00:00Z'),
-      endDate: new Date('2023-08-30T16:00:00Z'),
+      startDate: currentDate,
+      endDate: oneMonthLater,
       createdById: legalHead.id,
       departmentId: legal.id,
       isPublic: false

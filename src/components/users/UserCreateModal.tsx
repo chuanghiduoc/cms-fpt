@@ -222,7 +222,7 @@ export default function UserCreateModal({
                   <div className="space-y-5">
                     <div>
                       <label htmlFor="name" className="block text-sm sm:text-base font-medium text-gray-700">
-                        Tên người dùng <span className="text-red-500">*</span>
+                        Tên người dùng: <span className="text-red-500">*</span>
                       </label>
                       <div className="mt-1 relative rounded-md shadow-sm">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -234,7 +234,7 @@ export default function UserCreateModal({
                           id="name"
                           value={formData.name}
                           onChange={handleChange}
-                          className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
+                          className={`pl-10 block w-full rounded-md border ${formErrors.name ? 'border-red-300' : 'border-gray-300'} bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150`}
                           placeholder="Nhập tên người dùng"
                           required
                         />
@@ -246,7 +246,7 @@ export default function UserCreateModal({
 
                     <div>
                       <label htmlFor="email" className="block text-sm sm:text-base font-medium text-gray-700">
-                        Email <span className="text-red-500">*</span>
+                        Email: <span className="text-red-500">*</span>
                       </label>
                       <div className="mt-1 relative rounded-md shadow-sm">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -258,7 +258,7 @@ export default function UserCreateModal({
                           id="email"
                           value={formData.email}
                           onChange={handleChange}
-                          className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
+                          className={`pl-10 block w-full rounded-md border ${formErrors.email ? 'border-red-300' : 'border-gray-300'} bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150`}
                           placeholder="Nhập địa chỉ email"
                           required
                         />
@@ -270,7 +270,7 @@ export default function UserCreateModal({
 
                     <div>
                       <label htmlFor="password" className="block text-sm sm:text-base font-medium text-gray-700">
-                        Mật khẩu <span className="text-red-500">*</span>
+                        Mật khẩu: <span className="text-red-500">*</span>
                       </label>
                       <div className="mt-1 relative rounded-md shadow-sm">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -282,7 +282,7 @@ export default function UserCreateModal({
                           id="password"
                           value={formData.password}
                           onChange={handleChange}
-                          className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
+                          className={`pl-10 block w-full rounded-md border ${formErrors.password ? 'border-red-300' : 'border-gray-300'} bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150`}
                           placeholder="Nhập mật khẩu (ít nhất 6 ký tự)"
                           required
                         />
@@ -294,7 +294,7 @@ export default function UserCreateModal({
 
                     <div>
                       <label htmlFor="role" className="block text-sm sm:text-base font-medium text-gray-700">
-                        Vai trò <span className="text-red-500">*</span>
+                        Vai trò: <span className="text-red-500">*</span>
                       </label>
                       <div className="mt-1 relative rounded-md shadow-sm">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -305,7 +305,7 @@ export default function UserCreateModal({
                           name="role"
                           value={formData.role}
                           onChange={handleChange}
-                          className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150 cursor-pointer appearance-none"
+                          className={`pl-10 block w-full rounded-md border ${formErrors.role ? 'border-red-300' : 'border-gray-300'} bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150 cursor-pointer appearance-none`}
                           required
                         >
                           <option value="EMPLOYEE">Nhân viên</option>
@@ -320,7 +320,7 @@ export default function UserCreateModal({
 
                     <div>
                       <label htmlFor="departmentId" className="block text-sm sm:text-base font-medium text-gray-700">
-                        Phòng ban
+                        Phòng ban:
                       </label>
                       <div className="mt-1 relative rounded-md shadow-sm">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -331,7 +331,7 @@ export default function UserCreateModal({
                           name="departmentId"
                           value={formData.departmentId || ''}
                           onChange={handleChange}
-                          className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150 cursor-pointer appearance-none"
+                          className={`pl-10 block w-full rounded-md border ${formErrors.departmentId ? 'border-red-300' : 'border-gray-300'} bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150 cursor-pointer appearance-none`}
                         >
                           <option value="">-- Chọn phòng ban --</option>
                           {loadingDepartments ? (
@@ -345,6 +345,9 @@ export default function UserCreateModal({
                           )}
                         </select>
                       </div>
+                      {formErrors.departmentId && (
+                        <p className="mt-1 text-sm sm:text-base text-red-600">{formErrors.departmentId}</p>
+                      )}
                     </div>
                   </div>
                 </div>

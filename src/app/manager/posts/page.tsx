@@ -424,7 +424,7 @@ export default function DepartmentPostsPage() {
           <div className="px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="block text-xs font-medium text-gray-700">Phạm vi</label>
+                <label className="block text-xs font-medium text-gray-700">Phạm vi:</label>
                 <select
                   value={selectedPublicStatus}
                   onChange={(e) => handlePublicStatusFilterChange(e.target.value)}
@@ -438,7 +438,7 @@ export default function DepartmentPostsPage() {
               </div>
               
               <div className="space-y-2">
-                <label className="block text-xs font-medium text-gray-700">Trạng thái duyệt</label>
+                <label className="block text-xs font-medium text-gray-700">Trạng thái duyệt:</label>
                 <select
                   value={selectedContentStatus}
                   onChange={(e) => handleContentStatusFilterChange(e.target.value)}
@@ -607,8 +607,8 @@ export default function DepartmentPostsPage() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {formatDate(post.createdAt)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${post.isPublic ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <span>
                         {post.isPublic ? 'Công khai' : 'Nội bộ'}
                       </span>
                     </td>

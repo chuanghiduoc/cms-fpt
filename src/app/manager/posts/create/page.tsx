@@ -447,7 +447,7 @@ export default function CreatePostPage() {
             <form className="p-6 space-y-6">
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1 cursor-pointer">
-                  Tiêu đề bài viết <span className="text-red-500">*</span>
+                  Tiêu đề bài viết: <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -462,7 +462,7 @@ export default function CreatePostPage() {
               {/* Cover Image Upload */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1 cursor-pointer">
-                  Ảnh bìa
+                  Ảnh bìa:
                 </label>
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                   {coverImage ? (
@@ -522,7 +522,7 @@ export default function CreatePostPage() {
               {/* Tags Input */}
               <div>
                 <label htmlFor="tags" className="block text-sm font-medium text-gray-700 mb-1 cursor-pointer">
-                  Thẻ
+                  Thẻ:
                 </label>
                 <div className="flex flex-wrap gap-2 mb-2">
                   {tags.map((tag, index) => (
@@ -567,7 +567,7 @@ export default function CreatePostPage() {
               {/* Rich Text Editor */}
               <div>
                 <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1 cursor-pointer">
-                  Nội dung bài viết <span className="text-red-500">*</span>
+                  Nội dung bài viết: <span className="text-red-500">*</span>
                 </label>
                 <div className="mt-1 cursor-text">
                   <ReactQuill
@@ -588,7 +588,7 @@ export default function CreatePostPage() {
               {/* File Attachments */}
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <label className="block text-sm font-medium text-gray-700 mb-3 cursor-pointer">
-                  Tệp đính kèm
+                  Tệp đính kèm:
                 </label>
                 
                 {attachments.length > 0 && (

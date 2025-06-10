@@ -246,7 +246,7 @@ export default function DashboardPage() {
 
       {/* Quick Actions for Admin/Department Head */}
       {(isAdmin || isDepartmentHead) && (
-        <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6">
+        <div className="bg-gradient-to-r from-orange-100 to-amber-100 rounded-2xl p-6 shadow-sm border ">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Thao tác nhanh</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {isAdmin ? (
@@ -327,11 +327,11 @@ export default function DashboardPage() {
       )}
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Column - Notifications & Events */}
-        <div className="lg:col-span-1 space-y-6">
+      <div className="space-y-6">
+        {/* Three Column Layout - Top Row */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Recent Notifications */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col">
             <div className="p-6 border-b border-gray-100">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-900">Thông báo</h3>
@@ -341,16 +341,16 @@ export default function DashboardPage() {
               </div>
             </div>
             
-            <div className="p-6">
+            <div className="p-6 flex-1 flex flex-col overflow-auto">
               {notificationsLoading ? (
                 <SkeletonList />
               ) : notifications.length === 0 ? (
-                <div className="text-center py-8">
+                <div className="text-center py-8 flex-1 flex flex-col justify-center">
                   <FiBell className="h-12 w-12 text-gray-300 mx-auto mb-3" />
                   <p className="text-gray-500">Không có thông báo mới</p>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="divide-y divide-gray-100 flex-1">
                   {notifications.slice(0, 3).map((notification) => (
                     <Link key={notification.id} href={`/company/announcements/${notification.id}`} className="block group">
                       <div className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
@@ -358,10 +358,17 @@ export default function DashboardPage() {
                           <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
                         )}
                         <div className="flex-1 min-w-0">
-                          <p className={`text-sm font-medium ${notification.isRead ? 'text-gray-600' : 'text-gray-900'} line-clamp-2`}>
+                          <p className={`text-sm font-medium ${notification.isRead ? 'text-gray-600' : 'text-gray-900'} line-clamp-2 group-hover:text-orange-600 transition-colors`}>
                             {notification.title}
                           </p>
-                          <p className="text-xs text-gray-500 mt-1">{formatDate(notification.createdAt)}</p>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {formatDate(notification.createdAt)}
+                          </p>
+                        </div>
+                        <div className="flex items-center h-full self-center ml-2">
+                          <span className="text-orange-600 hover:text-orange-700">
+                            <FiChevronRight className="h-4 w-4" />
+                          </span>
                         </div>
                       </div>
                     </Link>
@@ -372,7 +379,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Upcoming Events */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col">
             <div className="p-6 border-b border-gray-100">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-900">Sự kiện sắp tới</h3>
@@ -382,95 +389,42 @@ export default function DashboardPage() {
               </div>
             </div>
             
-            <div className="p-6">
+            <div className="p-6 flex-1 flex flex-col overflow-auto">
               {loading.events ? (
                 <SkeletonList />
               ) : events.length === 0 ? (
-                <div className="text-center py-8">
+                <div className="text-center py-8 flex-1 flex flex-col justify-center">
                   <FiCalendar className="h-12 w-12 text-gray-300 mx-auto mb-3" />
                   <p className="text-gray-500">Không có sự kiện sắp tới</p>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="divide-y divide-gray-100 flex-1">
                   {events.slice(0, 3).map((event) => (
                     <Link key={event.id} href={`/company/events/${event.id}`} className="block group">
                       <div className="p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                        <h4 className="font-medium text-gray-900 line-clamp-1 group-hover:text-orange-600">
-                          {event.title}
-                        </h4>
-                        <div className="flex items-center text-sm text-gray-500 mt-1">
-                          <FiClock className="h-4 w-4 mr-1" />
-                          <span>{formatDate(event.startDate)} • {formatTime(event.startDate)}</span>
-                        </div>
-                        {event.location && (
-                          <div className="flex items-center text-sm text-gray-500 mt-1">
-                            <FiMapPin className="h-4 w-4 mr-1" />
-                            <span className="line-clamp-1">{event.location}</span>
-                          </div>
-                        )}
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Right Column - Posts & Documents */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Recent Posts */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
-            <div className="p-6 border-b border-gray-100">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900">Tin tức mới nhất</h3>
-                <Link href="/company/posts" className="text-sm text-orange-600 hover:text-orange-700 flex items-center">
-                  Xem tất cả <FiChevronRight className="ml-1 h-4 w-4" />
-                </Link>
-              </div>
-            </div>
-            
-            <div className="p-6">
-              {loading.posts ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {[1, 2, 3, 4].map((i) => <SkeletonCard key={i} />)}
-                </div>
-              ) : posts.length === 0 ? (
-                <div className="text-center py-12">
-                  <FiEdit className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-                  <p className="text-gray-500">Chưa có tin tức nào</p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {posts.slice(0, 4).map((post) => (
-                    <Link key={post.id} href={`/company/posts/${post.id}`} className="group">
-                      <article className="bg-gray-50 rounded-xl overflow-hidden hover:shadow-md transition-all">
-                        {post.coverImageUrl && (
-                          <div className="h-32 bg-gray-200 overflow-hidden">
-                            <img 
-                              src={post.coverImageUrl} 
-                              alt={post.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            />
-                          </div>
-                        )}
-                        <div className="p-4">
-                          <h4 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-orange-600 transition-colors">
-                            {post.title}
-                          </h4>
-                          <p className="text-sm text-gray-600 line-clamp-2 mt-2">
-                            {post.content.replace(/<[^>]*>?/gm, '')}
-                          </p>
-                          <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-200">
-                            {post.department && (
-                              <span className="text-xs text-gray-500">
-                                {post.department.name}
-                              </span>
+                        <div className="flex justify-between items-center">
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium text-gray-900 line-clamp-1 group-hover:text-orange-600">
+                              {event.title}
+                            </h4>
+                            <div className="flex items-center text-sm text-gray-500 mt-1">
+                              <FiClock className="h-4 w-4 mr-1" />
+                              <span>{formatDate(event.startDate)} • {formatTime(event.startDate)}</span>
+                            </div>
+                            {event.location && (
+                              <div className="flex items-center text-sm text-gray-500 mt-1">
+                                <FiMapPin className="h-4 w-4 mr-1" />
+                                <span className="line-clamp-1">{event.location}</span>
+                              </div>
                             )}
-                            <span className="text-xs text-gray-500">{formatDate(post.createdAt)}</span>
+                          </div>
+                          <div className="flex items-center h-full self-center ml-2">
+                            <span className="text-orange-600 hover:text-orange-700 flex-shrink-0">
+                              <FiChevronRight className="h-4 w-4" />
+                            </span>
                           </div>
                         </div>
-                      </article>
+                      </div>
                     </Link>
                   ))}
                 </div>
@@ -479,7 +433,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Recent Documents */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col">
             <div className="p-6 border-b border-gray-100">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-900">Tài liệu mới nhất</h3>
@@ -489,7 +443,7 @@ export default function DashboardPage() {
               </div>
             </div>
             
-            <div className="p-6">
+            <div className="p-6 flex-1 overflow-auto">
               {loading.documents ? (
                 <SkeletonList />
               ) : documents.length === 0 ? (
@@ -499,7 +453,7 @@ export default function DashboardPage() {
                 </div>
               ) : (
                 <div className="space-y-3">
-                  {documents.slice(0, 5).map((document) => (
+                  {documents.slice(0, 3).map((document: Document) => (
                     <div key={document.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
                       <div className="flex items-center space-x-3 flex-1 min-w-0">
                         <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -507,27 +461,96 @@ export default function DashboardPage() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <h4 className="font-medium text-gray-900 line-clamp-1">{document.title}</h4>
-                          <div className="flex items-center space-x-2 mt-1">
-                            <span className={`text-xs px-2 py-1 rounded-full border ${categoryMapping[document.category]?.color || 'bg-gray-50 text-gray-700 border-gray-200'}`}>
-                              {categoryMapping[document.category]?.label || document.category}
-                            </span>
-                            <span className="text-xs text-gray-500">{formatDate(document.createdAt)}</span>
+                          <div className="flex items-center justify-between mt-1">
+                            <div className="flex items-center space-x-2">
+                              <span className={`text-xs px-2 py-1 rounded-full border ${categoryMapping[document.category]?.color || 'bg-gray-50 text-gray-700 border-gray-200'}`}>
+                                {categoryMapping[document.category]?.label || document.category}
+                              </span>
+                              <span className="text-xs text-gray-500">{formatDate(document.createdAt)}</span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <a 
-                        href={document.filePath}
-                        download
-                        className="text-green-600 hover:text-green-700 p-2 rounded-lg hover:bg-green-50 transition-colors"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <FiDownload className="h-4 w-4" />
-                      </a>
+                      <div className="flex items-center space-x-1">
+                        {/* <Link 
+                          href={`/company/documents/view/${document.id}`}
+                          className="text-blue-600 hover:text-blue-700 p-2 rounded-lg hover:bg-blue-50 transition-colors"
+                        >
+                          <FiFileText className="h-4 w-4" />
+                        </Link> */}
+                        <a 
+                          href={document.filePath}
+                          download
+                          className="text-orange-600 hover:text-orange-700 p-2 rounded-lg hover:bg-orange-50 transition-colors"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <FiDownload className="h-4 w-4" />
+                        </a>
+                      </div>
                     </div>
                   ))}
                 </div>
               )}
             </div>
+          </div>
+        </div>
+
+        {/* Recent Posts - Bottom Row */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+          <div className="p-6 border-b border-gray-100">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-gray-900">Tin tức mới nhất</h3>
+              <Link href="/company/posts" className="text-sm text-orange-600 hover:text-orange-700 flex items-center">
+                Xem tất cả <FiChevronRight className="ml-1 h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+          
+          <div className="p-6">
+            {loading.posts ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[1, 2, 3, 4, 5, 6].map((i) => <SkeletonCard key={i} />)}
+              </div>
+            ) : posts.length === 0 ? (
+              <div className="text-center py-12">
+                <FiEdit className="h-12 w-12 text-gray-300 mx-auto mb-3" />
+                <p className="text-gray-500">Chưa có tin tức nào</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {posts.slice(0, 6).map((post) => (
+                  <Link key={post.id} href={`/company/posts/${post.id}`} className="group">
+                    <article className="bg-gray-50 rounded-xl overflow-hidden hover:shadow-md transition-all h-full">
+                      {post.coverImageUrl && (
+                        <div className="h-32 bg-gray-200 overflow-hidden">
+                          <img 
+                            src={post.coverImageUrl} 
+                            alt={post.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                      )}
+                      <div className="p-4">
+                        <h4 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-orange-600 transition-colors">
+                          {post.title}
+                        </h4>
+                        <p className="text-sm text-gray-600 line-clamp-2 mt-2">
+                          {post.content.replace(/<[^>]*>?/gm, '')}
+                        </p>
+                        <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-200">
+                          {post.department && (
+                            <span className="text-xs text-gray-500">
+                              {post.department.name}
+                            </span>
+                          )}
+                          <span className="text-xs text-gray-500">{formatDate(post.createdAt)}</span>
+                        </div>
+                      </div>
+                    </article>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

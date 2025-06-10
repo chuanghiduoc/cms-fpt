@@ -174,7 +174,7 @@ export default function DepartmentCreateModal({
                   <div className="space-y-5">
                     <div>
                       <label htmlFor="name" className="block text-sm sm:text-base font-medium text-gray-700">
-                        Tên phòng ban <span className="text-red-500">*</span>
+                        Tên phòng ban: <span className="text-red-500">*</span>
                       </label>
                       <div className="mt-1 relative rounded-md shadow-sm">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -186,7 +186,7 @@ export default function DepartmentCreateModal({
                           id="name"
                           value={formData.name || ''}
                           onChange={handleInputChange}
-                          className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
+                          className={`pl-10 block w-full rounded-md border ${formErrors.name ? 'border-red-300' : 'border-gray-300'} bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150`}
                           disabled={isLoading}
                           placeholder="Nhập tên phòng ban"
                           required
@@ -199,7 +199,7 @@ export default function DepartmentCreateModal({
                     
                     <div>
                       <label htmlFor="description" className="block text-sm sm:text-base font-medium text-gray-700">
-                        Mô tả
+                        Mô tả:
                       </label>
                       <div className="mt-1 relative rounded-md shadow-sm">
                         <div className="absolute top-3 left-0 pl-3 flex items-start pointer-events-none">
@@ -211,11 +211,14 @@ export default function DepartmentCreateModal({
                           rows={3}
                           value={formData.description || ''}
                           onChange={handleInputChange}
-                          className="pl-10 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150"
+                          className={`pl-10 block w-full rounded-md border ${formErrors.description ? 'border-red-300' : 'border-gray-300'} bg-white py-2 px-3 text-gray-700 text-sm focus:ring-1 focus:ring-orange-400 focus:border-orange-400 outline-none transition duration-150`}
                           disabled={isLoading}
                           placeholder="Nhập mô tả cho phòng ban (không bắt buộc)"
                         />
                       </div>
+                      {formErrors.description && (
+                        <p className="mt-1 text-sm sm:text-base text-red-600">{formErrors.description}</p>
+                      )}
                     </div>
                   </div>
                 </div>

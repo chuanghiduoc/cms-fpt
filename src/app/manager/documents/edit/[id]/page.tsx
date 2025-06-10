@@ -302,7 +302,7 @@ export default function EditDocumentPage() {
           {/* Title */}
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-              Tiêu đề <span className="text-red-500">*</span>
+              Tiêu đề: <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -325,7 +325,7 @@ export default function EditDocumentPage() {
           {/* Description */}
           <div>
             <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-              Mô tả
+              Mô tả:
             </label>
             <textarea
               id="description"
@@ -347,7 +347,7 @@ export default function EditDocumentPage() {
           {/* Category */}
           <div>
             <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-              Phân loại
+              Phân loại:
             </label>
             <select
               id="category"
@@ -367,7 +367,7 @@ export default function EditDocumentPage() {
           {/* Department */}
           <div>
             <label htmlFor="department" className="block text-sm font-medium text-gray-700">
-              Phòng ban {session?.user?.role === 'ADMIN' && <span className="text-red-500">*</span>}
+              Phòng ban: {session?.user?.role === 'ADMIN' && <span className="text-red-500">*</span>}
             </label>
             <select
               id="department"
@@ -422,7 +422,7 @@ export default function EditDocumentPage() {
           {/* Current file info */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Tệp tin hiện tại
+              Tệp tin hiện tại:
             </label>
             <div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-md">
               <FiFileText className="h-6 w-6 text-gray-500" />
