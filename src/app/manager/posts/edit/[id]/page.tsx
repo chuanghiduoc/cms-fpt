@@ -448,8 +448,18 @@ export default function EditPostPage() {
             {tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-4">
                 {tags.map((tag, index) => (
-                  <span key={index} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                  <span 
+                    key={index} 
+                    className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded flex items-center"
+                  >
                     {tag}
+                    <button 
+                      type="button" 
+                      onClick={() => removeTag(tag)}
+                      className="ml-1 text-orange-600 hover:text-orange-800 cursor-pointer"
+                    >
+                      <FiX size={14} />
+                    </button>
                   </span>
                 ))}
               </div>
@@ -586,13 +596,13 @@ export default function EditPostPage() {
                   {tags.map((tag, index) => (
                     <span 
                       key={index} 
-                      className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded flex items-center"
+                      className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded flex items-center"
                     >
                       {tag}
                       <button 
                         type="button" 
                         onClick={() => removeTag(tag)}
-                        className="ml-1 text-blue-600 hover:text-blue-800 cursor-pointer"
+                        className="ml-1 text-orange-600 hover:text-orange-800 cursor-pointer"
                       >
                         <FiX size={14} />
                       </button>
@@ -612,7 +622,7 @@ export default function EditPostPage() {
                   <button
                     type="button"
                     onClick={() => addTag(tagInput)}
-                    className="ml-2 inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
+                    className="ml-2 inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 cursor-pointer"
                   >
                     Thêm
                   </button>

@@ -119,7 +119,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
 
     return (
       <div className="mt-6">
-        <h3 className="text-md font-semibold text-gray-900 flex items-center">
+        <h3 className="text-md font-semibold text-gray-900 flex items-center pl-0">
           <FiFileText className="mr-2 text-blue-600" />
           Tài liệu
           {results.pagination.totalDocuments > 0 && (
@@ -139,8 +139,8 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                 className="mb-3 bg-white p-3 rounded-lg border border-gray-200 hover:shadow-md transition duration-150 hover:border-blue-300"
               >
                 <div className="flex justify-between items-start">
-                  <div>
-                    <h4 className="text-sm font-medium">{doc.title}</h4>
+                  <div className="w-full">
+                    <h4 className="text-sm font-medium pl-0">{doc.title}</h4>
                     {doc.description && (
                       <p className="text-xs text-gray-500 mt-1 line-clamp-2">{doc.description}</p>
                     )}
@@ -157,9 +157,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                   </div>
                   <div className="flex items-center">
                     <span 
-                      className={`px-2 py-1 rounded-full text-xs ${
-                        categoryMapping[doc.category]?.bgClass || 'bg-gray-100'
-                      } ${categoryMapping[doc.category]?.textClass || 'text-gray-800'}`}
+                      className={`px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-800 text-center`}
                     >
                       {categoryMapping[doc.category]?.label || doc.category}
                     </span>
@@ -187,7 +185,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
             ))}
           </AnimatePresence>
           {searchType === 'documents' && results.pagination.totalDocuments > results.documents.length && (
-            <div className="text-center mt-4">
+            <div className="text-left mt-4">
               <Link
                 href={`/company/documents?search=${encodeURIComponent(query)}`}
                 className="text-sm text-blue-600 hover:text-blue-800 inline-flex items-center p-2 hover:bg-blue-50 rounded-md transition-colors"
@@ -208,7 +206,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
 
     return (
       <div className="mt-6">
-        <h3 className="text-md font-semibold text-gray-900 flex items-center">
+        <h3 className="text-md font-semibold text-gray-900 flex items-center pl-0">
           <FiCalendar className="mr-2 text-green-600" />
           Sự kiện 
           {results.pagination.totalEvents > 0 && (
@@ -228,8 +226,8 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                 className="mb-3 bg-white p-3 rounded-lg border border-gray-200 hover:shadow-md transition duration-150 hover:border-green-300"
               >
                 <div className="flex justify-between items-start">
-                  <div>
-                    <h4 className="text-sm font-medium">{event.title}</h4>
+                  <div className="w-full">
+                    <h4 className="text-sm font-medium pl-0">{event.title}</h4>
                     {event.description && (
                       <p className="text-xs text-gray-500 mt-1 line-clamp-2">{event.description}</p>
                     )}
@@ -249,7 +247,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                     </div>
                   </div>
                   <div className="flex flex-col items-end">
-                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full text-center">
                       {event.department?.name || 'Công ty'}
                     </span>
                   </div>
@@ -267,7 +265,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
             ))}
           </AnimatePresence>
           {searchType === 'events' && results.pagination.totalEvents > results.events.length && (
-            <div className="text-center mt-4">
+            <div className="text-left mt-4">
               <Link
                 href={`/company/events?search=${encodeURIComponent(query)}`}
                 className="text-sm text-green-600 hover:text-green-800 inline-flex items-center p-2 hover:bg-green-50 rounded-md transition-colors"
@@ -288,7 +286,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
 
     return (
       <div className="mt-6">
-        <h3 className="text-md font-semibold text-gray-900 flex items-center">
+        <h3 className="text-md font-semibold text-gray-900 flex items-center pl-0">
           <FiBell className="mr-2 text-yellow-600" />
           Thông báo
           {results.pagination.totalAnnouncements > 0 && (
@@ -307,8 +305,8 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                 exit={{ opacity: 0 }}
                 className="mb-3 bg-white p-3 rounded-lg border border-gray-200 hover:shadow-md transition duration-150 hover:border-yellow-300"
               >
-                <div>
-                  <h4 className="text-sm font-medium">{announcement.title}</h4>
+                <div className="w-full">
+                  <h4 className="text-sm font-medium pl-0">{announcement.title}</h4>
                   <p className="text-xs text-gray-500 mt-1 line-clamp-2">{announcement.content}</p>
                   <div className="flex items-center mt-2 text-xs text-gray-500">
                     <span className="mr-3 flex items-center">
@@ -334,7 +332,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
             ))}
           </AnimatePresence>
           {searchType === 'announcements' && results.pagination.totalAnnouncements > results.announcements.length && (
-            <div className="text-center mt-4">
+            <div className="text-left mt-4">
               <Link
                 href={`/company/announcements?search=${encodeURIComponent(query)}`}
                 className="text-sm text-yellow-600 hover:text-yellow-800 inline-flex items-center p-2 hover:bg-yellow-50 rounded-md transition-colors"
@@ -355,7 +353,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
 
     return (
       <div className="mt-6">
-        <h3 className="text-md font-semibold text-gray-900 flex items-center">
+        <h3 className="text-md font-semibold text-gray-900 flex items-center pl-0">
           <FiFileText className="mr-2 text-orange-600" />
           Tin tức
           {results.pagination.totalPosts > 0 && (
@@ -375,8 +373,8 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                 className="mb-3 bg-white p-3 rounded-lg border border-gray-200 hover:shadow-md transition duration-150 hover:border-orange-300"
               >
                 <div className="flex justify-between items-start">
-                  <div>
-                    <h4 className="text-sm font-medium">{post.title}</h4>
+                  <div className="w-full">
+                    <h4 className="text-sm font-medium pl-0">{post.title}</h4>
                     <p className="text-xs text-gray-500 mt-1 line-clamp-2">
                       {post.content.replace(/<[^>]*>?/gm, '').substring(0, 120)}...
                     </p>
@@ -393,7 +391,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                   </div>
                   <div className="flex items-center">
                     {post.tags && post.tags.length > 0 && (
-                      <span className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">
+                      <span className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800 text-center">
                         {post.tags[0]}
                       </span>
                     )}
@@ -412,7 +410,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
             ))}
           </AnimatePresence>
           {searchType === 'posts' && results.pagination.totalPosts > results.posts.length && (
-            <div className="text-center mt-4">
+            <div className="text-left mt-4">
               <Link
                 href={`/company/posts?search=${encodeURIComponent(query)}`}
                 className="text-sm text-orange-600 hover:text-orange-800 inline-flex items-center p-2 hover:bg-orange-50 rounded-md transition-colors"
@@ -441,7 +439,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
     if (totalItems <= results.pagination.limit) return null;
 
     return (
-      <div className="flex justify-center mt-6">
+      <div className="flex justify-start mt-6">
         <nav className="flex items-center bg-gray-50 px-3 py-1 rounded-full">
           <button
             onClick={() => handlePageChange(page - 1)}
@@ -501,7 +499,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition duration-150">
+              <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-xl bg-white p-6 shadow-2xl transition duration-150 text-left">
                 <div className="flex justify-between items-center">
                   <Dialog.Title as="h3" className="text-lg font-medium text-gray-900 flex items-center">
                     <FiSearch className="mr-2 text-orange-500" />
@@ -654,7 +652,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                       {renderPagination()}
                       
                       {searchType === 'all' && results && results.pagination.total > 0 && (
-                        <div className="mt-6 text-center">
+                        <div className="mt-6 text-left">
                           <p className="text-sm text-gray-500 mb-2">
                             Tìm thấy {results.pagination.total} kết quả cho &ldquo;{query}&rdquo;
                           </p>
