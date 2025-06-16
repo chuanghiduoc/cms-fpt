@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
-import { FiSave, FiX, FiPaperclip, FiImage, FiEye, FiArrowLeft } from 'react-icons/fi';
+import { FiX, FiPaperclip, FiImage, FiEye, FiArrowLeft } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -741,7 +741,6 @@ export default function EditPostPage() {
                     </>
                   ) : (
                     <>
-                      <FiSave className="mr-2 -ml-1" />
                       Lưu thay đổi
                     </>
                   )}

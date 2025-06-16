@@ -235,69 +235,96 @@ export default function AdminAnnouncementsPage() {
   };
 
   const renderPaginationControls = () => {
-    // Calculate the range of visible page buttons
-    const maxVisiblePages = 5;
-    const halfVisible = Math.floor(maxVisiblePages / 2);
-    
-    let startPage = Math.max(1, currentPage - halfVisible);
-    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-    
-    if (endPage - startPage + 1 < maxVisiblePages) {
-      startPage = Math.max(1, endPage - maxVisiblePages + 1);
-    }
-    
-    const pageNumbers = [];
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(i);
-    }
-    
     return (
-      <div className="flex items-center justify-between mt-6">
-        <div className="flex items-center text-sm text-gray-600">
-          <span>Hiển thị</span>
-          <select
-            className="mx-2 border-gray-300 rounded-md shadow-sm"
-            value={itemsPerPage}
-            onChange={handleItemsPerPageChange}
-          >
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-          </select>
-          <span>trên tổng số {totalItems} mục</span>
-        </div>
-        
-        <div className="flex items-center">
-          <button
-            className="p-2 rounded-md hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-            onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            <FiChevronLeft className="h-5 w-5 text-gray-600" />
-          </button>
+      <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+        <div className="flex-1 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          <div className="mb-3 sm:mb-0">
+            <p className="text-sm text-gray-700">
+              Hiển thị <span className="font-medium">{announcements.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}</span> đến{' '}
+              <span className="font-medium">
+                {Math.min(currentPage * itemsPerPage, totalItems)}
+              </span>{' '}
+              trong số <span className="font-medium">{totalItems}</span> kết quả
+            </p>
+          </div>
           
-          {pageNumbers.map(number => (
-            <button
-              key={number}
-              className={`px-3 py-1.5 mx-0.5 rounded-md ${
-                number === currentPage
-                  ? 'bg-orange-100 text-orange-600 font-medium'
-                  : 'hover:bg-gray-100 text-gray-700'
-              }`}
-              onClick={() => setCurrentPage(number)}
-            >
-              {number}
-            </button>
-          ))}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center space-x-2">
+              <label htmlFor="itemsPerPage" className="text-sm text-gray-700 whitespace-nowrap hidden sm:inline">
+                Hiển thị mỗi trang
+              </label>
+              <select
+                id="itemsPerPage"
+                name="itemsPerPage"
+                className="block w-16 py-2 px-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-colors text-sm"
+                value={itemsPerPage}
+                onChange={handleItemsPerPageChange}
+                disabled={loading}
+              >
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </select>
+            </div>
           
-          <button
-            className="p-2 rounded-md hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentPage === totalPages || totalPages === 0}
-          >
-            <FiChevronRight className="h-5 w-5 text-gray-600" />
-          </button>
+            <nav className="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+              <button
+                disabled={currentPage === 1 || loading}
+                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                className={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium transition-colors ${
+                  currentPage === 1 || loading
+                    ? 'text-gray-300 cursor-not-allowed'
+                    : 'text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:z-10'
+                }`}
+              >
+                <span className="sr-only">Previous</span>
+                <FiChevronLeft className="h-5 w-5" />
+              </button>
+              
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                let pageNum;
+                
+                if (totalPages <= 5) {
+                  pageNum = i + 1;
+                } else if (currentPage <= 3) {
+                  pageNum = i + 1;
+                } else if (currentPage >= totalPages - 2) {
+                  pageNum = totalPages - 4 + i;
+                } else {
+                  pageNum = currentPage - 2 + i;
+                }
+                
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => setCurrentPage(pageNum)}
+                    disabled={loading}
+                    className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors ${
+                      currentPage === pageNum
+                        ? 'z-10 bg-orange-50 border-orange-500 text-orange-600'
+                        : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:z-10'
+                    } ${loading ? 'opacity-60 cursor-not-allowed' : ''}`}
+                  >
+                    {pageNum}
+                  </button>
+                );
+              })}
+              
+              <button
+                disabled={currentPage === totalPages || loading}
+                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                className={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium transition-colors ${
+                  currentPage === totalPages || loading
+                    ? 'text-gray-300 cursor-not-allowed'
+                    : 'text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:z-10'
+                }`}
+              >
+                <span className="sr-only">Next</span>
+                <FiChevronRight className="h-5 w-5" />
+              </button>
+            </nav>
+          </div>
         </div>
       </div>
     );
@@ -395,14 +422,21 @@ export default function AdminAnnouncementsPage() {
                 </tbody>
               </table>
             </div>
-            <div className="flex items-center justify-between mt-6">
-              <div className="h-6 bg-gray-200 rounded w-56"></div>
-              <div className="flex items-center space-x-1">
-                <div className="h-9 w-9 bg-gray-200 rounded"></div>
-                {[...Array(3)].map((_, index) => (
-                  <div key={index} className="h-9 w-9 bg-gray-200 rounded-md mx-0.5"></div>
-                ))}
-                <div className="h-9 w-9 bg-gray-200 rounded"></div>
+            <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 animate-pulse">
+              <div className="flex-1 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <div className="mb-3 sm:mb-0">
+                  <div className="h-5 bg-gray-200 rounded w-56"></div>
+                </div>
+                <div className="flex items-center justify-end space-x-4">
+                  <div className="h-8 bg-gray-200 rounded w-24"></div>
+                  <div className="inline-flex rounded-md -space-x-px">
+                    <div className="h-9 w-9 bg-gray-200 rounded-l-md"></div>
+                    {[...Array(3)].map((_, index) => (
+                      <div key={index} className="h-9 w-9 bg-gray-200"></div>
+                    ))}
+                    <div className="h-9 w-9 bg-gray-200 rounded-r-md"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

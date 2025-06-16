@@ -5,6 +5,7 @@ import { useSession, signOut } from 'next-auth/react';
 import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 import { 
   FiHome, 
   FiFileText, 
@@ -601,24 +602,32 @@ export function DashboardLayout({
                     <p className="text-xs text-gray-500 mt-1 truncate">{session?.user?.email}</p>
                   </div>
                   <div className="py-1">
-                    <Link
-                      href="/profile"
-                      className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
-                      onClick={() => setProfileDropdownOpen(false)}
-                      style={{ cursor: 'pointer' }}
+                    <button
+                      className="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150 text-left"
+                      onClick={() => {
+                        setProfileDropdownOpen(false);
+                        toast.success('Tính năng đang được phát triển!', {
+                          icon: '👨‍💻',
+                        });
+                      }}
+                      style={{ cursor: 'pointer', outline: 'none' }}
                     >
                       <FiUser className="mr-3 h-4 w-4 text-gray-500" />
                       Thông tin cá nhân
-                    </Link>
-                    <Link
-                      href="/profile/settings"
-                      className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
-                      onClick={() => setProfileDropdownOpen(false)}
-                      style={{ cursor: 'pointer' }}
+                    </button>
+                    <button
+                      className="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150 text-left"
+                      onClick={() => {
+                        setProfileDropdownOpen(false);
+                        toast.success('Tính năng đang được phát triển!', {
+                          icon: '⚙️',
+                        });
+                      }}
+                      style={{ cursor: 'pointer', outline: 'none' }}
                     >
                       <FiSettings className="mr-3 h-4 w-4 text-gray-500" />
                       Cài đặt tài khoản
-                    </Link>
+                    </button>
                     <div className="border-t border-gray-100 my-1"></div>
                     <button
                       onClick={() => {
@@ -701,24 +710,32 @@ export function DashboardLayout({
                           <p className="text-xs text-gray-500 mt-1 truncate">{session?.user?.email}</p>
                         </div>
                         <div className="py-1">
-                          <Link
-                            href="/profile"
-                            className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
-                            onClick={() => setProfileDropdownOpen(false)}
-                            style={{ cursor: 'pointer' }}
+                          <button
+                            className="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150 text-left"
+                            onClick={() => {
+                              setProfileDropdownOpen(false);
+                              toast.success('Tính năng đang được phát triển!', {
+                                icon: '👨‍💻',
+                              });
+                            }}
+                            style={{ cursor: 'pointer', outline: 'none' }}
                           >
                             <FiUser className="mr-3 h-4 w-4 text-gray-500" />
                             Thông tin cá nhân
-                          </Link>
-                          <Link
-                            href="/profile/settings"
-                            className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
-                            onClick={() => setProfileDropdownOpen(false)}
-                            style={{ cursor: 'pointer' }}
+                          </button>
+                          <button
+                            className="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150 text-left"
+                            onClick={() => {
+                              setProfileDropdownOpen(false);
+                              toast.success('Tính năng đang được phát triển!', {
+                                icon: '👨‍💻',
+                              });
+                            }}
+                            style={{ cursor: 'pointer', outline: 'none' }}
                           >
                             <FiSettings className="mr-3 h-4 w-4 text-gray-500" />
                             Cài đặt tài khoản
-                          </Link>
+                          </button>
                           <div className="border-t border-gray-100 my-1"></div>
                           <button
                             onClick={() => {
