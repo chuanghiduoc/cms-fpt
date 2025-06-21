@@ -6,6 +6,17 @@ import prisma from '@/lib/prisma';
 // Define params as a Promise type
 type Params = Promise<{ id: string }>;
 
+// Define type for review comment with user relation
+type ReviewCommentWithUser = {
+  id: string;
+  content: string;
+  createdAt: Date;
+  user: {
+    id: string;
+    name: string;
+  };
+};
+
 // GET /api/admin/content/[id] - Get a single content item (post or document) by ID
 export async function GET(
   request: NextRequest,
@@ -87,7 +98,7 @@ export async function GET(
         },
         submittedAt: post.createdAt,
         views: 0, // Add view count if available
-        comments: post.reviewComments.map(comment => ({
+        comments: post.reviewComments.map((comment: ReviewCommentWithUser) => ({
           id: comment.id,
           text: comment.content,
           createdAt: comment.createdAt,
@@ -180,7 +191,7 @@ export async function GET(
         },
         submittedAt: document.createdAt,
         views: 0, // Add view count if available
-        comments: document.reviewComments.map(comment => ({
+        comments: document.reviewComments.map((comment: ReviewCommentWithUser) => ({
           id: comment.id,
           text: comment.content,
           createdAt: comment.createdAt,
